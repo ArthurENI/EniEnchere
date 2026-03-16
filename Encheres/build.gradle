@@ -24,7 +24,17 @@ dependencies {
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	//thymeleaf
+	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 
+	// Spring Validation
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	// JDBC
+	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+
+	// Driver de MySQL
+	runtimeOnly 'com.mysql:mysql-connector-j:8.4.0'
 
 }
 
