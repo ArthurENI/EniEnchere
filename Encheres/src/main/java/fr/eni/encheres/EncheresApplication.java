@@ -1,4 +1,4 @@
-package com.example.Encheres;
+package fr.eni.encheres;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
