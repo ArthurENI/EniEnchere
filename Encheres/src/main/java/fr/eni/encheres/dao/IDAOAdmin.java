@@ -1,5 +1,6 @@
 package fr.eni.encheres.dao;
 
+import fr.eni.encheres.bo.Categorie;
 import fr.eni.encheres.bo.Utilisateur;
 
 public interface IDAOAdmin {
