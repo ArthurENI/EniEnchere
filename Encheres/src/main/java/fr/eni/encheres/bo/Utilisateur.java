@@ -16,17 +16,19 @@ public class Utilisateur implements Serializable {
     private String telephone;
     private String motDePasse;
     private int credit;
-    private boolean isAdmin;
     private boolean isActif;
 
     private Adresse adresse;
     private List<Enchere> enchereList;
+    private List<Role> roleList;
 
     public Utilisateur() {
         this.enchereList = new ArrayList<>();
+        this.roleList = new ArrayList<>();
     }
 
-    public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String motDePasse, int credit, boolean isAdmin, boolean isActif, Adresse adresse) {
+    public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String motDePasse,
+                       int credit, boolean isActif, Adresse adresse) {
         this.pseudo = pseudo;
         this.nom = nom;
         this.prenom = prenom;
@@ -34,12 +36,12 @@ public class Utilisateur implements Serializable {
         this.telephone = telephone;
         this.motDePasse = motDePasse;
         this.credit = credit;
-        this.isAdmin = isAdmin;
         this.isActif = isActif;
         this.adresse = adresse;
     }
 
-    public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String motDePasse, int credit, boolean isAdmin, boolean isActif, Adresse adresse, List<Enchere> enchereList) {
+    public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String motDePasse,
+                       int credit, boolean isActif, Adresse adresse, List<Enchere> enchereList, List<Role> roleList) {
         this.pseudo = pseudo;
         this.nom = nom;
         this.prenom = prenom;
@@ -47,10 +49,11 @@ public class Utilisateur implements Serializable {
         this.telephone = telephone;
         this.motDePasse = motDePasse;
         this.credit = credit;
-        this.isAdmin = isAdmin;
+
         this.isActif = isActif;
         this.adresse = adresse;
         this.enchereList = enchereList;
+        this.roleList = roleList;
     }
 
     public Long getNoUtilisateur() {
@@ -117,14 +120,6 @@ public class Utilisateur implements Serializable {
         this.credit = credit;
     }
 
-    public boolean isAdmin() {
-        return isAdmin;
-    }
-
-    public void setAdmin(boolean admin) {
-        isAdmin = admin;
-    }
-
     public boolean isActif() {
         return isActif;
     }
@@ -149,17 +144,23 @@ public class Utilisateur implements Serializable {
         this.enchereList = enchereList;
     }
 
+    public List<Role> getRoleList() {
+        return roleList;
+    }
+
+    public void setRoleList(List<Role> roleList) {
+        this.roleList = roleList;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Utilisateur that = (Utilisateur) o;
-        return getCredit() == that.getCredit() && isAdmin() == that.isAdmin() && isActif() == that.isActif() && Objects.equals(getNoUtilisateur(), that.getNoUtilisateur()) && Objects.equals(getPseudo(), that.getPseudo()) && Objects.equals(getNom(), that.getNom()) && Objects.equals(getPrenom(), that.getPrenom()) && Objects.equals(getEmail(), that.getEmail()) && Objects.equals(getTelephone(), that.getTelephone()) && Objects.equals(getMotDePasse(), that.getMotDePasse()) && Objects.equals(getAdresse(), that.getAdresse()) && Objects.equals(getEnchereList(), that.getEnchereList());
+        return getCredit() == that.getCredit() && isActif() == that.isActif() && Objects.equals(getNoUtilisateur(), that.getNoUtilisateur()) && Objects.equals(getPseudo(), that.getPseudo()) && Objects.equals(getNom(), that.getNom()) && Objects.equals(getPrenom(), that.getPrenom()) && Objects.equals(getEmail(), that.getEmail()) && Objects.equals(getTelephone(), that.getTelephone()) && Objects.equals(getMotDePasse(), that.getMotDePasse()) && Objects.equals(getAdresse(), that.getAdresse()) && Objects.equals(getEnchereList(), that.getEnchereList()) && Objects.equals(getRoleList(), that.getRoleList());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getNoUtilisateur(), getPseudo(), getNom(), getPrenom(), getEmail(), getTelephone(), getMotDePasse(), getCredit(), isAdmin(), isActif(), getAdresse(), getEnchereList());
+        return Objects.hash(getNoUtilisateur(), getPseudo(), getNom(), getPrenom(), getEmail(), getTelephone(), getMotDePasse(), getCredit(), isActif(), getAdresse(), getEnchereList(), getRoleList());
     }
-
-
 }
