@@ -30,11 +30,11 @@ dependencies {
 	// Spring Validation
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
-	// JDBC
-	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
-
-	// Driver de MySQL
-	runtimeOnly 'com.mysql:mysql-connector-j:8.4.0'
+//	// JDBC
+//	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+//
+//	// Driver de MySQL
+//	runtimeOnly 'com.mysql:mysql-connector-j:8.4.0'
 
 }
 

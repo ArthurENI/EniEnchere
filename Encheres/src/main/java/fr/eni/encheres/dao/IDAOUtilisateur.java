@@ -10,7 +10,7 @@ public interface IDAOUtilisateur {
 
     public Utilisateur selectUtilisateurById(Long id) ;
 
-    public Utilisateur selectUtilisateurByEmailAndPassword(String email, String password) ;
+    public Utilisateur selectUtilisateurByPseudoAndPassword(String pseudo, String password) ;
 
     public void saveSessionUtilisateur (Utilisateur utilisateur);
 

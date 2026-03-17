@@ -27,6 +27,13 @@ public class Utilisateur implements Serializable {
         this.roleList = new ArrayList<>();
     }
 
+    public Utilisateur(String pseudo, String motDePasse) {
+        this.pseudo = pseudo;
+        this.motDePasse = motDePasse;
+        this.enchereList = new ArrayList<>();
+        this.roleList = new ArrayList<>();
+    }
+
     public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String motDePasse,
                        int credit, boolean isActif, Adresse adresse) {
         this.pseudo = pseudo;
