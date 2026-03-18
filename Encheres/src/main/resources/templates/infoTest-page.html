@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="en"
+      layout:decorate="~{layout/base}"
+>
+<body>
+
+<title layout:fragment="title">[[#{Title_Details}]]</title>
+
+<div layout:fragment="content">
+    <h1>[[#{Title_Details}]]</h1>
+
+    <div class="uk-child-width-1-2@m" uk-grid>
+        <div>
+            <div class="uk-card uk-card-default">
+
+                <div class="uk-card-media-top">
+                    <img src="images/light.jpg" width="1800" height="1200" alt="">
+                </div>
+
+                <div class="uk-card-body">
+                    <h3 class="uk-heading-medium uk-margin-remove-bottom"
+                        th:text="${enchere.title}"></h3>
+                    <p th:text="${enchere.description}"></p>
+                    <p th:text="${enchere.categorie}"></p>
+                    <p th:text="${enchere.meilleurOffre}"></p>
+                    <p th:text="${enchere.baseOffre}"></p>
+                    <p th:text="${enchere.dateFin}"></p>
+                    <p th:text="${enchere.adress}"></p>
+                    <p th:text="${enchere.vendeur}"></p>
+
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="proposition-perso">Ma proposition :</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input" id="proposition-perso" type="text" placeholder="Some text...">
+                        </div>
+                        <input type="submit" class="uk-button uk-button-default"
+                               value="Encherir"/>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+

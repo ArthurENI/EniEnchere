@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="en"
+      layout:decorate="~{layout/base}"
+>
+<body>
+
+    <title layout:fragment="title">Formulaire Article</title>
+
+    <div layout:fragment="content">
+
+        <form class="uk-form-stacked">
+
+            <legend class="uk-legend">Article de l'enchère</legend>
+
+            <div class="uk-margin">
+                <label class="uk-form-label" for="article-name">Article :</label>
+                <div class="uk-form-controls">
+                    <input class="uk-input" id="article-name" type="text" placeholder="Some text...">
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <label class="uk-form-label" for="description-article">Description :</label>
+                <textarea class="uk-textarea" id="description-article" rows="5" placeholder="Textarea" aria-label="Textarea"></textarea>
+            </div>
+
+            <div class="uk-margin">
+                <label class="uk-form-label" for="photo-article">Photo de l'article</label>
+                <div uk-form-custom>
+                    <input type="file" id="photo-article" aria-label="Custom controls">
+                    <button class="uk-button uk-button-default" type="button" tabindex="-1">Upload</button>
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <label class="uk-form-label" for="prixBase">Mise à prix :</label>
+                <div class="uk-form-controls">
+                    <input class="uk-input" id="prixBase" type="text" placeholder="Some text...">
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <label class="uk-form-label" for="date-debut">Date de début de l'enchère :</label>
+                <div class="uk-form-controls">
+                    <input class="uk-input" type="date" id="date-debut" name="date-debut">
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <label class="uk-form-label" for="date-fin">Date de fin de l'enchère :</label>
+                <div class="uk-form-controls">
+                    <input class="uk-input" type="date" id="date-fin" name="date-fin">
+                </div>
+            </div>
+
+            <legend class="uk-legend">Adresse de retrait</legend>
+
+            <div class="uk-margin">
+                <label class="uk-form-label" for="adress-rue">Rue :</label>
+                <div class="uk-form-controls">
+                    <input class="uk-input" id="adress-rue" type="text" placeholder="Some text...">
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <label class="uk-form-label" for="adress-postal">Code postal :</label>
+                <div class="uk-form-controls">
+                    <input class="uk-input" id="adress-postal" type="text" placeholder="Some text...">
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <label class="uk-form-label" for="adress-ville">Ville :</label>
+                <div class="uk-form-controls">
+                    <input class="uk-input" id="adress-ville" type="text" placeholder="Some text...">
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <input type="submit" class="uk-button uk-button-default"
+                       value="Enregistrer"/>
+            </div>
+
+
+        </form>
+    </div>
+</body>
+</html>

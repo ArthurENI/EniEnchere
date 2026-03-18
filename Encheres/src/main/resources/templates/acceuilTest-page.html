@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="en"
+      layout:decorate="~{layout/base}"
+>
+<body>
+<div layout:fragment="content">
+    <h1>La liste des articles</h1>
+    <div class="uk-child-width-1-2@m " uk-grid>
+        <div th:each="article : ${articles}">
+            <div class="uk-card uk-card-default">
+                <div class="uk-card-media-top" style="height: 300px; overflow: hidden;">
+                    <img th:src="${article.imagePath}" th:alt="${article.title}"
+                         style="width: 100%; height: 100%; object-fit: contain;">
+                </div>
+                <div class="uk-card-body">
+                    <h3 class="uk-card-title" th:text="${article.title}"></h3>
+                    <p th:text="${article.description}"></p>
+                    <p th:text="${article.date-fin}"></p>
+                    <p th:text="${artcile.name-vendeur}"></p>
+                </div>
+                <div class="uk-card-footer">
+                    <a th:href="@{/single-article/{id}(id=${article.id})}" class="uk-button uk-button-text">Read more</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
