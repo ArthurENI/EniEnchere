@@ -6,4 +6,6 @@ public interface UtilisateurService {
 
 
     public ServiceResponse<Utilisateur> login(String pseudo, String password);
+
+    public ServiceResponse<Utilisateur> inscriptionUtilisateur(Utilisateur utilisateur);
 }

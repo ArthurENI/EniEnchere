@@ -1,18 +1,15 @@
 package fr.eni.encheres.services;
 
 import fr.eni.encheres.bo.Utilisateur;
-import fr.eni.encheres.controller.locale.LocaleHelper;
 import fr.eni.encheres.dao.IDAOUtilisateur;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class UtilisateurServiceImpl implements UtilisateurService{
     private final IDAOUtilisateur daoUtilisateur;
-    private final LocaleHelper lh;
 
-    public UtilisateurServiceImpl(IDAOUtilisateur daoUtilisateur, LocaleHelper lh) {
+    public UtilisateurServiceImpl(IDAOUtilisateur daoUtilisateur) {
         this.daoUtilisateur = daoUtilisateur;
-        this.lh = lh;
     }
 
     @Override
@@ -23,10 +20,16 @@ public class UtilisateurServiceImpl implements UtilisateurService{
         // Si je trouve pas => erreur
         if (loggedUtilisateur == null)
         {
-            return new ServiceResponse<Utilisateur>("7025", lh.i18n("Msg_Auth_Error"));
+            return new ServiceResponse<Utilisateur>("7025", "pseudo et/ou mot de passe incorrect");
         }
 
         // Success
-        return new ServiceResponse<Utilisateur>("2002", lh.i18n("Msg_Auth_Success"), loggedUtilisateur);
+        return new ServiceResponse<Utilisateur>("2002", "Authentification réussie", loggedUtilisateur);
+    }
+
+    @Override
+    public ServiceResponse<Utilisateur> inscriptionUtilisateur(Utilisateur utilisateur) {
+        daoUtilisateur.createCompte(utilisateur);
+        return new ServiceResponse<Utilisateur>("2002", "Utilisateur créer avec succès", utilisateur);
     }
 }

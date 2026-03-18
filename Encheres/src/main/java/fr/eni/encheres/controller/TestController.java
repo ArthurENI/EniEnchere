@@ -3,9 +3,11 @@ package fr.eni.encheres.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
+@SessionAttributes({"loggedUser"})
 @Controller
-@RequestMapping
+@RequestMapping("/encheres")
 public class TestController {
 
    @GetMapping ("/formtest")
@@ -18,7 +20,7 @@ public class TestController {
       return "infoTest-page";
    }
 
-   @GetMapping("/")
+   @GetMapping("/acceuil")
    public String showAcceuil() {
       return "acceuilTest-page";
    }

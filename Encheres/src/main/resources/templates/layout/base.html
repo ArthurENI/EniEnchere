@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
-    <title layout:fragment="title">Title</title>
+    <title layout:fragment="title">Encheres</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <!-- UIKIT -->
@@ -9,9 +9,6 @@
     <script src="/uikit/js/uikit.min.js"></script>
     <script src="/uikit/js/uikit-icons.min.js"></script>
     <!-- /UIKIT -->
-    <!-- ENI -->
-    <link rel="stylesheet" href="/eni/eni-styles.css"/>
-    <!-- /ENI -->
 </head>
 <body>
 <!--HEADER-->
@@ -28,19 +25,19 @@
                             <ul class="uk-nav uk-navbar-dropdown-nav">
                                 <li class="uk-nav-header uk-text-small uk-text-primary" th:text="'Bonjour ' + ${loggedUser.pseudo}"></li>
                                 <li class="uk-nav-divider"></li>
-                                <li><a href="/logout"><span data-uk-icon="icon: sign-out"></span> [[#{Btn_Logout}]]</a></li>
+                                <li><a href="/encheres/logout"><span data-uk-icon="icon: sign-out"></span> Se déconnecter</a></li>
                             </ul>
                         </div>
                     </li>
                     <!-- SI PAS CONNECTE -->
                     <div class="uk-navbar-item" th:if="${loggedUser == null}">
-                        <a href="/login" class="uk-button uk-button-primary uk-visible@m"> [[#{Btn_Login}]]</a>
+                        <a href="/encheres/" class="uk-button uk-button-primary uk-visible@m"> Se connecter</a>
                     </div>
                 </ul>
 
             </div>
             <div class="uk-navbar-center">
-                <a class="uk-navbar-item uk-logo" href="/">[[#{Title_App}]]</a>
+                <a class="uk-navbar-item uk-logo" href="/encheres/acceuil">Eni-Encheres</a>
             </div>
             <div class="uk-navbar-right">
 

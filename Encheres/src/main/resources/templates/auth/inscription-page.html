@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="en"
+      layout:decorate="~{layout/base}">
+<body>
+
+<div layout:fragment="content">
+
+<div class="uk-width-1-1 uk-height-viewport uk-padding">
+
+    <h1 class="uk-tile uk-text-center">Inscription</h1>
+
+
+    <!-- Inscription -->
+    <form class="uk-form-horizontal "
+          action=""
+          method="post"
+          th:object="${utilisateur}">
+
+        <input type="hidden" th:field="*{noUtilisateur}"/>
+
+        <div class="uk-grid">
+
+            <!-- COLONNE GAUCHE -->
+            <div class="uk-width-1-2@s ">
+
+                <!-- Pseudo -->
+                <div class="uk-margin-small">
+                    <label class="uk-form-label" for="pseudo">Pseudo :</label>
+                    <div class="uk-form-controls">
+                        <input class="uk-input" id="pseudo" type="text"
+                               th:field="*{pseudo}">
+                    </div>
+                </div>
+
+                <!-- Nom -->
+                <div class="uk-margin-small">
+                    <label class="uk-form-label" for="nom">Nom :</label>
+                    <div class="uk-form-controls">
+                        <input class="uk-input" id="nom" type="text"
+                               th:field="*{nom}">
+                    </div>
+                </div>
+
+                <!-- Prénom -->
+                <div class="uk-margin-small">
+                    <label class="uk-form-label" for="prenom">Prénom :</label>
+                    <div class="uk-form-controls">
+                        <input class="uk-input" id="prenom" type="text"
+                               th:field="*{prenom}">
+                    </div>
+                </div>
+
+                <!-- Email -->
+                <div class="uk-margin-small">
+                    <label class="uk-form-label" for="email">Email :</label>
+                    <div class="uk-form-controls">
+                        <input class="uk-input" id="email" type="email"
+                               th:field="*{email}">
+                    </div>
+                </div>
+
+
+                <!-- Mot de passe -->
+                <div class="uk-margin-small">
+                    <label class="uk-form-label" for="motDePasse">Mot de passe :</label>
+                    <div class="uk-form-controls">
+                        <input class="uk-input" id="motDePasse" type="password"
+                               th:field="*{motDePasse}">
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- COLONNE DROITE -->
+            <div class="uk-width-1-2@s">
+
+                <!-- Téléphone -->
+                <div class="uk-margin-small">
+                    <label class="uk-form-label" for="telephone">Téléphone :</label>
+                    <div class="uk-form-controls">
+                        <input class="uk-input" id="telephone" type="tel"
+                               th:field="*{telephone}">
+                    </div>
+                </div>
+
+                <!-- Rue -->
+                <div class="uk-margin-small">
+                    <label class="uk-form-label" for="rue">Rue :</label>
+                    <div class="uk-form-controls">
+                        <input class="uk-input" id="rue" type="text"
+                               th:field="*{adresse.rue}">
+                    </div>
+                </div>
+
+                <!-- Code postal -->
+                <div class="uk-margin-small">
+                    <label class="uk-form-label" for="codePostal">Code postal :</label>
+                    <div class="uk-form-controls">
+                        <input class="uk-input" id="codePostal" type="text"
+                               th:field="*{adresse.codePostal}">
+                    </div>
+                </div>
+
+                <!-- Ville -->
+                <div class="uk-margin-small">
+                    <label class="uk-form-label" for="ville">Ville :</label>
+                    <div class="uk-form-controls">
+                        <input class="uk-input" id="ville" type="text"
+                               th:field="*{adresse.ville}">
+                    </div>
+                </div>
+
+
+                <!-- Confirmation -->
+                <div class="uk-margin-small">
+                    <label class="uk-form-label" for="confirmMdp">Confirmation :</label>
+                    <div class="uk-form-controls">
+                        <input class="uk-input" id="confirmMdp" type="password"
+                               name="confirmMdp">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Bouttons -->
+        <div class="uk-grid-small uk-grid">
+            <div class="uk-width-1-2">
+                <input type="submit" class="uk-button uk-button-primary uk-width-1-2 uk-align-center" value="Créer">
+            </div>
+            <!-- Annuler-->
+            <div class="uk-width-1-2">
+                <a class="uk-button uk-button-default uk-width-1-2 uk-align-center" href="/encheres/">Retour</a>
+            </div>
+        </div>
+
+    </form>
+</div>
+</div>
+
+</body>
+</html>
