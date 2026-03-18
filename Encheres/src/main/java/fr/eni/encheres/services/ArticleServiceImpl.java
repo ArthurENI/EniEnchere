@@ -11,13 +11,20 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@AllArgsConstructor
+//@AllArgsConstructor
 public class ArticleServiceImpl  implements ArticleService{
     private final IDAOArticle idaoArticle;
     private final IDAOCategorie idaoCategorie;
     private final IDAOUtilisateur idaoUtilisateur;
     private final IDAOEnchere idaoEnchere;
 
+
+    public ArticleServiceImpl(IDAOArticle idaoArticle, IDAOCategorie idaoCategorie, IDAOUtilisateur idaoUtilisateur, IDAOEnchere idaoEnchere) {
+        this.idaoArticle = idaoArticle;
+        this.idaoCategorie = idaoCategorie;
+        this.idaoUtilisateur = idaoUtilisateur;
+        this.idaoEnchere = idaoEnchere;
+    }
 
     @Override
     public List<Article> selectAllArticles() {
@@ -63,20 +70,6 @@ public class ArticleServiceImpl  implements ArticleService{
     public List<Article> filterArticles(String nom, Long categorieId) {
         return idaoArticle.filterArticles(nom, categorieId);
     }
-
-    private void chargerCategorieEtUtilisateur(Article a){
-        Categorie c = idaoCategorie.read(a.getCategorie().getNoCategorie());
-        a.setCategorie(c);
-        Utilisateur u = idaoUtilisateur.selectUtilisateurById(a.getUtilisateur().getNoUtilisateur());
-        a.setUtilisateur(u);
-    }
-
-    private void chargerUtilisateurEnchere(Enchere e){
-        Utilisateur u = idaoUtilisateur.selectUtilisateurById(e.getUtilisateur().getNoUtilisateur());
-        e.setUtilisateur(u);
-    }
-
-
     @Override
     public Article createArticle() {
         return null;
@@ -92,4 +85,15 @@ public class ArticleServiceImpl  implements ArticleService{
         return null;
     }
 
+    private void chargerCategorieEtUtilisateur(Article a){
+        Categorie c = idaoCategorie.read(a.getCategorie().getNoCategorie());
+        a.setCategorie(c);
+        Utilisateur u = idaoUtilisateur.selectUtilisateurById(a.getUtilisateur().getNoUtilisateur());
+        a.setUtilisateur(u);
+    }
+
+    private void chargerUtilisateurEnchere(Enchere e){
+        Utilisateur u = idaoUtilisateur.selectUtilisateurById(e.getUtilisateur().getNoUtilisateur());
+        e.setUtilisateur(u);
+    }
 }

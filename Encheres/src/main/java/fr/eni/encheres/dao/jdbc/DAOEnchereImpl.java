@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public class DAOEnchereImpl implements IDAOEnchere {
     @Override
-    public Enchere selectById(long id) {
+    public Enchere selectById(Long id) {
         return null;
     }
 
@@ -19,7 +19,7 @@ public class DAOEnchereImpl implements IDAOEnchere {
     }
 
     @Override
-    public List<Enchere> findByArticle(long idArticle) {
+    public List<Enchere> findByArticle(Long idArticle) {
         return List.of();
     }
 }

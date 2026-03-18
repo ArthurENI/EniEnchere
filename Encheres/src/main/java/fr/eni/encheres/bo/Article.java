@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
@@ -60,6 +59,110 @@ public class Article implements Serializable {
 
     private EtatVente etatVente;
 
+    public Article(Long l, String ordinateurPortable, String s, LocalDateTime date1, LocalDateTime date2, int i, int i1, Utilisateur vendeur1, Adresse adresseRetrait1, Categorie c1, EtatVente etatVente, List<Enchere> enchereList) {
+    }
 
+    public Long getNoArticle() {
+        return noArticle;
+    }
 
+    public void setNoArticle(Long noArticle) {
+        this.noArticle = noArticle;
+    }
+
+    public String getNomArticle() {
+        return nomArticle;
+    }
+
+    public void setNomArticle(String nomArticle) {
+        this.nomArticle = nomArticle;
+    }
+
+    public String getNomImage() {
+        return nomImage;
+    }
+
+    public void setNomImage(String nomImage) {
+        this.nomImage = nomImage;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public LocalDateTime getDateDebutEnchere() {
+        return dateDebutEnchere;
+    }
+
+    public void setDateDebutEnchere(LocalDateTime dateDebutEnchere) {
+        this.dateDebutEnchere = dateDebutEnchere;
+    }
+
+    public LocalDateTime getDateFinEnchere() {
+        return dateFinEnchere;
+    }
+
+    public void setDateFinEnchere(LocalDateTime dateFinEnchere) {
+        this.dateFinEnchere = dateFinEnchere;
+    }
+
+    public int getMiseAPrix() {
+        return miseAPrix;
+    }
+
+    public void setMiseAPrix(int miseAPrix) {
+        this.miseAPrix = miseAPrix;
+    }
+
+    public int getPrixVenteEnCours() {
+        return prixVenteEnCours;
+    }
+
+    public void setPrixVenteEnCours(int prixVenteEnCours) {
+        this.prixVenteEnCours = prixVenteEnCours;
+    }
+
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
+    }
+
+    public void setUtilisateur(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
+    }
+
+    public List<Enchere> getEnchereList() {
+        return enchereList;
+    }
+
+    public void setEnchereList(List<Enchere> enchereList) {
+        this.enchereList = enchereList;
+    }
+
+    public Adresse getAdresseRetrait() {
+        return adresseRetrait;
+    }
+
+    public void setAdresseRetrait(Adresse adresseRetrait) {
+        this.adresseRetrait = adresseRetrait;
+    }
+
+    public Categorie getCategorie() {
+        return categorie;
+    }
+
+    public void setCategorie(Categorie categorie) {
+        this.categorie = categorie;
+    }
+
+    public EtatVente getEtatVente() {
+        return etatVente;
+    }
+
+    public void setEtatVente(EtatVente etatVente) {
+        this.etatVente = etatVente;
+    }
 }

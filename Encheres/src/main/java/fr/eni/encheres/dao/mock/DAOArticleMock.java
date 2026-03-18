@@ -23,44 +23,22 @@ public class DAOArticleMock implements IDAOArticle {
         Utilisateur vendeur1 = new Utilisateur("Paul", "0000");
         Utilisateur acquereur2 = new Utilisateur("Christian", "0000");
         Utilisateur vendeur2 = new Utilisateur("Michel", "0000");
-        Categorie c1 = new Categorie(1l,"Catégorie1", null);
+        Categorie c1 = new Categorie();
         // Créer des adresses de retrait simples
         Adresse adresseRetrait1 = new Adresse("Rue de la Vente 1", "75001", "Paris");
         Adresse adresseRetrait2 = new Adresse("Rue de la Vente 2", "69000", "Lyon");
+        Enchere enchere = new Enchere();
+        List<Enchere> enchereList = new ArrayList<>();
+        enchereList.add(enchere);
 
-// Créer le premier article
-        Article article1 = new Article();
-        article1.setNoArticle(1L);
-        article1.setNomArticle("Ordinateur portable");
-        article1.setDescription("Un ordinateur portable en bon état.");
-        article1.setDateDebutEnchere(date1);
-        article1.setDateFinEnchere(date2);
-        article1.setMiseAPrix(100);
-        article1.setPrixVenteEnCours(100);
-        article1.setUtilisateur(vendeur1);
-        article1.setAdresseRetrait(adresseRetrait1);
-        article1.setCategorie(c1);
-        article1.setEtatVente(EtatVente.OUVERTE);
-        article1.setEnchereList(new ArrayList<>());
 
-// Créer le deuxième article
-        Article article2 = new Article();
-        article2.setNoArticle(2L);
-        article2.setNomArticle("Vélo de course");
-        article2.setDescription("Un vélo de course neuf.");
-        article2.setDateDebutEnchere(date1);
-        article2.setDateFinEnchere(date2);
-        article2.setMiseAPrix(200);
-        article2.setPrixVenteEnCours(200);
-        article2.setUtilisateur(vendeur2);
-        article2.setAdresseRetrait(adresseRetrait2);
-        article2.setCategorie(c1);
-        article2.setEtatVente(EtatVente.OUVERTE);
-        article2.setEnchereList(new ArrayList<>());
+        //Articles
+        Article a1 = new Article(1L,"Ordinateur portable","Un ordinateur portable en bon état.",date1, date2, 100,100,
+                vendeur1, adresseRetrait1, c1, EtatVente.ATTENTE, enchereList);
+
 
 // Ajouter les articles à la liste
-        articleDb.add(article1);
-        articleDb.add(article2);
+        articleDb.add(a1);
     }
 
     @Override

@@ -10,7 +10,7 @@ import java.util.List;
 public class DAOCategorieImpl implements IDAOCategorie {
 
     @Override
-    public Categorie read(long id) {
+    public Categorie read(Long id) {
         return null;
     }
 

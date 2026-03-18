@@ -5,7 +5,7 @@ import fr.eni.encheres.bo.Enchere;
 import java.util.List;
 
 public interface IDAOEnchere {
-    Enchere selectById(long id);
+    Enchere selectById(Long id);
     List<Enchere> findAll();
-    List<Enchere> findByArticle(long idArticle);
+    List<Enchere> findByArticle(Long idArticle);
 }
