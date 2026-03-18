@@ -3,9 +3,6 @@ package fr.eni.encheres.bo;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 
@@ -13,10 +10,6 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
-
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
 public class Article implements Serializable {
 
     private static final long serialVersionUID = 1L;
