@@ -18,6 +18,6 @@ public class Enchere implements Serializable {
     private LocalDateTime dateEnchere;
     private int montantEnchere;
     private Utilisateur utilisateur;
-    private List<Article> articleList;
+    private Article article;
 
 }

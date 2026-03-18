@@ -60,4 +60,6 @@ public class Article implements Serializable {
 
     private EtatVente etatVente;
 
+
+
 }

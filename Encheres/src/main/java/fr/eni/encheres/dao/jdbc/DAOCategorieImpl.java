@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public class DAOCategorieImpl implements IDAOCategorie {
-   
+
     @Override
     public Categorie read(long id) {
         return null;

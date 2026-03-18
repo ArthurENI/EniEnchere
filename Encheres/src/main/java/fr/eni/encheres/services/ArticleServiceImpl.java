@@ -1,11 +1,9 @@
 package fr.eni.encheres.services;
 
-import fr.eni.encheres.bo.Article;
-import fr.eni.encheres.bo.Categorie;
-import fr.eni.encheres.bo.EtatVente;
-import fr.eni.encheres.bo.Utilisateur;
+import fr.eni.encheres.bo.*;
 import fr.eni.encheres.dao.IDAOArticle;
 import fr.eni.encheres.dao.IDAOCategorie;
+import fr.eni.encheres.dao.IDAOEnchere;
 import fr.eni.encheres.dao.IDAOUtilisateur;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,6 +16,7 @@ public class ArticleServiceImpl  implements ArticleService{
     private final IDAOArticle idaoArticle;
     private final IDAOCategorie idaoCategorie;
     private final IDAOUtilisateur idaoUtilisateur;
+    private final IDAOEnchere idaoEnchere;
 
 
     @Override
@@ -32,10 +31,17 @@ public class ArticleServiceImpl  implements ArticleService{
 
     @Override
     public Article selectArticleById(Long id) {
-        Article article = idaoArticle.selectArticleById(id);
-        if(article != null){
-            chargerCategorieEtUtilisateur(article);
+        Article a = idaoArticle.selectArticleById(id);
+        if (a != null) {
+            chargerCategorieEtUtilisateur(a);
+            //Charger les encheres si il y en a
+            List<Enchere> encheres = idaoEnchere.findByArticle(id);
+            if(encheres !=null){
+                encheres.forEach(this::chargerUtilisateurEnchere);
+                a.setEnchereList(encheres);
+            }
         }
+        return a;
     }
 
     @Override
@@ -64,6 +70,12 @@ public class ArticleServiceImpl  implements ArticleService{
         Utilisateur u = idaoUtilisateur.selectUtilisateurById(a.getUtilisateur().getNoUtilisateur());
         a.setUtilisateur(u);
     }
+
+    private void chargerUtilisateurEnchere(Enchere e){
+        Utilisateur u = idaoUtilisateur.selectUtilisateurById(e.getUtilisateur().getNoUtilisateur());
+        e.setUtilisateur(u);
+    }
+
 
     @Override
     public Article createArticle() {
