@@ -59,8 +59,8 @@ public class Article implements Serializable {
 
     private EtatVente etatVente;
 
-    public Article(Long l, String ordinateurPortable, String s, LocalDateTime date1, LocalDateTime date2, int i, int i1, Utilisateur vendeur1, Adresse adresseRetrait1, Categorie c1, EtatVente etatVente, List<Enchere> enchereList) {
-    }
+
+
 
     public Long getNoArticle() {
         return noArticle;
