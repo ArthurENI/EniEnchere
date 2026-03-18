@@ -1,9 +1,6 @@
 package fr.eni.encheres.dao.jdbc;
 
-import fr.eni.encheres.bo.Article;
-import fr.eni.encheres.bo.Categorie;
-import fr.eni.encheres.bo.EtatVente;
-import fr.eni.encheres.bo.Utilisateur;
+import fr.eni.encheres.bo.*;
 import fr.eni.encheres.dao.IDAOArticle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -42,15 +39,16 @@ public class DAOArticleImpl implements IDAOArticle {
                 article.setDescription(rs.getString("DESCRIPTION"));
                 article.setMiseAPrix(rs.getInt("MISE_A_PRIX"));
                 //TODO AJOUTER DATES
+                //article.setDateDebutEnchere(rs.getDate("DATE_DEBUT_ENCHERE").toLocalDate());
                 //TODO AJOUTER UTLISATEUR ETC
                 //Association Realisateur
                 Utilisateur utilisateur = new Utilisateur();
                 utilisateur.setNoUtilisateur(rs.getLong("ID_UTILISATEUR"));
                 article.setUtilisateur(utilisateur);
                 //Association Categorie
-                /*Categorie categorie = new Categorie();
+                Categorie categorie = new Categorie();
                 categorie.setNoCategorie(rs.getLong("ID_CATEGORIE"));
-                article.setCategorie(categorie);*/
+                article.setCategorie(categorie);
                 //Association Adresse
                 /*Adresse adresse = new Adresse();
                 adresse.setNoAdresse(rs.getLong("ID_ADRESSE"));
