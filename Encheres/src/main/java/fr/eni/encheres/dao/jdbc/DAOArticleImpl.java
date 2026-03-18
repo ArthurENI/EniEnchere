@@ -24,7 +24,7 @@ import java.util.List;
 public class DAOArticleImpl implements IDAOArticle {
 
     private final String FIND_ALL = "SELECT ID, NOM_ARTICLE, NOM_IMAGE, DESCRIPTION,DATE_DEBUT_ENCHERE, DATE_FIN_ENCHERE" +
-            "MISE_A_PRIX, PRIX_VENTE_EN_COURS , ID_UTILISATEUR, ID_CATEGORIE FROM ARTICLES ";
+            "MISE_A_PRIX, ID_UTILISATEUR, ID_CATEGORIE FROM ARTICLES ";
     //TODO COMMENT AJOUTER ENCHERES ADRESSE CATEGORIE ETATVENTE
 
     @Autowired
@@ -41,7 +41,6 @@ public class DAOArticleImpl implements IDAOArticle {
                 article.setNomImage(rs.getString("NOM_IMAGE"));
                 article.setDescription(rs.getString("DESCRIPTION"));
                 article.setMiseAPrix(rs.getInt("MISE_A_PRIX"));
-                article.setPrixVenteEnCours(rs.getInt("PRIX_VENTE_EN_COURS"));
                 //TODO AJOUTER DATES
                 //TODO AJOUTER UTLISATEUR ETC
                 //Association Realisateur

@@ -10,9 +10,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class Article implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class Article {
 
     private Long noArticle;
 
@@ -33,19 +31,19 @@ public class Article implements Serializable {
     @NotBlank
     @Range(min = 1, message = "La valeur minimale doit être de 1 point")
     @Positive
-    private int miseAPrix;
-
-    private int prixVenteEnCours;
+    private int miseAPrix;;
     private Utilisateur utilisateur;
     private List<Enchere> enchereList;
 
     @NotNull
     private Adresse adresseRetrait;
-
     @NotNull
     private Categorie categorie;
 
     private EtatVente etatVente;
+
+
+
 
     public Long getNoArticle() {
         return noArticle;
@@ -101,14 +99,6 @@ public class Article implements Serializable {
 
     public void setMiseAPrix(int miseAPrix) {
         this.miseAPrix = miseAPrix;
-    }
-
-    public int getPrixVenteEnCours() {
-        return prixVenteEnCours;
-    }
-
-    public void setPrixVenteEnCours(int prixVenteEnCours) {
-        this.prixVenteEnCours = prixVenteEnCours;
     }
 
     public Utilisateur getUtilisateur() {

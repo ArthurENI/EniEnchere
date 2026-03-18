@@ -5,7 +5,6 @@ import fr.eni.encheres.dao.IDAOArticle;
 import fr.eni.encheres.dao.IDAOCategorie;
 import fr.eni.encheres.dao.IDAOEnchere;
 import fr.eni.encheres.dao.IDAOUtilisateur;
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
