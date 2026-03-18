@@ -7,12 +7,12 @@
 
 <div class="uk-width-1-1 uk-height-viewport uk-padding">
 
-    <h1 class="uk-tile uk-text-center">Inscription</h1>
+<!--    <h1 class="uk-tile uk-text-center">Inscription</h1>-->
 
 
     <!-- Inscription -->
     <form class="uk-form-horizontal "
-          action=""
+          action="/encheres/inscription-process"
           method="post"
           th:object="${utilisateur}">
 
@@ -27,9 +27,12 @@
                 <div class="uk-margin-small">
                     <label class="uk-form-label" for="pseudo">Pseudo :</label>
                     <div class="uk-form-controls">
-                        <input class="uk-input" id="pseudo" type="text"
-                               th:field="*{pseudo}">
+                        <input class="uk-input" id="pseudo" type="text" name="usurname"
+                               th:field="*{pseudo}" th:classappend="${#fields.hasErrors('pseudo')} ? ' uk-form-danger' : ''">
                     </div>
+                    <ul th:if="${#fields.hasErrors('pseudo')}" class="uk-form-danger">
+                        <li th:each="error: ${#fields.errors('pseudo')}" th:text="${error}"></li>
+                    </ul>
                 </div>
 
                 <!-- Nom -->
@@ -37,8 +40,11 @@
                     <label class="uk-form-label" for="nom">Nom :</label>
                     <div class="uk-form-controls">
                         <input class="uk-input" id="nom" type="text"
-                               th:field="*{nom}">
+                               th:field="*{nom}" th:classappend="${#fields.hasErrors('nom')} ? ' uk-form-danger' : ''">
                     </div>
+                    <ul th:if="${#fields.hasErrors('nom')}" class="uk-form-danger">
+                        <li th:each="error: ${#fields.errors('nom')}" th:text="${error}"></li>
+                    </ul>
                 </div>
 
                 <!-- Prénom -->
@@ -46,8 +52,11 @@
                     <label class="uk-form-label" for="prenom">Prénom :</label>
                     <div class="uk-form-controls">
                         <input class="uk-input" id="prenom" type="text"
-                               th:field="*{prenom}">
+                               th:field="*{prenom}" th:classappend="${#fields.hasErrors('prenom')} ? ' uk-form-danger' : ''">
                     </div>
+                    <ul th:if="${#fields.hasErrors('prenom')}" class="uk-form-danger">
+                        <li th:each="error: ${#fields.errors('prenom')}" th:text="${error}"></li>
+                    </ul>
                 </div>
 
                 <!-- Email -->
@@ -55,8 +64,11 @@
                     <label class="uk-form-label" for="email">Email :</label>
                     <div class="uk-form-controls">
                         <input class="uk-input" id="email" type="email"
-                               th:field="*{email}">
+                               th:field="*{email}" th:classappend="${#fields.hasErrors('email')} ? ' uk-form-danger' : ''">
                     </div>
+                    <ul th:if="${#fields.hasErrors('email')}" class="uk-form-danger">
+                        <li th:each="error: ${#fields.errors('email')}" th:text="${error}"></li>
+                    </ul>
                 </div>
 
 
@@ -64,9 +76,12 @@
                 <div class="uk-margin-small">
                     <label class="uk-form-label" for="motDePasse">Mot de passe :</label>
                     <div class="uk-form-controls">
-                        <input class="uk-input" id="motDePasse" type="password"
-                               th:field="*{motDePasse}">
+                        <input class="uk-input" id="motDePasse" type="password" name="password"
+                               th:field="*{motDePasse}" th:classappend="${#fields.hasErrors('motDePasse')} ? ' uk-form-danger' : ''">
                     </div>
+                    <ul th:if="${#fields.hasErrors('motDePasse')}" class="uk-form-danger">
+                        <li th:each="error: ${#fields.errors('motDePasse')}" th:text="${error}"></li>
+                    </ul>
                 </div>
 
             </div>
@@ -125,12 +140,12 @@
 
         <!-- Bouttons -->
         <div class="uk-grid-small uk-grid">
-            <div class="uk-width-1-2">
-                <input type="submit" class="uk-button uk-button-primary uk-width-1-2 uk-align-center" value="Créer">
-            </div>
             <!-- Annuler-->
             <div class="uk-width-1-2">
-                <a class="uk-button uk-button-default uk-width-1-2 uk-align-center" href="/encheres/">Retour</a>
+                <a class="uk-button uk-button-default uk-width-1-2 uk-align-center" href="/encheres">Retour</a>
+            </div>
+            <div class="uk-width-1-2">
+                <input type="submit" class="uk-button uk-button-primary uk-width-1-2 uk-align-center" value="Créer">
             </div>
         </div>
 

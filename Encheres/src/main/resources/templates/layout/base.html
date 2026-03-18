@@ -17,7 +17,15 @@
     <div class="uk-container">
         <nav id="navbar" data-uk-navbar="mode: click;">
             <div class="uk-navbar-left">
+                <a class="uk-navbar-item uk-logo" href="/encheres/acceuil">Eni-Encheres</a>
+
+            </div>
+            <div class="uk-navbar-center">
+
+            </div>
+            <div class="uk-navbar-right">
                 <ul class="uk-navbar-nav">
+
                     <!-- SI CONNECTE -->
                     <li th:if="${loggedUser}">
                         <a href="#" data-uk-icon="icon:user"></a>
@@ -31,16 +39,9 @@
                     </li>
                     <!-- SI PAS CONNECTE -->
                     <div class="uk-navbar-item" th:if="${loggedUser == null}">
-                        <a href="/encheres/" class="uk-button uk-button-primary uk-visible@m"> Se connecter</a>
+                        <a href="/encheres" class="uk-button uk-button-primary uk-visible@m"> Se connecter</a>
                     </div>
                 </ul>
-
-            </div>
-            <div class="uk-navbar-center">
-                <a class="uk-navbar-item uk-logo" href="/encheres/acceuil">Eni-Encheres</a>
-            </div>
-            <div class="uk-navbar-right">
-
                 <div class="uk-navbar-item">
                     <a class="uk-navbar-toggle uk-hidden@m" data-uk-toggle data-uk-navbar-toggle-icon
                        href="#offcanvas-nav"></a>

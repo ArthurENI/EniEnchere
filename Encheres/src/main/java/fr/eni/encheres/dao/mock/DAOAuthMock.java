@@ -16,8 +16,8 @@ public class DAOAuthMock implements IDAOUtilisateur {
     public DAOAuthMock() {
 
         DBUsers = new ArrayList<>();
-        DBUsers.add(new Utilisateur("user1","aze"));
-        DBUsers.add(new Utilisateur("user2","mdp"));
+        DBUsers.add(new Utilisateur("user1","Jean","VIER","a@a.fr",null,"aze",0,false,null));
+        DBUsers.add(new Utilisateur("user2","François","DUPONT","a@a.fr",null,"mdp",0,false,null));
     }
 
 
@@ -51,7 +51,8 @@ public class DAOAuthMock implements IDAOUtilisateur {
 
     @Override
     public void createCompte(Utilisateur utilisateur) {
-
+        Utilisateur u1 = new Utilisateur("test","François","DUPONT","a@a.fr",null,"mdp",0,false,null);
+        DBUsers.add(u1);
     }
 
     @Override

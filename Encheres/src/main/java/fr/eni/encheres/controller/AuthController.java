@@ -3,14 +3,15 @@ package fr.eni.encheres.controller;
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.services.ServiceResponse;
 import fr.eni.encheres.services.UtilisateurService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.Objects;
 
 @SessionAttributes({"loggedUser"})
 @Controller
@@ -21,7 +22,7 @@ public class AuthController {
         this.authService = authService;
     }
 
-    @GetMapping("/encheres/")
+    @GetMapping("/encheres")
     public String showLoginForm(Model model) {
         // Instancier un user par defaut dans le formulaire
         Utilisateur utilisateur = new Utilisateur();
@@ -32,12 +33,18 @@ public class AuthController {
     }
 
     @PostMapping("/encheres/login-process")
-    public String loginProcess(@ModelAttribute("utilisateur") Utilisateur utilisateur, Model model, RedirectAttributes redirectAttributes) {
+    public String loginProcess(@Valid @ModelAttribute("utilisateur") Utilisateur utilisateur,BindingResult bindingResult, Model model,
+                               RedirectAttributes redirectAttributes) {
+
+        if (bindingResult.hasErrors() ) {
+            return "auth/login-page";
+        }
+
         // Appel le service
         ServiceResponse<Utilisateur> serviceResponse = authService.login(utilisateur.getPseudo(), utilisateur.getMotDePasse());
 
         // Si tentative erreur
-        if (!serviceResponse.code.equals("2002")) {
+        if (!serviceResponse.code.equals("2002") ) {
             // Envoyer un message d'erreur temporaire
             EniFlashMessage.sendError(model, serviceResponse.message);
 
@@ -79,11 +86,31 @@ public class AuthController {
         return "auth/inscription-page";
     }
 
-    @GetMapping("/encheres/inscription-process")
-    public String InscriptionProcess(@ModelAttribute("utilisateur") Utilisateur utilisateur, Model model, RedirectAttributes redirectAttributes) {
-        ServiceResponse<Utilisateur> serviceResponse = authService.inscriptionUtilisateur(utilisateur);
+    @PostMapping("/encheres/inscription-process")
+    public String InscriptionProcess(@Valid @ModelAttribute("utilisateur") Utilisateur utilisateur, BindingResult bindingResult,
+                                     Model model, RedirectAttributes redirectAttributes, @RequestParam("confirmMdp") String confirmMdp) {
 
-        return "auth/inscription-page";
+        if (bindingResult.hasErrors()  ) {
+            return "auth/inscription-page";
+        }
+
+        if(!Objects.equals(utilisateur.getMotDePasse(), confirmMdp)){
+            EniFlashMessage.sendError(model, "Les champs mots de passes ne sont pas identiques");
+            return "auth/inscription-page";
+        }
+
+        ServiceResponse<Utilisateur> serviceResponse = authService.inscriptionUtilisateur(utilisateur);
+        EniFlashMessage.sendSuccessFlash(redirectAttributes, serviceResponse.message);
+
+        // récupérer le user connecté(e)
+        Utilisateur loggedUser = serviceResponse.data;
+
+        // Ajouter dans une session un user
+        model.addAttribute("loggedUser", loggedUser);
+
+        // Rediriger sur la page d'accueil
+        return "redirect:/encheres/acceuil";
+
     }
 
 

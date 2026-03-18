@@ -1,5 +1,8 @@
 package fr.eni.encheres.bo;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,11 +12,14 @@ public class Utilisateur implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long noUtilisateur;
+    @Pattern(regexp = "^[a-zA-Z0-9_.-]*$")
+    @NotBlank
     private String pseudo;
     private String nom;
     private String prenom;
     private String email;
     private String telephone;
+    @NotBlank
     private String motDePasse;
     private int credit;
     private boolean isActif;

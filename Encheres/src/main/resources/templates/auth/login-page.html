@@ -23,6 +23,9 @@
                                        th:field="*{pseudo}"
                                        type="text">
                             </label>
+                            <div class="uk-text-danger"
+                                 th:if="${#fields.hasErrors('pseudo')}"
+                                 th:errors="*{pseudo}"></div>
                         </div>
                     </div>
                     <div class="uk-margin-small">
@@ -34,6 +37,8 @@
                                        th:field="*{motDePasse}"
                                        type="password">
                             </label>
+                            <div class="uk-text-danger" th:if="${#fields.hasErrors('motDePasse')}"
+                                 th:errors="*{motDePasse}"></div>
                         </div>
                     </div>
                     <div class="uk-margin-small">
@@ -48,13 +53,10 @@
                             Connexion
                         </button>
                     </div>
-                    <div th:if="${flashMessage}" th:attr="class=${flashMessage.getClassName()}" uk-alert>
-                        <a href class="uk-alert-close" uk-close></a>
-                        <p th:text="${flashMessage.message}"></p>
-                    </div>
 
                 </fieldset>
             </form>
+
             <!-- /login -->
 
             <!-- recover password -->
@@ -95,7 +97,9 @@
                     <a class="uk-link-reset uk-text-small toggle-class" href="/encheres/inscription">
                         Créer un compte
                     </a>
+
                 </div>
+
             </div>
             <!-- action buttons -->
         </div>
