@@ -3,21 +3,16 @@ package fr.eni.encheres.bo;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -58,9 +53,6 @@ public class Article implements Serializable {
     private Categorie categorie;
 
     private EtatVente etatVente;
-
-
-
 
     public Long getNoArticle() {
         return noArticle;
