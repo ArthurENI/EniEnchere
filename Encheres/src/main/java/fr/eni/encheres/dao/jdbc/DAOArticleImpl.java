@@ -51,6 +51,11 @@ public class DAOArticleImpl implements IDAOArticle {
                 /*Categorie categorie = new Categorie();
                 categorie.setNoCategorie(rs.getLong("ID_CATEGORIE"));
                 article.setCategorie(categorie);*/
+                //Association Adresse
+                /*Adresse adresse = new Adresse();
+                adresse.setNoAdresse(rs.getLong("ID_ADRESSE"));
+                article.setAdresse(adresse);*/
+                article.setEtatVente(EtatVente.valueOf(rs.getString("ETAT_VENTE")));
                 return article;
             }
         });
