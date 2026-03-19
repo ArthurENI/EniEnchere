@@ -29,12 +29,17 @@ public class UtilisateurServiceImpl implements UtilisateurService{
 
     @Override
     public ServiceResponse<Utilisateur> saveUtilisateur(Utilisateur utilisateur) {
+        Utilisateur utilisateurBdd = daoUtilisateur.selectUtilisateurById(utilisateur.getNoUtilisateur());
 
+        if (utilisateurBdd == null){
+            utilisateur.setCredit(0);
+            daoUtilisateur.createCompte(utilisateur);
+            return new ServiceResponse<Utilisateur>("2002", "Utilisateur créer avec succès", utilisateur);
+        }else {
+            daoUtilisateur.updateUtilisateur(utilisateur);
+            return new ServiceResponse<Utilisateur>("2002", "Utilisateur modifié avec succès", utilisateur);
+        }
 
-
-        utilisateur.setCredit(0);
-        daoUtilisateur.createCompte(utilisateur);
-        return new ServiceResponse<Utilisateur>("2002", "Utilisateur créer avec succès", utilisateur);
     }
 
     @Override
