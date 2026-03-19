@@ -15,7 +15,7 @@ public class DAOAuthMock implements IDAOUtilisateur {
     public List<Utilisateur> DBUsers;
 
     public DAOAuthMock() {
-        Adresse a1 = new Adresse("rue 2","97160","Le Moule");
+        Adresse a1 = new Adresse(1L,"rue 2","97160","Le Moule");
         DBUsers = new ArrayList<>();
         Utilisateur u1 = new Utilisateur("user1","Jean","VIER","a@a.fr",null,"aze",0,false,a1);
         u1.setNoUtilisateur(1L);
