@@ -69,6 +69,21 @@ public class Utilisateur implements Serializable {
         this.roleList = roleList;
     }
 
+    public Utilisateur(Long noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone, String motDePasse, int credit, boolean isActif, Adresse adresse, List<Enchere> enchereList, List<Role> roleList) {
+        this.noUtilisateur = noUtilisateur;
+        this.pseudo = pseudo;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.email = email;
+        this.telephone = telephone;
+        this.motDePasse = motDePasse;
+        this.credit = credit;
+        this.isActif = isActif;
+        this.adresse = adresse;
+        this.enchereList = enchereList;
+        this.roleList = roleList;
+    }
+
     public Long getNoUtilisateur() {
         return noUtilisateur;
     }

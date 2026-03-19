@@ -41,10 +41,6 @@ public class DAOArticleImpl implements IDAOArticle {
 
     @Override
     public List<Article> selectAllArticles() {
-        System.out.println("I'm in selectAllArticles() of DAOArticleImpl");
-
-        List<Long> list = jdbcTemplate.query("select no_article from articles", (rs, rowNum) -> rs.getLong("no_article"));
-        System.out.println(list);
         return jdbcTemplate.query(FIND_ALL, new ArticleRowMapper());
     }
 
@@ -109,14 +105,11 @@ class ArticleRowMapper implements RowMapper<Article> {
         article.setDateDebutEnchere(rs.getTimestamp("date_debut_encheres").toLocalDateTime());
         article.setDateFinEnchere(rs.getTimestamp("date_fin_encheres").toLocalDateTime());
         article.setMiseAPrix(rs.getInt("prix_initial"));
-        System.out.println(rs.getInt("prix_initial"));
-        //TODO enlever les sout
         //Timestamp.valueOf(localDateTime); pour set la valeur inverse (POUR LE CREATE)
 
         //Association Utilisateur
         Utilisateur utilisateur = new Utilisateur();
         utilisateur.setNoUtilisateur(rs.getLong("no_utilisateur"));
-        System.out.println(rs.getLong("no_utilisateur"));
         article.setUtilisateur(utilisateur);
 
         //Association Categorie

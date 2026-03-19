@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IDAOCategorie {
 
-    Categorie read(Long id);
+    Categorie selectCategorieById(Long id);
     List<Categorie> findAll();
     Categorie create(Categorie categorie);
     Categorie edit(Categorie categorie);
