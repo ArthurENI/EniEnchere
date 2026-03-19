@@ -1,6 +1,7 @@
 package fr.eni.encheres.bo;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Adresse implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -14,10 +15,19 @@ public class Adresse implements Serializable {
     public Adresse() {
     }
 
-    public Adresse(String rue, String codePostal, String ville) {
+    public Adresse(Long noAdresse, String rue, String codePostal, String ville) {
+        this.noAdresse = noAdresse;
         this.rue = rue;
         this.codePostal = codePostal;
         this.ville = ville;
+    }
+
+    public Long getNoAdresse() {
+        return noAdresse;
+    }
+
+    public void setNoAdresse(Long noAdresse) {
+        this.noAdresse = noAdresse;
     }
 
     public String getRue() {
@@ -42,5 +52,26 @@ public class Adresse implements Serializable {
 
     public void setVille(String ville) {
         this.ville = ville;
+    }
+
+    @Override
+    public String toString() {
+        return "Adresse{" +
+                "rue='" + rue + '\'' +
+                ", codePostal='" + codePostal + '\'' +
+                ", ville='" + ville + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Adresse adresse = (Adresse) o;
+        return Objects.equals(getNoAdresse(), adresse.getNoAdresse()) && Objects.equals(getRue(), adresse.getRue()) && Objects.equals(getCodePostal(), adresse.getCodePostal()) && Objects.equals(getVille(), adresse.getVille());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getNoAdresse(), getRue(), getCodePostal(), getVille());
     }
 }

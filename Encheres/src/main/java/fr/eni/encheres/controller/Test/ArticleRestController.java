@@ -21,6 +21,7 @@ public class ArticleRestController {
 
     @GetMapping
     public List<Article> afficherArticles() {
+        System.out.println("I'm in afficherArticles()");
         return articleService.selectAllArticles();
     }
 }

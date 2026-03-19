@@ -12,7 +12,7 @@ public interface IDAOArticle {
 
     List<Article> selectAllArticles();
     Article selectArticleById(Long id);
-    List<Article> filterArticleParNom(String nom);
+    List<Article> selectArticleParNom(String nom);
     List<Article> selectArticleByUtilisateur(Utilisateur utilisateur);
     List<Article> selectArticleByEtat(EtatVente etatVente);
     List<Article> filterArticles(String nom, Long categorieId);

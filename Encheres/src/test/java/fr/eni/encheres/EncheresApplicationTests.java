@@ -1,13 +1,20 @@
 package fr.eni.encheres;
 
+import fr.eni.encheres.dao.IDAOArticle;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 class EncheresApplicationTests {
 
+	@Autowired
+	IDAOArticle idaoArticle;
+
+
 	@Test
 	void contextLoads() {
+		System.out.println(idaoArticle.selectAllArticles());
 	}
 
 }
