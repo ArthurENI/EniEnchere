@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="en"
+      layout:decorate="~{layout/base}">
+<body>
+
+<div layout:fragment="content">
+
+
+    <div class="uk-width-1-1 uk-height-viewport uk-padding ">
+        <h1>Mon profil</h1>
+
+        <!-- Profil -->
+        <div class="uk-align-center">
+
+            <ul class="uk-list uk-list-bullet">
+                <li>
+                    <!-- Pseudo -->
+                    <p id="pseudo" th:text="'Pseudo : '+${utilisateur.pseudo}"></p>
+                </li>
+
+                <li>
+                    <!-- Nom -->
+                    <p id="nom" th:text="'Nom : '+${utilisateur.nom}"></p>
+                </li>
+
+                <li>
+                    <!-- Prénom -->
+                    <p id="prenom" th:text="'Prénom : '+${utilisateur.prenom}"></p>
+                </li>
+                <li>
+                    <!-- Email -->
+                    <p id="Email" th:text="'Email : '+${utilisateur.email}"></p>
+                </li>
+                <li>
+                    <!-- Téléphone -->
+                    <p id="telephone" th:text="'Téléphone : '+${utilisateur.telephone}"></p>
+                </li>
+                <li>
+                    <!-- Rue -->
+                    <p id="rue" th:text="'Rue : '+${utilisateur.adresse.rue}"></p>
+                </li>
+                <li>
+                    <!-- Code postal -->
+                    <p id="codePostal" th:text="'Code Postal : '+${utilisateur.adresse.codePostal}"></p>
+                </li>
+                <li>
+                    <!-- Ville -->
+                    <p id="ville" th:text="'Ville : '+${utilisateur.adresse.ville}"></p>
+                </li>
+            </ul>
+
+            <!-- Bouttons -->
+            <div class="uk-width-1-2">
+                <a th:href= "'/encheres/ProfilModif/'+${loggedUser.noUtilisateur}">Modifier</a>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+</body>
+</html>

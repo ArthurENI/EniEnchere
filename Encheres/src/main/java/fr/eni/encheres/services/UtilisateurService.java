@@ -7,5 +7,10 @@ public interface UtilisateurService {
 
     public ServiceResponse<Utilisateur> login(String pseudo, String password);
 
-    public ServiceResponse<Utilisateur> inscriptionUtilisateur(Utilisateur utilisateur);
+    public ServiceResponse<Utilisateur> saveUtilisateur(Utilisateur utilisateur);
+
+    public Utilisateur getUtilisateur(Long id);
+
+    public void SupprUtilisateur(Utilisateur utilisateur);
+
 }

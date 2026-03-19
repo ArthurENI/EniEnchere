@@ -28,9 +28,25 @@ public class UtilisateurServiceImpl implements UtilisateurService{
     }
 
     @Override
-    public ServiceResponse<Utilisateur> inscriptionUtilisateur(Utilisateur utilisateur) {
+    public ServiceResponse<Utilisateur> saveUtilisateur(Utilisateur utilisateur) {
+
+
+
         utilisateur.setCredit(0);
         daoUtilisateur.createCompte(utilisateur);
         return new ServiceResponse<Utilisateur>("2002", "Utilisateur créer avec succès", utilisateur);
     }
+
+    @Override
+    public Utilisateur getUtilisateur(Long id) {
+        return daoUtilisateur.selectUtilisateurById(id);
+    }
+
+    @Override
+    public void SupprUtilisateur(Utilisateur utilisateur) {
+        daoUtilisateur.deleteCompte(utilisateur);
+    }
+
+
+
 }

@@ -12,7 +12,7 @@ public interface IDAOUtilisateur {
 
     public Utilisateur selectUtilisateurByPseudoAndPassword(String pseudo, String password) ;
 
-    public void saveSessionUtilisateur (Utilisateur utilisateur);
+    public void updateUtilisateur (Utilisateur utilisateur);
 
     public void createCompte(Utilisateur utilisateur) ;
 

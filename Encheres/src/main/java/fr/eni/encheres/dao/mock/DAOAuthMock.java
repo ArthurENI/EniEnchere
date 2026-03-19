@@ -1,5 +1,6 @@
 package fr.eni.encheres.dao.mock;
 
+import fr.eni.encheres.bo.Adresse;
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dao.IDAOUtilisateur;
 import org.springframework.context.annotation.Profile;
@@ -14,10 +15,15 @@ public class DAOAuthMock implements IDAOUtilisateur {
     public List<Utilisateur> DBUsers;
 
     public DAOAuthMock() {
-
+        Adresse a1 = new Adresse("rue 2","97160","Le Moule");
         DBUsers = new ArrayList<>();
-        DBUsers.add(new Utilisateur("user1","Jean","VIER","a@a.fr",null,"aze",0,false,null));
-        DBUsers.add(new Utilisateur("user2","François","DUPONT","a@a.fr",null,"mdp",0,false,null));
+        Utilisateur u1 = new Utilisateur("user1","Jean","VIER","a@a.fr",null,"aze",0,false,a1);
+        u1.setNoUtilisateur(1L);
+        Utilisateur u2 = new Utilisateur("user2","François","DUPONT","a@a.fr",
+                null,"mdp",0,false, a1);
+        u2.setNoUtilisateur(2L);
+        DBUsers.add(u1);
+        DBUsers.add(u2);
     }
 
 
@@ -45,7 +51,7 @@ public class DAOAuthMock implements IDAOUtilisateur {
     }
 
     @Override
-    public void saveSessionUtilisateur(Utilisateur utilisateur) {
+    public void updateUtilisateur(Utilisateur utilisateur) {
 
     }
 
@@ -57,5 +63,6 @@ public class DAOAuthMock implements IDAOUtilisateur {
 
     @Override
     public void deleteCompte(Utilisateur utilisateur) {
+        DBUsers.remove(utilisateur);
     }
 }

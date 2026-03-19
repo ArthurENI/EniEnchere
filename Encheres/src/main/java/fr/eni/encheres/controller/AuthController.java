@@ -76,10 +76,23 @@ public class AuthController {
     }
 
 
-    @GetMapping("/encheres/inscription")
-    public String showInscriptionForm(Model model) {
+    @GetMapping({"/encheres/inscription","/encheres/ProfilModif/{id}"})
+    public String showInscriptionForm(@PathVariable(name="id", required = false) Long id,Model model) {
         // Instancier un user par defaut dans le formulaire
         Utilisateur utilisateur = new Utilisateur();
+
+        // Si id => récupérer un film existant pour le mettre dans le formulaire
+        if (id != null){
+            Utilisateur loggedUser = (Utilisateur) model.getAttribute("loggedUser");
+            utilisateur = authService.getUtilisateur(id);
+
+            if (!loggedUser.getNoUtilisateur().equals(id)) {
+                return "auth/accesRestreint-page";
+            }
+
+        }
+
+
 
         model.addAttribute("utilisateur", utilisateur);
 
@@ -99,7 +112,8 @@ public class AuthController {
             return "auth/inscription-page";
         }
 
-        ServiceResponse<Utilisateur> serviceResponse = authService.inscriptionUtilisateur(utilisateur);
+        ServiceResponse<Utilisateur> serviceResponse = authService.saveUtilisateur(utilisateur);
+
         EniFlashMessage.sendSuccessFlash(redirectAttributes, serviceResponse.message);
 
         // récupérer le user connecté(e)
@@ -112,6 +126,19 @@ public class AuthController {
         return "redirect:/encheres/acceuil";
 
     }
+
+    @GetMapping("/encheres/Profil/{id}")
+    public String showProfilForm(@PathVariable(name="id") Long id, Model model) {
+        Utilisateur loggedUser = (Utilisateur) model.getAttribute("loggedUser");
+
+        if (loggedUser == null) {
+            return "acceuilTest-page";
+        }
+
+        model.addAttribute("utilisateur", loggedUser);
+        return "auth/profil-page";
+    }
+
 
 
     @GetMapping("/encheres/ChgMdp")
