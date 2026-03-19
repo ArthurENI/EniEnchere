@@ -43,7 +43,25 @@ public class Article {
     private EtatVente etatVente;
 
 
+    public Article() {
+    }
 
+    public Article(Long noArticle, String nomArticle, String nomImage, String description, LocalDateTime dateDebutEnchere,
+                   LocalDateTime dateFinEnchere, int miseAPrix, Utilisateur utilisateur, List<Enchere> enchereList,
+                   Adresse adresseRetrait, Categorie categorie, EtatVente etatVente) {
+        this.noArticle = noArticle;
+        this.nomArticle = nomArticle;
+        this.nomImage = nomImage;
+        this.description = description;
+        this.dateDebutEnchere = dateDebutEnchere;
+        this.dateFinEnchere = dateFinEnchere;
+        this.miseAPrix = miseAPrix;
+        this.utilisateur = utilisateur;
+        this.enchereList = enchereList;
+        this.adresseRetrait = adresseRetrait;
+        this.categorie = categorie;
+        this.etatVente = etatVente;
+    }
 
     public Long getNoArticle() {
         return noArticle;
