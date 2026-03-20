@@ -32,10 +32,10 @@ public class UtilisateurServiceImpl implements UtilisateurService{
         Utilisateur utilisateurBdd = daoUtilisateur.selectUtilisateurById(utilisateur.getNoUtilisateur());
 
         if (utilisateurBdd == null){
-            utilisateur.setCredit(0);
             daoUtilisateur.createCompte(utilisateur);
             return new ServiceResponse<Utilisateur>("2002", "Utilisateur créer avec succès", utilisateur);
         }else {
+            utilisateur.getAdresse().setNoAdresse(utilisateurBdd.getAdresse().getNoAdresse());
             daoUtilisateur.updateUtilisateur(utilisateur);
             return new ServiceResponse<Utilisateur>("2002", "Utilisateur modifié avec succès", utilisateur);
         }

@@ -125,13 +125,17 @@ public class AuthController {
 
         EniFlashMessage.sendSuccessFlash(redirectAttributes, serviceResponse.message);
 
+        if (serviceResponse.message.equals("Utilisateur créer avec succès")){
+            // Rediriger sur la page d'accueil
+            return "redirect:/encheres";
+        }
+
         // récupérer le user connecté(e)
         Utilisateur loggedUser = serviceResponse.data;
 
         // Ajouter dans une session un user
         model.addAttribute("loggedUser", loggedUser);
 
-        // Rediriger sur la page d'accueil
         return "redirect:/encheres/acceuil";
 
     }

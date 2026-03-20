@@ -4,23 +4,24 @@ import java.io.Serializable;
 
 public class Role{
 
-    public Utilisateur utilisateur;
+    public Long no_role;
     public String libelle;
 
     public Role() {
     }
 
-    public Role(Utilisateur utilisateur, String libelle) {
-        this.utilisateur = utilisateur;
+    public Role(Long utilisateur, String libelle) {
+        this.no_role = utilisateur;
         this.libelle = libelle;
     }
 
-    public Utilisateur getUtilisateur() {
-        return utilisateur;
+
+    public Long getNo_role() {
+        return no_role;
     }
 
-    public void setUtilisateur(Utilisateur utilisateur) {
-        this.utilisateur = utilisateur;
+    public void setNo_role(Long no_role) {
+        this.no_role = no_role;
     }
 
     public String getLibelle() {

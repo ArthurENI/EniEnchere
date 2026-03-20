@@ -26,18 +26,16 @@ public class Utilisateur implements Serializable {
 
     private Adresse adresse;
     private List<Enchere> enchereList;
-    private List<Role> roleList;
+    private Role role;
 
     public Utilisateur() {
         this.enchereList = new ArrayList<>();
-        this.roleList = new ArrayList<>();
     }
 
     public Utilisateur(String pseudo, String motDePasse) {
         this.pseudo = pseudo;
         this.motDePasse = motDePasse;
         this.enchereList = new ArrayList<>();
-        this.roleList = new ArrayList<>();
     }
 
     public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String motDePasse,
@@ -54,7 +52,7 @@ public class Utilisateur implements Serializable {
     }
 
     public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String motDePasse,
-                       int credit, boolean isActif, Adresse adresse, List<Enchere> enchereList, List<Role> roleList) {
+                       int credit, boolean isActif, Adresse adresse, List<Enchere> enchereList, Role role) {
         this.pseudo = pseudo;
         this.nom = nom;
         this.prenom = prenom;
@@ -66,7 +64,7 @@ public class Utilisateur implements Serializable {
         this.isActif = isActif;
         this.adresse = adresse;
         this.enchereList = enchereList;
-        this.roleList = roleList;
+        this.role = role;
     }
 
     public Long getNoUtilisateur() {
@@ -157,23 +155,23 @@ public class Utilisateur implements Serializable {
         this.enchereList = enchereList;
     }
 
-    public List<Role> getRoleList() {
-        return roleList;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoleList(List<Role> roleList) {
-        this.roleList = roleList;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Utilisateur that = (Utilisateur) o;
-        return getCredit() == that.getCredit() && isActif() == that.isActif() && Objects.equals(getNoUtilisateur(), that.getNoUtilisateur()) && Objects.equals(getPseudo(), that.getPseudo()) && Objects.equals(getNom(), that.getNom()) && Objects.equals(getPrenom(), that.getPrenom()) && Objects.equals(getEmail(), that.getEmail()) && Objects.equals(getTelephone(), that.getTelephone()) && Objects.equals(getMotDePasse(), that.getMotDePasse()) && Objects.equals(getAdresse(), that.getAdresse()) && Objects.equals(getEnchereList(), that.getEnchereList()) && Objects.equals(getRoleList(), that.getRoleList());
+        return getCredit() == that.getCredit() && isActif() == that.isActif() && Objects.equals(getNoUtilisateur(), that.getNoUtilisateur()) && Objects.equals(getPseudo(), that.getPseudo()) && Objects.equals(getNom(), that.getNom()) && Objects.equals(getPrenom(), that.getPrenom()) && Objects.equals(getEmail(), that.getEmail()) && Objects.equals(getTelephone(), that.getTelephone()) && Objects.equals(getMotDePasse(), that.getMotDePasse()) && Objects.equals(getAdresse(), that.getAdresse()) && Objects.equals(getEnchereList(), that.getEnchereList()) && Objects.equals(getRole(), that.getRole());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getNoUtilisateur(), getPseudo(), getNom(), getPrenom(), getEmail(), getTelephone(), getMotDePasse(), getCredit(), isActif(), getAdresse(), getEnchereList(), getRoleList());
+        return Objects.hash(getNoUtilisateur(), getPseudo(), getNom(), getPrenom(), getEmail(), getTelephone(), getMotDePasse(), getCredit(), isActif(), getAdresse(), getEnchereList(), getRole());
     }
 }
