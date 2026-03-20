@@ -131,6 +131,7 @@ public class DAOAuthJdbc implements IDAOUtilisateur {
 
     @Override
     public void deleteCompte(Utilisateur utilisateur) {
+        jdbcTemplate.update("DELETE FROM utilisateurs WHERE no_utilisateur = ?", utilisateur.getNoUtilisateur());
 
     }
 }
