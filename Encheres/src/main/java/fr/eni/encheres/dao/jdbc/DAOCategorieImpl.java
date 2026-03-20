@@ -1,3 +1,4 @@
+/*
 package fr.eni.encheres.dao.jdbc;
 
 
@@ -18,49 +19,63 @@ public class DAOCategorieImpl implements IDAOCategorie {
 
     @Override
     public Categorie read(Long id) {
-        String sql = "SELECT * FROM Categorie WHERE NoCategorie = ?";
+        */
+/*String sql = "SELECT * FROM Categorie WHERE NoCategorie = ?";
 
         return jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
             Categorie cat = new Categorie();
             cat.setNoCategorie(rs.getLong("NoCategorie"));
             cat.setLibelle(rs.getString("Libelle"));
             return cat;
-        }, id);
+        }, id);*//*
+
+        return null;
     }
 
     @Override
     public List<Categorie> findAll() {
-        String sql = "SELECT * FROM Categorie";
+        */
+/*String sql = "SELECT * FROM Categorie";
 
         return jdbcTemplate.query(sql, (rs, rowNum) -> {
             Categorie cat = new Categorie();
             cat.setNoCategorie(rs.getLong("NoCategorie"));
             cat.setLibelle(rs.getString("Libelle"));
             return cat;
-        });
+        });*//*
+
+        return List.of();
     }
 
     @Override
     public Categorie create (Categorie categorie) {
 
-        String sql = "INSERT INTO Categorie (Libelle) VALUES (?)";
+        */
+/*String sql = "INSERT INTO Categorie (Libelle) VALUES (?)";
         jdbcTemplate.update(sql, categorie.getLibelle());
-        return categorie;
+        return categorie;*//*
+
+        return null;
     }
 
     @Override
     public Categorie edit (Categorie categorie) {
 
-        String sql = "UPDATE Categorie SET Libelle = ? WHERE NoCategorie = ?";
+        */
+/*String sql = "UPDATE Categorie SET Libelle = ? WHERE NoCategorie = ?";
         jdbcTemplate.update(sql, categorie.getLibelle(), categorie.getNoCategorie());
-        return categorie;
+        return categorie;*//*
+
+        return null;
     }
 
     @Override
     public void delete(Long id) {
-        String sql = "DELETE FROM Categorie WHERE NoCategorie = ?";
-        jdbcTemplate.update(sql, id);
+        */
+/*String sql = "DELETE FROM Categorie WHERE NoCategorie = ?";
+        jdbcTemplate.update(sql, id);*//*
+
     }
 
 
-}
+}*/

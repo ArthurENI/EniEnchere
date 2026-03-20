@@ -1,12 +1,15 @@
 package fr.eni.encheres.bo;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 public class Categorie {
 
     private Long noCategorie;
     private String libelle;
+    @JsonIgnore
     private List<Article> articles;
 
     public Categorie() {
