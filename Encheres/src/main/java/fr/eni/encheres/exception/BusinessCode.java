@@ -17,6 +17,7 @@ public class BusinessCode {
     public static final String VALIDATION_CATEGORIE_NULL = "validation.categorie.null";
 
     public static final String BLL_ARTICLE_CREER_ERREUR="bll.article.creer.erreur";
+    public static final String BLL_ADRESSE_CREER_ERREUR="bll.adresse.creer.erreur";
 
 
 }

@@ -4,6 +4,7 @@ import fr.eni.encheres.bo.Adresse;
 import fr.eni.encheres.bo.Article;
 import fr.eni.encheres.bo.Categorie;
 import fr.eni.encheres.exception.BusinessException;
+import fr.eni.encheres.services.AdresseService;
 import fr.eni.encheres.services.ArticleService;
 
 import fr.eni.encheres.services.CategorieService;
@@ -22,11 +23,14 @@ import java.util.List;
 public class ArticleController {
 
     private final CategorieService categorieService;
-    ArticleService articleService;
+    private final ArticleService articleService;
+    private final AdresseService adresseService;
 
-    public ArticleController(ArticleService articleService, CategorieService categorieService) {
+    public ArticleController(ArticleService articleService, CategorieService categorieService
+    , AdresseService adresseService) {
         this.articleService = articleService;
         this.categorieService = categorieService;
+        this.adresseService = adresseService;
     }
 
     /*@GetMapping()
@@ -81,6 +85,8 @@ public class ArticleController {
         if(bindingResult.hasErrors()) {
             try {
                 articleService.createArticle(article);
+                //TODO Gérer la création d'adresse
+                // adresseService.create(adresse);
                 return "redirect:/articles";
             }catch (BusinessException e){
                 e.getClefsExternalisations().forEach(code->bindingResult.rejectValue("article", null, code));

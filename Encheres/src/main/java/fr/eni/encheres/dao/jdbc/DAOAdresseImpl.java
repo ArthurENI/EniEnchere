@@ -17,7 +17,7 @@ import java.sql.SQLException;
 @Primary
 public class DAOAdresseImpl implements IDAOAdresse {
 
-   //private final String INSERT = "INSERT INTO ADRESSE (rue, code_postal, ville) VALUES (:rue, :codePostal, :ville)";
+   private final String INSERT = "INSERT INTO ADRESSE (rue, code_postal, ville) VALUES (:rue, :codePostal, :ville)";
 
     private final JdbcTemplate jdbcTemplate;
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -38,7 +38,7 @@ public class DAOAdresseImpl implements IDAOAdresse {
         namedParameter.addValue("rue", adresse.getRue());
         namedParameter.addValue("codePostal", adresse.getCodePostal());
         namedParameter.addValue("ville", adresse.getVille());
-        //namedParameterJdbcTemplate.update(INSERT, namedParameter);
+        namedParameterJdbcTemplate.update(INSERT, namedParameter);
     }
 
     @Override
