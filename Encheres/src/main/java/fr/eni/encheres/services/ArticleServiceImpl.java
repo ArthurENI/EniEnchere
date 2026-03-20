@@ -89,7 +89,6 @@ public class ArticleServiceImpl  implements ArticleService{
     private void chargerCategorieEtUtilisateur(Article a){
         Categorie c = idaoCategorie.selectCategorieById(a.getCategorie().getNoCategorie());
         a.setCategorie(c);
-        System.out.println("CATEGORIE : "+a.getCategorie().getNoCategorie());
         Utilisateur u = idaoUtilisateur.selectUtilisateurById(a.getUtilisateur().getNoUtilisateur());
         a.setUtilisateur(u);
     }

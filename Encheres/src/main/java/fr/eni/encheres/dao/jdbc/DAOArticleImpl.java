@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.swing.tree.TreePath;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -23,6 +24,14 @@ import java.util.List;
 public class DAOArticleImpl implements IDAOArticle {
 
     private final String FIND_ALL = "SELECT no_article, nom_article, nom_image, description_article,date_debut_encheres, date_fin_encheres ,prix_initial, no_utilisateur, no_categorie, no_adresse, etat FROM ARTICLES ";
+
+    private final String FIND_ALL_JOIN = """
+                SELECT no_article, nom_article, nom_image, description_article,date_debut_encheres,
+                			date_fin_encheres ,prix_initial, a.no_utilisateur,pseudo, a.no_adresse,rue, code_postal, ville, etat ,
+                			a.no_categorie, libelle FROM ARTICLES as a LEFT OUTER JOIN CATEGORIES as c ON a.no_categorie = c.no_categorie
+                			LEFT OUTER JOIN ADRESSE as ad ON a.no_adresse = ad.no_adresse LEFT OUTER JOIN UTILISATEURS as u ON a.no_utilisateur = u.no_utilisateur;
+            """;
+
     private final String FIND_BY_ID = "SELECT no_article, nom_article, nom_image, description_article,date_debut_encheres, date_fin_encheres ,prix_initial, no_utilisateur, no_categorie, no_adresse, etat FROM ARTICLES "
             + "WHERE no_article = :id";
     private final String FIND_BY_NAME = "SELECT * FROM ARTICLES WHERE  nom_article = :nom";
@@ -41,7 +50,7 @@ public class DAOArticleImpl implements IDAOArticle {
 
     @Override
     public List<Article> selectAllArticles() {
-        return jdbcTemplate.query(FIND_ALL, new ArticleRowMapper());
+        return jdbcTemplate.query(FIND_ALL_JOIN, new ArticleRowMapper());
     }
 
     @Override
@@ -102,19 +111,31 @@ class ArticleRowMapper implements RowMapper<Article> {
         article.setNomArticle(rs.getString("nom_article"));
         article.setNomImage(rs.getString("nom_image"));
         article.setDescription(rs.getString("description_article"));
-        article.setDateDebutEnchere(rs.getTimestamp("date_debut_encheres").toLocalDateTime());
-        article.setDateFinEnchere(rs.getTimestamp("date_fin_encheres").toLocalDateTime());
+
+        //Gestion d'une date si elle est null
+        LocalDateTime dateDebutEncheres = rs.getTimestamp("date_debut_encheres").toLocalDateTime();
+        if(dateDebutEncheres != null){
+            article.setDateDebutEnchere(dateDebutEncheres);
+        }
+        LocalDateTime dateFinEncheres = rs.getTimestamp("date_fin_encheres").toLocalDateTime();
+        if(dateFinEncheres != null) {
+            article.setDateFinEnchere(dateFinEncheres);
+        }
+
         article.setMiseAPrix(rs.getInt("prix_initial"));
         //Timestamp.valueOf(localDateTime); pour set la valeur inverse (POUR LE CREATE)
 
         //Association Utilisateur
         Utilisateur utilisateur = new Utilisateur();
         utilisateur.setNoUtilisateur(rs.getLong("no_utilisateur"));
+        utilisateur.setPseudo(rs.getString("pseudo"));
         article.setUtilisateur(utilisateur);
 
         //Association Categorie
+        //changer le nom de la categorie
         Categorie categorie = new Categorie();
         categorie.setNoCategorie(rs.getLong("no_categorie"));
+        categorie.setLibelle(rs.getString("libelle"));
         article.setCategorie(categorie);
 
         //Association Adresse
