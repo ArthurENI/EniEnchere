@@ -19,7 +19,7 @@ public interface ArticleService {
 
 
     //Créer un article revient à créer une vente
-    Article createArticle();
+    void createArticle(Article article);
     Article deleteArticle();
     Article updateArticle();
 

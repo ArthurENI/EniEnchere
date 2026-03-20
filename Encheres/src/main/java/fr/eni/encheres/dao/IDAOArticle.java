@@ -18,7 +18,7 @@ public interface IDAOArticle {
     List<Article> filterArticles(String nom, Long categorieId, String etat);
 
     //Créer un article revient à créer une vente
-    Article createArticle();
+    void createArticle(Article article);
     Article deleteArticle();
     Article updateArticle();
 

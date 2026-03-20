@@ -23,7 +23,7 @@ public class DAOCategorieMock implements IDAOCategorie {
         // Création d'un utilisateur fictif
         Utilisateur utilisateur = new Utilisateur(1L,"testuser", "Test", "User", "test@eni.fr", "0102030405", "mdp", 100, true, adresse, encheres, role);
         // Création de la catégorie mockée (vide pour l'instant)
-        Categorie mockCategorie = new Categorie(1L, "Informatique", null);
+        Categorie mockCategorie = new Categorie(1L, "DIVERS", null);
         // Création d'un article fictif
         Article article = new Article(
                 1L,

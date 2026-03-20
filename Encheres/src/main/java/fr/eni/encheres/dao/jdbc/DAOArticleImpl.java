@@ -8,13 +8,17 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import javax.swing.tree.TreePath;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -87,8 +91,34 @@ public class DAOArticleImpl implements IDAOArticle {
     }
 
     @Override
-    public Article createArticle() {
-        return null;
+    public void createArticle(Article article) {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(
+                    "INSERT INTO adresse (rue,code_postal,ville) VALUES(?,?,?)",
+                    Statement.RETURN_GENERATED_KEYS
+            );
+            ps.setString(1, article.getAdresseRetrait().getRue());
+            ps.setString(2, article.getAdresseRetrait().getCodePostal());
+            ps.setString(3, article.getAdresseRetrait().getVille());
+            return ps;
+        }, keyHolder);
+        Long id = keyHolder.getKey().longValue();
+
+        MapSqlParameterSource namedParameter = new MapSqlParameterSource();
+        namedParameter.addValue("nom", article.getNomArticle());
+        namedParameter.addValue("image", article.getNomImage());
+        namedParameter.addValue("description", article.getDescription());
+        namedParameter.addValue("date_debut", article.getDateDebutEnchere());
+        namedParameter.addValue("date_fin", article.getDateFinEnchere());
+        namedParameter.addValue("prix", article.getMiseAPrix());
+        namedParameter.addValue("idUtilisateur", article.getUtilisateur().getNoUtilisateur());
+        namedParameter.addValue("idCategorie", article.getCategorie().getNoCategorie());
+        namedParameter.addValue("idAdresse", id);
+        namedParameter.addValue("etat", article.getEtatVente().name());
+
+        jdbcTemplate.update(INSERT, namedParameter);
+
     }
 
     @Override

@@ -1,10 +1,16 @@
 package fr.eni.encheres.controller;
 
+import fr.eni.encheres.bo.Adresse;
 import fr.eni.encheres.bo.Article;
+import fr.eni.encheres.bo.Categorie;
+import fr.eni.encheres.exception.BusinessException;
 import fr.eni.encheres.services.ArticleService;
 
+import fr.eni.encheres.services.CategorieService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -15,15 +21,20 @@ import java.util.List;
 @RequestMapping("/articles")
 public class ArticleController {
 
+    private final CategorieService categorieService;
     ArticleService articleService;
 
+    public ArticleController(ArticleService articleService, CategorieService categorieService) {
+        this.articleService = articleService;
+        this.categorieService = categorieService;
+    }
 
-    @GetMapping()
+    /*@GetMapping()
     public String afficherArticles(Model model){
         List<Article> lstArticles = articleService.selectAllArticles();
         model.addAttribute("services", lstArticles);
         return "articles/articles-page";
-    }
+    }*/
 
     @GetMapping("/detail")
     public String afficherUnArticle(
@@ -39,7 +50,9 @@ public class ArticleController {
     }
 
     @GetMapping("/encheres")
-    public String afficherEncheres(){
+    public String afficherEncheres(Model model){
+        model.addAttribute("articles", articleService.selectAllArticles());
+
         return "encheres/ListEnchere-page";
     }
 
@@ -52,5 +65,29 @@ public class ArticleController {
         List<Article> articlesFiltres = articleService.filterArticles(nom, categorieId,etat );
         model.addAttribute("articles", articlesFiltres);
         return "articles/articles-page";
+    }
+
+    @GetMapping("/vente")
+    public String creerVente(Model model)
+    {
+        model.addAttribute("article", new Article());
+        model.addAttribute("categorie", categorieService.selectAllCategories());
+        return "encheres/creationArticle-page";
+    }
+
+    @PostMapping("/vente")
+    public String creerVente(@Valid @ModelAttribute("article") Article article, @ModelAttribute("categorie")Categorie categorie,
+                             @ModelAttribute("adresse")Adresse adresse, BindingResult bindingResult){
+        if(bindingResult.hasErrors()) {
+            try {
+                articleService.createArticle(article);
+                return "redirect:/articles";
+            }catch (BusinessException e){
+                e.getClefsExternalisations().forEach(code->bindingResult.rejectValue("article", null, code));
+                return "encheres/creationArticle-page";
+            }
+        }
+        return "encheres/creationArticle-page";
+
     }
 }
