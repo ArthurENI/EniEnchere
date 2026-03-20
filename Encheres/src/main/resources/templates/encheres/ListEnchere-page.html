@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des enchères</title>
+
+    <!-- UIKit CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.16.22/dist/css/uikit.min.css" />
+</head>
+<body>
+
+<div class="uk-container uk-margin-top">
+
+    <form action="/encheres" method="post">
+
+        <!-- TITRE -->
+        <h2 class="uk-text-center">Liste des enchères</h2>
+
+        <div uk-grid class="uk-grid-large">
+
+            <!-- FILTRES GAUCHE -->
+            <div class="uk-width-1-2@m">
+
+                <h4>Filtres :</h4>
+
+                <!-- Input -->
+                <div class="uk-margin">
+                    <input class="uk-input uk-border-pill" type="text"
+                           name="nomArticle"
+                           placeholder="🔍 Le nom de l'article contient">
+                </div>
+
+                <!-- Catégorie -->
+                <div class="uk-margin">
+                    <label>Catégorie :</label>
+                    <select class="uk-select uk-width-small" name="categorie">
+                        <option>Toutes</option>
+                        <option>Informatique</option>
+                        <option>Ameublement</option>
+                    </select>
+                </div>
+
+                <!-- Radios -->
+                <div class="uk-margin">
+                    <label>
+                        <input class="uk-radio" type="radio" name="type" checked> Achats
+                    </label>
+
+                    <div class="uk-margin-left">
+                        <label class="uk-display-block">
+                            <input class="uk-checkbox" type="checkbox"> enchères ouvertes
+                        </label>
+                        <label class="uk-display-block">
+                            <input class="uk-checkbox" type="checkbox"> mes enchères en cours
+                        </label>
+                        <label class="uk-display-block">
+                            <input class="uk-checkbox" type="checkbox"> mes enchères remportées
+                        </label>
+                    </div>
+                </div>
+
+                <div class="uk-margin">
+                    <label>
+                        <input class="uk-radio" type="radio" name="type"> Mes ventes
+                    </label>
+
+                    <div class="uk-margin-left">
+                        <label class="uk-display-block">
+                            <input class="uk-checkbox" type="checkbox"> ventes en cours
+                        </label>
+                        <label class="uk-display-block">
+                            <input class="uk-checkbox" type="checkbox"> ventes non débutées
+                        </label>
+                        <label class="uk-display-block">
+                            <input class="uk-checkbox" type="checkbox"> ventes terminées
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- BOUTON DROITE -->
+            <div class="uk-width-1-2@m uk-flex uk-flex-middle uk-flex-center">
+                <button class="uk-button uk-button-default uk-button-large" type="submit">
+                    Rechercher
+                </button>
+            </div>
+
+        </div>
+
+        <!-- LISTE DES ARTICLES -->
+        <div class="uk-margin-large-top">
+
+            <div class="uk-grid-match uk-child-width-1-2@m uk-grid-medium" uk-grid>
+
+                <!-- ARTICLE 1 -->
+                <div>
+                    <div class="uk-card uk-card-default uk-card-body uk-flex">
+
+                        <!-- Image -->
+                        <div class="uk-margin-right">
+                            <div style="width:100px;height:100px;border:1px solid #000;"></div>
+                        </div>
+
+                        <!-- Infos -->
+                        <div>
+                            <h4 class="uk-margin-remove">PC Gamer pour travailler</h4>
+                            <p class="uk-margin-remove">Prix : 210 points</p>
+                            <p class="uk-margin-remove">Fin de l'enchère : 10/08/2018</p>
+                            <p class="uk-margin-remove">
+                                Vendeur : <a href="#">jojo44</a>
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- ARTICLE 2 -->
+                <div>
+                    <div class="uk-card uk-card-default uk-card-body uk-flex">
+
+                        <div class="uk-margin-right">
+                            <div style="width:100px;height:100px;border:1px solid #000;"></div>
+                        </div>
+
+                        <div>
+                            <h4 class="uk-margin-remove">Rocket stove pour riz et pâtes</h4>
+                            <p class="uk-margin-remove">Prix : 185 points</p>
+                            <p class="uk-margin-remove">Fin de l'enchère : 09/10/2018</p>
+                            <p class="uk-margin-remove">
+                                Vendeur : <a href="#">jiji56</a>
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- DUPLIQUE CES BLOCS POUR TESTER LE SCROLL -->
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
+<!-- UIKit JS -->
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.16.22/dist/js/uikit.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.16.22/dist/js/uikit-icons.min.js"></script>
+
+</body>
+</html>

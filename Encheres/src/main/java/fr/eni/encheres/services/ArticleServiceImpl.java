@@ -68,8 +68,8 @@ public class ArticleServiceImpl  implements ArticleService{
     }
 
     @Override
-    public List<Article> filterArticles(String nom, Long categorieId) {
-        return idaoArticle.filterArticles(nom, categorieId);
+    public List<Article> filterArticles(String nom, Long categorieId, String etat) {
+        return idaoArticle.filterArticles(nom, categorieId, etat);
     }
     @Override
     public Article createArticle() {

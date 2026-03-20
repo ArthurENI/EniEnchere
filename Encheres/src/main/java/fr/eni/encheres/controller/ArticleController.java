@@ -40,12 +40,18 @@ public class ArticleController {
         return "redirect:/articles";
     }
 
+    @GetMapping("/encheres")
+    public String afficherEncheres(){
+        return "encheres/ListEnchere-page";
+    }
+
     @PostMapping("/chercher")
     public String rechercherArticle(
             @RequestParam(name = "nom", required = false) String nom,
             @RequestParam(name = "categorie", required = false) Long categorieId,
+            @RequestParam(name = "etat", required = false) String etat,
             Model model) {
-        List<Article> articlesFiltres = articleService.filterArticles(nom, categorieId);
+        List<Article> articlesFiltres = articleService.filterArticles(nom, categorieId,etat );
         model.addAttribute("articles", articlesFiltres);
         return "articles/articles-page";
     }

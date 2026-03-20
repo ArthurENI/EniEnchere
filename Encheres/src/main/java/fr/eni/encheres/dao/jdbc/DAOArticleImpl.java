@@ -73,7 +73,7 @@ public class DAOArticleImpl implements IDAOArticle {
     }
 
     @Override
-    public List<Article> filterArticles(String nom, Long categorieId) {
+    public List<Article> filterArticles(String nom, Long categorieId, String etat) {
         return List.of();
     }
 
