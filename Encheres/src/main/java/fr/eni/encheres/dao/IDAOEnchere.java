@@ -8,4 +8,8 @@ public interface IDAOEnchere {
     Enchere selectById(Long id);
     List<Enchere> findAll();
     List<Enchere> findByArticle(Long idArticle);
+    Enchere create(Enchere enchere);
+    Enchere edit(Enchere enchere);
+    void delete(Long id);
+
 }
