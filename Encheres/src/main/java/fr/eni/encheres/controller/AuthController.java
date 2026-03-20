@@ -61,7 +61,7 @@ public class AuthController {
         EniFlashMessage.sendSuccessFlash(redirectAttributes, serviceResponse.message);
 
         // Rediriger sur la page d'accueil
-        return "redirect:/encheres/acceuil";
+        return "redirect:/articles/encheres";
     }
 
     @GetMapping("encheres/logout")
@@ -72,7 +72,7 @@ public class AuthController {
         EniFlashMessage.sendSuccessFlash(redirectAttributes, "Déconnecter avec succés");
 
         // Rediriger sur la page d'accueil
-        return "redirect:/encheres/acceuil";
+        return "redirect:/articles/encheres";
     }
 
 
@@ -126,7 +126,7 @@ public class AuthController {
         EniFlashMessage.sendSuccessFlash(redirectAttributes, serviceResponse.message);
 
         if (serviceResponse.message.equals("Utilisateur créer avec succès")){
-            // Rediriger sur la page d'accueil
+            // Rediriger sur la page de connexion
             return "redirect:/encheres";
         }
 
@@ -136,7 +136,8 @@ public class AuthController {
         // Ajouter dans une session un user
         model.addAttribute("loggedUser", loggedUser);
 
-        return "redirect:/encheres/acceuil";
+        //page acceuil
+        return "redirect:/articles/encheres";
 
     }
 
@@ -145,7 +146,7 @@ public class AuthController {
         Utilisateur loggedUser = (Utilisateur) model.getAttribute("loggedUser");
 
         if (loggedUser == null) {
-            return "acceuilTest-page";
+            return "auth/accesRestreint-page";
         }
 
         model.addAttribute("utilisateur", loggedUser);
@@ -161,7 +162,7 @@ public class AuthController {
         EniFlashMessage.sendSuccessFlash(redirectAttributes, "Compte supprimé avec succés");
 
         // Rediriger sur la page d'accueil
-        return "redirect:/encheres/acceuil";
+        return "redirect:/articles/encheres";
 
     }
 
