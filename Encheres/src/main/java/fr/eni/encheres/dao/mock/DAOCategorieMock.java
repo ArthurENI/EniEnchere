@@ -19,9 +19,9 @@ public class DAOCategorieMock implements IDAOCategorie {
         // Création d'une adresse fictive
         Adresse adresse = new Adresse(1L, "1 rue du Test", "75000", "Paris");
         List<Enchere> encheres = new ArrayList<>();
-        List<Role> roles = new ArrayList<>();
+        Role role = new Role();
         // Création d'un utilisateur fictif
-        Utilisateur utilisateur = new Utilisateur(1L,"testuser", "Test", "User", "test@eni.fr", "0102030405", "mdp", 100, true, adresse, encheres, roles);
+        Utilisateur utilisateur = new Utilisateur(1L,"testuser", "Test", "User", "test@eni.fr", "0102030405", "mdp", 100, true, adresse, encheres, role);
         // Création de la catégorie mockée (vide pour l'instant)
         Categorie mockCategorie = new Categorie(1L, "Informatique", null);
         // Création d'un article fictif
