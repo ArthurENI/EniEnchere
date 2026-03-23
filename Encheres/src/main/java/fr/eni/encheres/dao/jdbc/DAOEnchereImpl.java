@@ -59,7 +59,12 @@ public class DAOEnchereImpl implements IDAOEnchere {
     @Override
     public Enchere create(Enchere enchere) {
         String sql = "INSERT INTO Enchere (dateEnchere, montant_enchere) VALUES (?, ?)";
-        jdbcTemplate.update(sql, enchere.getDateEnchere(), enchere.getMontant_enchere());
+        jdbcTemplate.update(sql,
+                enchere.getDateEnchere(),
+                enchere.getMontant_enchere(),
+                enchere.getArticle().getNoArticle(),
+                enchere.getUtilisateur().getNoUtilisateur()
+        );
         return enchere;
     }
 

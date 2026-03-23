@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="en"
+      layout:decorate="~{layout/base}"
+>
+<body>
+
+<title layout:fragment="title">Détail vente</title>
+
+<div layout:fragment="content">
+  <h1>Détail vente</h1>
+
+  <div class="uk-child-width-1-2@m" uk-grid>
+    <div>
+      <div class="uk-card uk-card-default">
+
+        <div class="uk-card-media-top">
+          <img th:src="${article.imagePath}" th:alt="${article.title}" width="1800" height="1200">
+        </div>
+
+        <div class="uk-card-body">
+          <h3 class="uk-heading-medium uk-margin-remove-bottom"
+              th:text="${article.title}"></h3>
+          <p th:text="${article.description}"></p>
+          <p th:text="${article.categorie}"></p>
+          <p th:text="${article.montant_enchere}"></p>
+          <p th:text="${article.miseAPrix}"></p>
+          <p th:text="${article.dateFinEnchere}"></p>
+          <p th:text="${article.adresseRetrait}"></p>
+          <p th:text="${article.utilisateur}"></p>
+
+          <div class="uk-margin">
+            <form th:action="@{/encheres/ajout}" method="post">
+              <input type="hidden" name="articleId"
+                     th:value="${article.noArticle}"/>
+              <input type="hidden" name="utilisateurId"
+                     th:value="${utilisateur.noUtilisateur}"/>
+
+              <div class="uk-margin">
+                <label class="uk-form-label" for="proposition-perso">
+                  Ma proposition :
+                </label>
+                <div class="uk-form-controls">
+                  <input class="uk-input"
+                         id="proposition-perso"
+                         type="number"
+                         name="montant"
+                         th:placeholder="${article.montant_enchere}"/>
+                </div>
+                <input type="submit"
+                       class="uk-button uk-button-default"
+                       value="Enchérir"/>
+              </div>
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
+

@@ -6,7 +6,7 @@
 <div layout:fragment="content">
     <h1>La liste des articles</h1>
     <div class="uk-child-width-1-2@m " uk-grid>
-        <div th:each="article : ${articles}">
+     <div th:each="article : ${articles}">
             <div class="uk-card uk-card-default">
                 <div class="uk-card-media-top" style="height: 300px; overflow: hidden;">
                     <img th:src="${article.imagePath}" th:alt="${article.title}"
