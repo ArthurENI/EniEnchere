@@ -3,6 +3,7 @@ package fr.eni.encheres.controller;
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.services.ServiceResponse;
 import fr.eni.encheres.services.UtilisateurService;
+import jakarta.servlet.ServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,7 +11,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.util.Objects;
 
 @SessionAttributes({"loggedUser"})
@@ -29,6 +29,8 @@ public class AuthController {
 
         model.addAttribute("utilisateur", utilisateur);
 
+        model.addAttribute("emailForm", new Utilisateur());
+
         return "auth/login-page";
     }
 
@@ -37,6 +39,7 @@ public class AuthController {
                                RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors() ) {
+            model.addAttribute("emailForm", new Utilisateur());
             return "auth/login-page";
         }
 
@@ -49,6 +52,7 @@ public class AuthController {
             EniFlashMessage.sendError(model, serviceResponse.message);
 
             // reafficher le  formulaire
+            model.addAttribute("emailForm", new Utilisateur());
             return "auth/login-page";
         }
 
@@ -121,7 +125,13 @@ public class AuthController {
             return "auth/inscription-page";
         }
 
-        ServiceResponse<Utilisateur> serviceResponse = authService.saveUtilisateur(utilisateur);
+        ServiceResponse<Utilisateur> serviceResponse = null;
+        try {
+            serviceResponse = authService.saveUtilisateur(utilisateur);
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "email ou pseudo déjà utilisé");
+            return "redirect:/encheres/inscription";
+        }
 
         EniFlashMessage.sendSuccessFlash(redirectAttributes, serviceResponse.message);
 
@@ -166,14 +176,67 @@ public class AuthController {
 
     }
 
-    @GetMapping("/encheres/ChgMdp")
-    public String showMdpForm(Model model) {
-        // Instancier un user par defaut dans le formulaire
-        Utilisateur utilisateur = new Utilisateur();
+
+    @PostMapping("/encheres/ChgProcess")
+    public String EmailProcess(@ModelAttribute("emailForm") Utilisateur emailForm,Model model,RedirectAttributes redirectAttributes) {
+
+        Utilisateur utilisateur = null;
+            utilisateur = authService.getUtilisateurByEmail(emailForm.getEmail());
+        if(utilisateur == null){
+            redirectAttributes.addFlashAttribute("errorMessage", "email incorrect");
+            return "redirect:/encheres";
+        }
 
         model.addAttribute("utilisateur", utilisateur);
 
+        return "redirect:/encheres/ChgMdp/"+utilisateur.getNoUtilisateur();
+    }
+
+    @GetMapping("/encheres/ChgMdp/{id}")
+    public String showMdpForm(@PathVariable(name="id") Long id,Model model) {
+
+
+        // Instancier un user par defaut dans le formulaire
+        Utilisateur utilisateur = authService.getUtilisateur(id);
+//        Utilisateur utilisateur = (Utilisateur) model.getAttribute("utilisateur");
+       model.addAttribute("utilisateur", utilisateur);
+
         return "auth/newMdp-page";
     }
+
+
+    @PostMapping("/encheres/Mdp-process")
+    public String mdpProcess(@Valid @ModelAttribute("utilisateur") Utilisateur utilisateur, BindingResult bindingResult,
+                             Model model, RedirectAttributes redirectAttributes, @RequestParam("confirmMdp") String confirmMdp, ServletRequest servletRequest) {
+
+        // Vérification confirmation
+        if (!Objects.equals(utilisateur.getMotDePasse(), confirmMdp)) {
+            bindingResult.rejectValue(
+                    "motDePasse",
+                    "error.motDePasse",
+                    "Les mots de passe ne correspondent pas"
+            );
+        }
+
+        // Gestion des erreurs
+        if (bindingResult.hasErrors()) {
+            return "/auth/newMdp-page";
+        }
+
+        ServiceResponse<Utilisateur> serviceResponse = null;
+        try {
+            serviceResponse = authService.updateMdp(utilisateur);
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "erreur SQL");
+            return "redirect:/encheres/ChgMdp/"+utilisateur.getNoUtilisateur();
+        }
+
+        EniFlashMessage.sendSuccessFlash(redirectAttributes, serviceResponse.message);
+
+        //page acceuil
+        return "redirect:/encheres";
+
+    }
+
 
 }

@@ -41,6 +41,9 @@
                                  th:errors="*{motDePasse}"></div>
                         </div>
                     </div>
+                    <div th:if="${errorMessage}" class="uk-alert-danger uk-alert">
+                        <p th:text="${errorMessage}"></p>
+                    </div>
                     <div class="uk-margin-small">
                         <label>
                             <input class="uk-checkbox" type="checkbox">
@@ -60,14 +63,15 @@
             <!-- /login -->
 
             <!-- recover password -->
-            <form class="toggle-class" action="/encheres/ChgMdp" hidden>
+            <form class="toggle-class" action="/encheres/ChgProcess" th:object="${emailForm}"  method="post" hidden>
                 <div class="uk-margin-small">
                     <div class="uk-inline uk-width-1-1">
                         <span class="uk-form-icon uk-form-icon-flip" data-uk-icon="icon: mail"></span>
                         <label>
                             <input class="uk-input uk-border-pill"
                                    th:placeholder="email"
-                                   required type="text">
+                                   th:field="*{email}"
+                                   required type="email">
                         </label>
                     </div>
                 </div>
@@ -76,6 +80,7 @@
                             class="uk-button uk-button-primary uk-border-pill uk-width-1-1">
                         Changer mot de passe
                     </button>
+
                 </div>
             </form>
             <!-- /recover password -->

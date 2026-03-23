@@ -10,6 +10,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
@@ -52,6 +53,27 @@ public class DAOAuthJdbc implements IDAOUtilisateur {
                 WHERE u.no_utilisateur = ?;
                 """;
         List<Utilisateur> utilisateurList = jdbcTemplate.query(sql, authRowMapper, id);
+        // Tester que y'a au moins un element trouvé
+        if (!utilisateurList.isEmpty()) {
+            // Je prend le premier resultat pour simuler un "get by id"
+            return utilisateurList.get(0);
+        } else return null;
+    }
+
+    @Override
+    public Utilisateur selectUtilisateurByEmail(String email) {
+        String sql = """
+                SELECT u.no_utilisateur,u.pseudo,u.nom,u.prenom,u.email,u.telephone,
+                       u.mot_de_passe,u.credit,u.actif,
+                       a.no_adresse,a.rue,a.code_postal,a.ville,
+                       r.no_role,r.libelle
+                FROM utilisateurs u
+                JOIN adresse a ON u.no_adresse = a.no_adresse
+                JOIN role r ON u.no_role = r.no_role
+                WHERE u.email = ?;
+                """;
+
+        List<Utilisateur> utilisateurList = jdbcTemplate.query(sql, authRowMapper, email);
         // Tester que y'a au moins un element trouvé
         if (!utilisateurList.isEmpty()) {
             // Je prend le premier resultat pour simuler un "get by id"
@@ -104,7 +126,19 @@ public class DAOAuthJdbc implements IDAOUtilisateur {
     }
 
     @Override
-    public void createCompte(Utilisateur utilisateur) {
+    public void updateMdp(Utilisateur utilisateur) throws SQLException {
+        String sql = """
+                UPDATE utilisateurs
+                SET mot_de_passe = ?
+                WHERE no_utilisateur = ?
+                
+                
+                """;
+        jdbcTemplate.update(sql, utilisateur.getMotDePasse(), utilisateur.getNoUtilisateur());
+    }
+
+    @Override
+    public void createCompte(Utilisateur utilisateur) throws SQLException {
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         jdbcTemplate.update(connection -> {
@@ -130,7 +164,7 @@ public class DAOAuthJdbc implements IDAOUtilisateur {
     }
 
     @Override
-    public void deleteCompte(Utilisateur utilisateur) {
+    public void deleteCompte(Utilisateur utilisateur)  {
         jdbcTemplate.update("DELETE FROM utilisateurs WHERE no_utilisateur = ?", utilisateur.getNoUtilisateur());
 
     }

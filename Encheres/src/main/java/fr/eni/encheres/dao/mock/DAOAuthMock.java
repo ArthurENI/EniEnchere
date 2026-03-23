@@ -6,6 +6,7 @@ import fr.eni.encheres.dao.IDAOUtilisateur;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +43,11 @@ public class DAOAuthMock implements IDAOUtilisateur {
     }
 
     @Override
+    public Utilisateur selectUtilisateurByEmail(String email) {
+        return null;
+    }
+
+    @Override
     public Utilisateur selectUtilisateurByPseudoAndPassword(String pseudo, String password) {
         Utilisateur utilisateur = DBUsers.stream()
                 .filter((user) ->  user.getPseudo().equals(pseudo) && user.getMotDePasse().equals(password) )
@@ -52,6 +58,11 @@ public class DAOAuthMock implements IDAOUtilisateur {
 
     @Override
     public void updateUtilisateur(Utilisateur utilisateur) {
+
+    }
+
+    @Override
+    public void updateMdp(Utilisateur utilisateur) throws SQLException {
 
     }
 

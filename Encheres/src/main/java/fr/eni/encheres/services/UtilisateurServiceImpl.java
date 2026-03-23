@@ -4,6 +4,8 @@ import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dao.IDAOUtilisateur;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
+
 @Service
 public class UtilisateurServiceImpl implements UtilisateurService{
     private final IDAOUtilisateur daoUtilisateur;
@@ -28,7 +30,7 @@ public class UtilisateurServiceImpl implements UtilisateurService{
     }
 
     @Override
-    public ServiceResponse<Utilisateur> saveUtilisateur(Utilisateur utilisateur) {
+    public ServiceResponse<Utilisateur> saveUtilisateur(Utilisateur utilisateur) throws SQLException {
         Utilisateur utilisateurBdd = daoUtilisateur.selectUtilisateurById(utilisateur.getNoUtilisateur());
 
         if (utilisateurBdd == null){
@@ -45,6 +47,17 @@ public class UtilisateurServiceImpl implements UtilisateurService{
     @Override
     public Utilisateur getUtilisateur(Long id) {
         return daoUtilisateur.selectUtilisateurById(id);
+    }
+
+    @Override
+    public ServiceResponse<Utilisateur> updateMdp(Utilisateur utilisateur) throws SQLException {
+        daoUtilisateur.updateMdp(utilisateur);
+        return new ServiceResponse<Utilisateur>("2002", "Mot de passe modifié avec succès", utilisateur);
+    }
+
+    @Override
+    public Utilisateur getUtilisateurByEmail(String email) {
+        return  daoUtilisateur.selectUtilisateurByEmail(email);
     }
 
     @Override

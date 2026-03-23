@@ -150,6 +150,10 @@
         </div>
 
     </form>
+    <div th:if="${errorMessage}" class="uk-alert-danger uk-alert">
+        <p th:text="${errorMessage}"></p>
+    </div>
+
 </div>
 </div>
 
