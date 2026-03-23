@@ -47,10 +47,10 @@ public class ArticleServiceImpl  implements ArticleService{
             chargerCategorieEtUtilisateur(a);
             //Charger les encheres si il y en a
             List<Enchere> encheres = idaoEnchere.findByArticle(id);
-            if(encheres !=null){
+            /*if(encheres !=null){
                 encheres.forEach(this::chargerUtilisateurEnchere);
                 a.setEnchereList(encheres);
-            }
+            }*/
         }
         return a;
     }
@@ -80,8 +80,8 @@ public class ArticleServiceImpl  implements ArticleService{
     public void createArticle(Article article) {
         //Valider l'article avant la sauvegarde
         BusinessException be = new BusinessException();
-        boolean isValid = true;
-        isValid&=validerArticle(article, be);
+        boolean isValid;
+        isValid = validerArticle(article, be);
 
         if(isValid){
             try {

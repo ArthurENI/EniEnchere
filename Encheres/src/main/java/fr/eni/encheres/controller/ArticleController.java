@@ -1,8 +1,6 @@
 package fr.eni.encheres.controller;
 
-import fr.eni.encheres.bo.Adresse;
-import fr.eni.encheres.bo.Article;
-import fr.eni.encheres.bo.Categorie;
+import fr.eni.encheres.bo.*;
 import fr.eni.encheres.exception.BusinessException;
 import fr.eni.encheres.services.AdresseService;
 import fr.eni.encheres.services.ArticleService;
@@ -15,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @SessionAttributes({"loggedUser"})
@@ -72,28 +71,45 @@ public class ArticleController {
     }
 
     @GetMapping("/vente")
-    public String creerVente(Model model)
+    public String creerVente(Model model, @SessionAttribute("loggedUser") Utilisateur utilisateur)
     {
-        model.addAttribute("article", new Article());
+        System.out.println("CREER VENTE");
+        Article article = new Article();
+        article.setAdresseRetrait(new Adresse());
+        model.addAttribute("article", article);
         model.addAttribute("categorie", categorieService.selectAllCategories());
+        model.addAttribute("utilisateur", utilisateur);
+        article.getAdresseRetrait().setRue(utilisateur.getAdresse().getRue());
+        article.getAdresseRetrait().setCodePostal(utilisateur.getAdresse().getCodePostal());
+        article.getAdresseRetrait().setVille(utilisateur.getAdresse().getVille());
         return "encheres/creationArticle-page";
     }
 
     @PostMapping("/vente")
-    public String creerVente(@Valid @ModelAttribute("article") Article article, @ModelAttribute("categorie")Categorie categorie,
-                             @ModelAttribute("adresse")Adresse adresse, BindingResult bindingResult){
+    public String creerVente(@Valid @ModelAttribute("article") Article article, BindingResult bindingResult,@SessionAttribute("loggedUser") Utilisateur utilisateur
+    ){
+
         if(bindingResult.hasErrors()) {
+            return "encheres/creationArticle-page";
+        }
+        else{
             try {
+                article.setUtilisateur(utilisateur);
+                LocalDateTime date = LocalDateTime.now();
+
+                if(date.isBefore(article.getDateDebutEnchere())){
+                    article.setEtatVente(EtatVente.ATTENTE);
+                }else if(date.isAfter(article.getDateDebutEnchere())
+                        && date.isBefore(article.getDateFinEnchere())){
+                    article.setEtatVente(EtatVente.OUVERTE);
+                }
+
                 articleService.createArticle(article);
-                //TODO Gérer la création d'adresse
-                // adresseService.create(adresse);
-                return "redirect:/articles";
+                return "redirect:/articles/encheres";
             }catch (BusinessException e){
                 e.getClefsExternalisations().forEach(code->bindingResult.rejectValue("article", null, code));
                 return "encheres/creationArticle-page";
             }
         }
-        return "encheres/creationArticle-page";
-
     }
 }

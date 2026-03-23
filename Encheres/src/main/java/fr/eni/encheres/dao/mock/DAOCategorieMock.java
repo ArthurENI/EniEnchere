@@ -34,7 +34,7 @@ public class DAOCategorieMock implements IDAOCategorie {
                 LocalDateTime.now().plusDays(5),
                 10,
                 utilisateur,
-                List.of(),
+                //List.of(),
                 adresse,
                 mockCategorie,
                 fr.eni.encheres.bo.EtatVente.OUVERTE
@@ -56,7 +56,6 @@ public class DAOCategorieMock implements IDAOCategorie {
 
     @Override
     public List<Categorie> findAll() {
-        System.out.println("I'M HERE");
         return dbCategories;
     }
 

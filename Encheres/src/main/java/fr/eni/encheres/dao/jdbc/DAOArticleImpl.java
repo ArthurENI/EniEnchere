@@ -40,8 +40,10 @@ public class DAOArticleImpl implements IDAOArticle {
             + "WHERE no_article = :id";
     private final String FIND_BY_NAME = "SELECT * FROM ARTICLES WHERE  nom_article = :nom";
     private final String FIND_BY_STATE = "SELECT * FROM ARTICLES WHERE  etat = :etat";
-    private final String INSERT = "INSERT INTO ARTICLES(nom_article, nom_image, description_article, date_debut_encheres, date_fin_encheres, prix_initial, no_utilisateur, no_categorie, no_adresse, etat) "
-            + "VALUES (:nom, :image, :description, :date_debut, :date_fin, :prix, :idUtilisateur, :idCategorie, :idAdresse, :etat)";
+    private final String INSERT = """
+            INSERT INTO ARTICLES(nom_article, nom_image, description_article, date_debut_encheres, date_fin_encheres, prix_initial, no_utilisateur, no_categorie, no_adresse, etat)\s
+            VALUES (:nom, :image, :description, :date_debut, :date_fin, :prix, :idUtilisateur, :idCategorie, :idAdresse, :etat)
+           \s""";
 
 
     private final JdbcTemplate jdbcTemplate;
@@ -112,12 +114,14 @@ public class DAOArticleImpl implements IDAOArticle {
         namedParameter.addValue("date_debut", article.getDateDebutEnchere());
         namedParameter.addValue("date_fin", article.getDateFinEnchere());
         namedParameter.addValue("prix", article.getMiseAPrix());
+        System.out.println("ID USER " + article.getUtilisateur().getNoUtilisateur());
         namedParameter.addValue("idUtilisateur", article.getUtilisateur().getNoUtilisateur());
         namedParameter.addValue("idCategorie", article.getCategorie().getNoCategorie());
         namedParameter.addValue("idAdresse", id);
         namedParameter.addValue("etat", article.getEtatVente().name());
+        System.out.println("ETAT VENTE " +article.getEtatVente());
 
-        jdbcTemplate.update(INSERT, namedParameter);
+        namedParameterJdbcTemplate.update(INSERT, namedParameter);
 
     }
 
@@ -151,6 +155,7 @@ class ArticleRowMapper implements RowMapper<Article> {
         if(dateFinEncheres != null) {
             article.setDateFinEnchere(dateFinEncheres);
         }
+
 
         article.setMiseAPrix(rs.getInt("prix_initial"));
         //Timestamp.valueOf(localDateTime); pour set la valeur inverse (POUR LE CREATE)

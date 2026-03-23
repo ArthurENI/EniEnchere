@@ -18,6 +18,10 @@ public class BusinessCode {
 
     public static final String BLL_ARTICLE_CREER_ERREUR="bll.article.creer.erreur";
     public static final String BLL_ADRESSE_CREER_ERREUR="bll.adresse.creer.erreur";
+    public static final String BLL_ADRESSE_VALIDER_RUE="bll.adresse.valider.rue";
+    public static final String BLL_ADRESSE_VALIDER_CODE_POSTAL="bll.adresse.valider.code.postal";
+    public static final String BLL_ADRESSE_VALIDER_VILLE="bll.adresse.valider.ville";
+    public static final String BLL_ADRESSE_VALIDER_RUE_IDENTIQUE="bll.adresse.valider.rue.identique";
 
 
 }

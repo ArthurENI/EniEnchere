@@ -1,5 +1,8 @@
 package fr.eni.encheres.bo;
 
+import jakarta.validation.constraints.NotBlank;
+import org.hibernate.validator.constraints.Length;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -8,8 +11,16 @@ public class Adresse implements Serializable {
 
 
     private Long noAdresse;
+    @NotBlank
+    @Length(min=2, max=250, message = "Le nom de la rue doit comporter au moins 2 caractères")
     private String rue;
+
+    @NotBlank
+    @Length(min=5, max=5, message = "Le code postal doit comporter 5 caractères")
     private String codePostal;
+
+    @NotBlank
+    @Length(min = 2, max = 250, message = "Le nom de la ville doit comporter au moins 2 caractères")
     private String ville;
 
     public Adresse() {

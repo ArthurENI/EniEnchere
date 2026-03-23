@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Locale;
 
 @Repository
 @Primary
@@ -58,9 +59,9 @@ class AdresseRowMapper implements RowMapper<Adresse> {
     public Adresse mapRow(ResultSet rs, int rowNum) throws SQLException {
         Adresse adresse = new Adresse();
         adresse.setNoAdresse(rs.getLong("no_adresse"));
-        adresse.setRue(rs.getString("rue"));
-        adresse.setCodePostal(rs.getString("code_postal"));
-        adresse.setVille(rs.getString("ville"));
+        adresse.setRue(rs.getString("rue").toLowerCase());
+        adresse.setCodePostal(rs.getString("code_postal").toLowerCase());
+        adresse.setVille(rs.getString("ville").toLowerCase());
         return adresse;
     }
 }

@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -23,17 +24,19 @@ public class Article {
     private String description;
 
     @NotNull(message = "L'enchère doit avoir une date de lancement")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime dateDebutEnchere;
 
     @NotNull(message = "L'enchère doit avoir une date de clôture")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime dateFinEnchere;
 
-    @NotBlank
+    @NotNull
     @Range(min = 1, message = "La valeur minimale doit être de 1 point")
-    @Positive
+    /*@Positive*/
     private int miseAPrix;;
     private Utilisateur utilisateur;
-    private List<Enchere> enchereList;
+    //private List<Enchere> enchereList;
 
     @NotNull
     private Adresse adresseRetrait;
@@ -47,7 +50,7 @@ public class Article {
     }
 
     public Article(Long noArticle, String nomArticle, String nomImage, String description, LocalDateTime dateDebutEnchere,
-                   LocalDateTime dateFinEnchere, int miseAPrix, Utilisateur utilisateur, List<Enchere> enchereList,
+                   LocalDateTime dateFinEnchere, int miseAPrix, Utilisateur utilisateur,/* List<Enchere> enchereList,*/
                    Adresse adresseRetrait, Categorie categorie, EtatVente etatVente) {
         this.noArticle = noArticle;
         this.nomArticle = nomArticle;
@@ -57,7 +60,7 @@ public class Article {
         this.dateFinEnchere = dateFinEnchere;
         this.miseAPrix = miseAPrix;
         this.utilisateur = utilisateur;
-        this.enchereList = enchereList;
+        //this.enchereList = enchereList;
         this.adresseRetrait = adresseRetrait;
         this.categorie = categorie;
         this.etatVente = etatVente;
@@ -127,13 +130,13 @@ public class Article {
         this.utilisateur = utilisateur;
     }
 
-    public List<Enchere> getEnchereList() {
+    /*public List<Enchere> getEnchereList() {
         return enchereList;
     }
 
     public void setEnchereList(List<Enchere> enchereList) {
         this.enchereList = enchereList;
-    }
+    }*/
 
     public Adresse getAdresseRetrait() {
         return adresseRetrait;

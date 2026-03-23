@@ -26,10 +26,13 @@ public class AdresseServiceImpl implements AdresseService {
     @Override
     public void create(Adresse adresse) {
         BusinessException be = new BusinessException();
-        try{
-            idaoAdresse.create(adresse);
-        }catch (DataAccessException e) {
-            be.add(BusinessCode.BLL_ADRESSE_CREER_ERREUR);
+        boolean isValid = validerAdresse(adresse, be);
+        if(isValid){
+            try{
+                idaoAdresse.create(adresse);
+            }catch (DataAccessException e) {
+                be.add(BusinessCode.BLL_ADRESSE_CREER_ERREUR);
+            }
         }
     }
 
@@ -41,5 +44,47 @@ public class AdresseServiceImpl implements AdresseService {
     @Override
     public void delete(Long id) {
 
+    }
+
+    private boolean validerRue(String rue,BusinessException be){
+        if(rue == null || rue.trim().isEmpty()){
+            be.add(BusinessCode.BLL_ADRESSE_VALIDER_RUE);
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validerCodePostal(String codePostal, BusinessException be){
+        if(codePostal == null || codePostal.trim().isEmpty()){
+            be.add(BusinessCode.BLL_ADRESSE_VALIDER_CODE_POSTAL);
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validerVille(String ville,BusinessException be){
+        if(ville == null || ville.trim().isEmpty()){
+            be.add(BusinessCode.BLL_ADRESSE_VALIDER_VILLE);
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validerAdresse(Adresse adresse, BusinessException be){
+        String rue, codePostal, ville;
+        rue = adresse.getRue().toLowerCase();
+        codePostal = adresse.getCodePostal().toLowerCase();
+        ville = adresse.getVille().toLowerCase();
+        boolean isValid = true;
+        if(!validerRue(rue, be)){
+            isValid = false;
+        }
+        if(!validerCodePostal(codePostal, be)){
+            isValid = false;
+        }
+        if(!validerVille(ville, be)){
+            isValid = false;
+        }
+        return isValid;
     }
 }

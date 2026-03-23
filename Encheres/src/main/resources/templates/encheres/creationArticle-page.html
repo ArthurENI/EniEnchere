@@ -8,10 +8,11 @@
         <h2 class="uk-heading-divider">Créer une nouvelle vente</h2>
 
         <form class="uk-form-stacked"
-              action="/articles/ventes"
+              action="/articles/vente"
               method="post"
               th:object="${article}">
 
+            <input type="hidden" th:field="*{noArticle}"/>
             <div class="uk-grid-large" uk-grid>
 
                 <!-- Image -->
@@ -44,7 +45,7 @@
                     <div class="uk-margin">
                         <label class="uk-form-label">Catégorie :</label>
                         <div class="uk-form-controls">
-                            <select class="uk-select" th:field="${article.categorie}">
+                            <select class="uk-select" th:field="*{categorie.noCategorie}">
                                 <option th:each="c : ${categorie}" th:value="${c.noCategorie}"
                                         th:text="${c.libelle}"></option>
                             </select>
@@ -70,14 +71,14 @@
                     <div class="uk-grid-small" uk-grid>
                         <div class="uk-width-1-2">
                             <label class="uk-form-label">Début de l'enchère :</label>
-                            <input class="uk-input" type="date"
+                            <input class="uk-input" type="datetime-local"
                                    th:field="*{dateDebutEnchere}"
                                    th:classappend="${#fields.hasErrors('dateDebutEnchere')} ? ' uk-form-danger' : ''">
                         </div>
 
                         <div class="uk-width-1-2">
                             <label class="uk-form-label">Fin de l'enchère :</label>
-                            <input class="uk-input" type="date"
+                            <input class="uk-input" type="datetime-local"
                                    th:field="*{dateFinEnchere}"
                                    th:classappend="${#fields.hasErrors('dateFinEnchere')} ? ' uk-form-danger' : ''">
                         </div>
@@ -86,33 +87,33 @@
                 </div>
             </div>
 
-           <!-- &lt;!&ndash; Retrait &ndash;&gt;
+            <!-- Retrait -->
             <fieldset class="uk-fieldset uk-margin-large-top">
                 <legend class="uk-legend">Retrait</legend>
 
                 <div class="uk-grid-small" uk-grid>
                     <div class="uk-width-1-1">
                         <label class="uk-form-label">Rue :</label>
-                        <input class="uk-input" type="text" value=""
+                        <input class="uk-input" type="text"
                                th:field="*{adresseRetrait.rue}"
-                               th:classappend="${#fields.hasErrors('rue')} ? ' uk-form-danger' : ''">
+                               th:classappend="${#fields.hasErrors('adresseRetrait.rue')} ? ' uk-form-danger' : ''">
                     </div>
 
                     <div class="uk-width-1-3">
                         <label class="uk-form-label">Code postal :</label>
-                        <input class="uk-input" type="text" value=""
+                        <input class="uk-input" type="text"
                                th:field="*{adresseRetrait.codePostal}"
-                               th:classappend="${#fields.hasErrors('codePostal')} ? ' uk-form-danger' : ''">
+                               th:classappend="${#fields.hasErrors('adresseRetrait.codePostal')} ? ' uk-form-danger' : ''">
                     </div>
 
                     <div class="uk-width-2-3">
                         <label class="uk-form-label">Ville :</label>
-                        <input class="uk-input" type="text" value=""
+                        <input class="uk-input" type="text"
                                th:field="*{adresseRetrait.ville}"
-                               th:classappend="${#fields.hasErrors('ville')} ? ' uk-form-danger' : ''">
+                               th:classappend="${#fields.hasErrors('adresseRetrait.ville')} ? ' uk-form-danger' : ''">
                     </div>
                 </div>
-            </fieldset>-->
+            </fieldset>
 
             <!-- Boutons -->
             <div class="uk-margin-large-top uk-flex uk-flex-between">
