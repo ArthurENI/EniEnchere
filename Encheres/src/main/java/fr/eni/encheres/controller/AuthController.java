@@ -1,5 +1,6 @@
 package fr.eni.encheres.controller;
 
+import fr.eni.encheres.bo.Adresse;
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.services.ServiceResponse;
 import fr.eni.encheres.services.UtilisateurService;
@@ -104,6 +105,13 @@ public class AuthController {
         } else {
             // Cas inscription
             utilisateur = new Utilisateur();
+            utilisateur.setNom("nom");
+            utilisateur.setTelephone("0620202020");
+            utilisateur.setPrenom("prenom");
+            utilisateur.setPseudo("pseudo");
+            utilisateur.setEmail("email@email.fr");
+            utilisateur.setMotDePasse("123");
+            utilisateur.setAdresse(new Adresse(1l, "rue", "paris", "35000"));
         }
         model.addAttribute("utilisateur", utilisateur);
         return "auth/inscription-page";

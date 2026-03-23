@@ -17,12 +17,12 @@ public class DAOEnchereImpl implements IDAOEnchere {
 
     @Override
     public Enchere selectById(Long id) {
-        String sql = "SELECT * FROM Enchere WHERE noEnchere = ?";
+        String sql = "SELECT * FROM encheres WHERE no_enchere = ?";
 
         return jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
             Enchere ench = new Enchere();
-            ench.setNoEnchere(rs.getLong("noEnchere"));
-            ench.setDateEnchere(rs.getTimestamp("dateEnchere").toLocalDateTime());
+            ench.setNoEnchere(rs.getLong("no_enchere"));
+            ench.setDateEnchere(rs.getTimestamp("date_enchere").toLocalDateTime());
             ench.setMontant_enchere(rs.getInt("montant_enchere"));
 
             return ench;
@@ -31,12 +31,12 @@ public class DAOEnchereImpl implements IDAOEnchere {
 
     @Override
     public List<Enchere> findAll() {
-        String sql = "SELECT * FROM Enchere";
+        String sql = "SELECT * FROM encheres";
 
         return jdbcTemplate.query(sql, (rs, rowNum) -> {
             Enchere ench = new Enchere();
-            ench.setNoEnchere(rs.getLong("noEnchere"));
-            ench.setDateEnchere(rs.getTimestamp("dateEnchere").toLocalDateTime());
+            ench.setNoEnchere(rs.getLong("no_enchere"));
+            ench.setDateEnchere(rs.getTimestamp("date_enchere").toLocalDateTime());
             ench.setMontant_enchere(rs.getInt("montant_enchere"));
 
             return ench;
@@ -45,12 +45,12 @@ public class DAOEnchereImpl implements IDAOEnchere {
 
     @Override
     public List<Enchere> findByArticle(Long noArticle) {
-        String sql = "SELECT * FROM Enchere WHERE noArticle = ?";
+        String sql = "SELECT * FROM encheres WHERE no_article = ?";
 
         return jdbcTemplate.query(sql, (rs, rowNum) -> {
             Enchere ench = new Enchere();
-            ench.setNoEnchere(rs.getLong("noEnchere"));
-            ench.setDateEnchere(rs.getTimestamp("dateEnchere").toLocalDateTime());
+            ench.setNoEnchere(rs.getLong("no_enchere"));
+            ench.setDateEnchere(rs.getTimestamp("date_enchere").toLocalDateTime());
             ench.setMontant_enchere(rs.getInt("montant_enchere"));
             return ench;
             }, noArticle);
@@ -58,7 +58,7 @@ public class DAOEnchereImpl implements IDAOEnchere {
 
     @Override
     public Enchere create(Enchere enchere) {
-        String sql = "INSERT INTO Enchere (dateEnchere, montant_enchere) VALUES (?, ?)";
+        String sql = "INSERT INTO encheres (date_enchere, montant_enchere, no_article, no_utilisateur) VALUES (?, ?)";
         jdbcTemplate.update(sql,
                 enchere.getDateEnchere(),
                 enchere.getMontant_enchere(),
@@ -71,14 +71,14 @@ public class DAOEnchereImpl implements IDAOEnchere {
     @Override
     public Enchere edit(Enchere enchere) {
 
-        String sql = "UPDATE Enchere SET dateEnchere = ?, montant_enchere = ? WHERE noEnchere = ?";
+        String sql = "UPDATE encheres SET date_enchere = ?, montant_enchere = ? WHERE no_enchere = ?";
         jdbcTemplate.update(sql, enchere.getDateEnchere(), enchere.getMontant_enchere(), enchere.getNoEnchere());
         return enchere;
     }
 
     @Override
     public void delete(Long id) {
-        String sql = "DELETE FROM Enchere WHERE NoEnchere = ?";
+        String sql = "DELETE FROM encheres WHERE no_enchere = ?";
         jdbcTemplate.update(sql, id);
     }
 }
