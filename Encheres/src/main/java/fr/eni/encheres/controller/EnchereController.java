@@ -56,6 +56,12 @@ public class EnchereController {
 
 
     }
+
+    @GetMapping("/test")
+    public String afficherFormulaireTest(Model model) {
+        return "test-enchere";
+    }
+
 }
 
 
