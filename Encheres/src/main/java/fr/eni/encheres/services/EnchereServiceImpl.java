@@ -95,6 +95,12 @@ public class EnchereServiceImpl  implements EnchereService {
 
     }
 
+    public Enchere getLastEnchere(Enchere enchere){
+        List<Enchere> encheres = selectEncheresByArticle(enchere.getArticle().getNoArticle());
+        enchere = encheres.get(encheres.size() - 1);
+        return enchere;
+    }
+
 
 }
 

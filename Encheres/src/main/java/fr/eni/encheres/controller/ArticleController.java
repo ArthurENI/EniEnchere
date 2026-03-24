@@ -39,8 +39,13 @@ public class ArticleController {
             @PathVariable Long id, Model model ) {
         if(id>0){
             Article article =articleService.selectArticleById(id);
+            Enchere enchere = enchereService.getLastEnchere(enchereService.selectMeilleureEnchere(id));
+            int montantMinimum = enchereService.getLastEnchere(enchereService.selectMeilleureEnchere(id)).getMontant_enchere() + 1;
+
             if(article!=null){
                 model.addAttribute("article", article);
+                model.addAttribute("enchere", enchere);
+                model.addAttribute("encherir", montantMinimum);
                 return "encheres/enchere-detail-page";
             }
         }
