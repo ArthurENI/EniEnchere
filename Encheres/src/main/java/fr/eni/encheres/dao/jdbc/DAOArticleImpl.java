@@ -27,7 +27,6 @@ import java.util.List;
 @Primary
 public class DAOArticleImpl implements IDAOArticle {
 
-    private final String FIND_ALL = "SELECT no_article, nom_article, nom_image, description_article,date_debut_encheres, date_fin_encheres ,prix_initial, no_utilisateur, no_categorie, no_adresse, etat FROM ARTICLES ";
 
     private final String FIND_ALL_JOIN = """
                 SELECT no_article, nom_article, nom_image, description_article,date_debut_encheres,
@@ -36,8 +35,22 @@ public class DAOArticleImpl implements IDAOArticle {
                 			LEFT OUTER JOIN ADRESSE as ad ON a.no_adresse = ad.no_adresse LEFT OUTER JOIN UTILISATEURS as u ON a.no_utilisateur = u.no_utilisateur;
             """;
 
-    private final String FIND_BY_ID = "SELECT no_article, nom_article, nom_image, description_article,date_debut_encheres, date_fin_encheres ,prix_initial, no_utilisateur, no_categorie, no_adresse, etat FROM ARTICLES "
-            + "WHERE no_article = :id";
+    private final String FIND_BY_ID = """
+           SELECT no_article, nom_article, nom_image, description_article,date_debut_encheres, date_fin_encheres ,prix_initial, u.no_utilisateur, 
+                  pseudo, a.no_categorie,c.libelle, a.no_adresse, rue,code_postal,ville, etat FROM ARTICLES as a
+               LEFT OUTER JOIN CATEGORIES as c ON a.no_categorie = c.no_categorie
+               LEFT OUTER JOIN UTILISATEURS as u ON a.no_utilisateur = u.no_utilisateur
+               LEFT OUTER JOIN ADRESSE as ad ON a.no_adresse = ad.no_adresse
+               WHERE no_article = :id
+           """;
+
+    private final String FIND_BY_USER = """
+           SELECT no_article, nom_article, nom_image, description_article,date_debut_encheres, date_fin_encheres ,prix_initial, u.no_utilisateur, pseudo, a.no_categorie,c.libelle, a.no_adresse, etat FROM ARTICLES as a
+               LEFT OUTER JOIN CATEGORIES as c ON a.no_categorie = c.no_categorie
+               LEFT OUTER JOIN UTILISATEURS as u ON a.no_utilisateur = u.no_utilisateur
+               LEFT OUTER JOIN ADRESSE as ad ON a.no_adresse = ad.no_adresse
+               WHERE u.no_utilisateur = :id
+           """;
     private final String FIND_BY_NAME = "SELECT * FROM ARTICLES WHERE  nom_article = :nom";
     private final String FIND_BY_STATE = "SELECT * FROM ARTICLES WHERE  etat = :etat";
     private final String INSERT = """
@@ -76,8 +89,10 @@ public class DAOArticleImpl implements IDAOArticle {
     }
 
     @Override
-    public List<Article> selectArticleByUtilisateur(Utilisateur utilisateur) {
-        return List.of();
+    public List<Article> selectArticleByUtilisateur(Long idUser) {
+        MapSqlParameterSource namedParameter = new MapSqlParameterSource();
+        namedParameter.addValue("id", idUser);
+        return namedParameterJdbcTemplate.query(FIND_BY_USER, namedParameter, new ArticleRowMapper());
     }
 
     @Override
@@ -88,7 +103,7 @@ public class DAOArticleImpl implements IDAOArticle {
     }
 
     @Override
-    public List<Article> filterArticles(String nom, Long categorieId, String etat) {
+    public List<Article> filterArticles(String nom, Long categorieId) {
         return List.of();
     }
 
@@ -176,6 +191,9 @@ class ArticleRowMapper implements RowMapper<Article> {
         //Association Adresse
         Adresse adresse = new Adresse();
         adresse.setNoAdresse(rs.getLong("no_adresse"));
+        adresse.setRue(rs.getString("rue"));
+        adresse.setCodePostal(rs.getString("code_postal"));
+        adresse.setVille(rs.getString("ville"));
         article.setAdresseRetrait(adresse);
         article.setEtatVente(EtatVente.valueOf(rs.getString("etat")));
         return article;

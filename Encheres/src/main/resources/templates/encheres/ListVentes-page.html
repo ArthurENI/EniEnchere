@@ -6,7 +6,7 @@ layout:decorate="~{layout/base}">
 
 <div class="uk-container uk-margin-top">
 
-    <form action="/encheres" method="post">
+    <form th:action="@{/articles/encheres}" method="post">
 
         <!-- TITRE -->
         <h2 class="uk-text-center">Liste des enchères</h2>
@@ -21,54 +21,28 @@ layout:decorate="~{layout/base}">
                 <!-- Input -->
                     <div class="uk-margin">
                         <input class="uk-input uk-border-pill" type="text"
-                               name="nomArticle"
-                               placeholder="🔍 Le nom de l'article contient">
+                               name="nom"
+                               placeholder=" Le nom de l'article contient">
                     </div>
 
                     <!-- Catégorie -->
-                    <div class="uk-margin">
-                        <label>Catégorie :</label>
-                        <select class="uk-select uk-width-small" name="categorie">
+                <div class="uk-form-controls">
+                    <select class="uk-select" name="categorie">
+                        <option th:each="c : ${categorie}" th:value="${c.noCategorie}"
+                                th:text="${c.libelle}"></option>
+                    </select>
+                </div>
 
-                        </select>
-                    </div>
-
-                    <!-- CHECKBOX -->
-                    <div class="uk-margin">
-                        <label>
-                            <input class="uk-radio" type="radio" name="type" checked> Achats
-                        </label>
-
-                        <div class="uk-margin-left">
-                            <label class="uk-display-block">
-                                <input class="uk-checkbox" type="checkbox"> enchères ouvertes
-                            </label>
-                            <label class="uk-display-block">
-                                <input class="uk-checkbox" type="checkbox"> mes enchères en cours
-                            </label>
-                            <label class="uk-display-block">
-                                <input class="uk-checkbox" type="checkbox"> mes enchères remportées
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="uk-margin">
-                        <label>
-                            <input class="uk-radio" type="radio" name="type"> Mes ventes
-                        </label>
-
-                        <div class="uk-margin-left">
-                            <label class="uk-display-block">
-                                <input class="uk-checkbox" type="checkbox"> ventes en cours
-                            </label>
-                            <label class="uk-display-block">
-                                <input class="uk-checkbox" type="checkbox"> ventes non débutées
-                            </label>
-                            <label class="uk-display-block">
-                                <input class="uk-checkbox" type="checkbox"> ventes terminées
-                            </label>
-                        </div>
-                    </div>
+                <!-- Statut -->
+                <div class="uk-margin">
+                    <label>Statut :</label>
+                    <select class="uk-select uk-width-small" name="statut">
+                        <option value="">Toutes</option>
+                        <option value="ouvertes">Ouvertes</option>
+                        <option value="nonDebutees">En attente</option>
+                        <option value="terminees">Terminées</option>>
+                    </select>
+                </div>
 
                 </div>
 
@@ -97,10 +71,11 @@ layout:decorate="~{layout/base}">
 
                             <!-- Infos -->
                             <div>
-                                <h4 class="uk-margin-remove" th:text="${enchere.getNomArticle()}"></h4>
+                                <a th:href ="'/articles/detail/' + ${enchere.getNoArticle()}"><h4 class="uk-margin-remove" th:text="${enchere.getNomArticle()}"></h4></a>
                                 <p class="uk-margin-remove" th:text="'Prix de départ : '+${enchere.getMiseAPrix()}"></p>
                                 <p class="uk-margin-remove" th:text="'Date de fin : '+${enchere.getDateFinEnchere()}"></p>
                                 <p class="uk-margin-remove" th:text="'Vendeur : '+${enchere.getUtilisateur().getPseudo()}"></p>
+                                <p class="uk-margin-remove" th:text="'Statut : '+${enchere.getEtatVente()}"></p>
                             </div>
 
                         </div>

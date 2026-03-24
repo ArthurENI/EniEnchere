@@ -46,7 +46,7 @@ public class ArticleServiceImpl  implements ArticleService{
         if (a != null) {
             chargerCategorieEtUtilisateur(a);
             //Charger les encheres si il y en a
-            List<Enchere> encheres = idaoEnchere.findByArticle(id);
+            //List<Enchere> encheres = idaoEnchere.findByArticle(id);
             /*if(encheres !=null){
                 encheres.forEach(this::chargerUtilisateurEnchere);
                 a.setEnchereList(encheres);
@@ -62,8 +62,9 @@ public class ArticleServiceImpl  implements ArticleService{
     }
 
     @Override
-    public List<Article> selectArticleByUtilisateur(Utilisateur utilisateur) {
-        return idaoArticle.selectArticleByUtilisateur(utilisateur);
+    public List<Article> selectArticleByUtilisateur(Long idUser) {
+        List<Article> articles =  idaoArticle.selectArticleByUtilisateur(idUser);
+        return articles;
     }
 
     @Override
@@ -72,8 +73,8 @@ public class ArticleServiceImpl  implements ArticleService{
     }
 
     @Override
-    public List<Article> filterArticles(String nom, Long categorieId, String etat) {
-        return idaoArticle.filterArticles(nom, categorieId, etat);
+    public List<Article> filterArticles(String nom, Long categorieId) {
+        return idaoArticle.filterArticles(nom, categorieId);
     }
 
     @Override
@@ -115,6 +116,11 @@ public class ArticleServiceImpl  implements ArticleService{
         System.out.println("UTILISATEUR ENCHERE : "+e.getUtilisateur().getNoUtilisateur());
     }
 
+    private void chargerArticleParUtilisateur(Long idUser){
+        List<Article> articles = idaoArticle.selectArticleByUtilisateur(idUser);
+        System.out.println("ARTICLES PAR UTILISATEUR : "+articles.size());
+    }
+
 
     private boolean validerNomArticle(String nom, BusinessException be){
         if(nom == null || nom.trim().isEmpty()){
@@ -141,10 +147,7 @@ public class ArticleServiceImpl  implements ArticleService{
             be.add(BusinessCode.VALIDATION_DATE_DEBUT_ENCHERE_NULL);
             return false;
         }
-        if(dateDebutEnchere.isBefore(LocalDateTime.now())){
-            be.add(BusinessCode.VALIDATION_DATE_DEBUT_ENCHERE_PAST_TO_NOW);
-            return false;
-        }
+
         return true;
     }
 
@@ -183,6 +186,9 @@ public class ArticleServiceImpl  implements ArticleService{
             be.add(BusinessCode.VALIDATION_ARTICLE_NULL);
             return false;
         }
+         if(article.getDateDebutEnchere().isBefore(LocalDateTime.now())){
+             article.setDateDebutEnchere(LocalDateTime.now());
+         }
         if(!validerNomArticle(article.getNomArticle(), be)){
             isValid = false;
         }
