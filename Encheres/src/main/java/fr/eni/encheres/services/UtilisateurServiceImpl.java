@@ -5,6 +5,7 @@ import fr.eni.encheres.dao.IDAOUtilisateur;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+import java.util.List;
 
 @Service
 public class UtilisateurServiceImpl implements UtilisateurService{
@@ -12,6 +13,11 @@ public class UtilisateurServiceImpl implements UtilisateurService{
 
     public UtilisateurServiceImpl(IDAOUtilisateur daoUtilisateur) {
         this.daoUtilisateur = daoUtilisateur;
+    }
+
+    @Override
+    public List<Utilisateur> getAllUtilisateur() {
+        return daoUtilisateur.selectAllUtilisateurs();
     }
 
     @Override

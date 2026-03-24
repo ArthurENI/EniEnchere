@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="en"
+      layout:decorate="~{layout/base}">
+<body>
+<div layout:fragment="content" class="uk-section uk-section-small">
+    <div class="uk-container">
+
+        <h1 class="uk-heading-line uk-text-center"><span>Liste des Utilisateurs</span></h1>
+
+        <ul class="uk-list uk-list-divider">
+            <li th:each="user : ${utilisateurs}" th:if="${user.getRole().getLibelle() != 'admin'}"
+                class="uk-flex uk-flex-between uk-flex-middle uk-padding-small">
+                <!-- Info utilisateur -->
+                <div>
+                    <span class="uk-text-bold" th:text="${user.pseudo}"></span>
+                    <span class="uk-text-meta" th:text="' - ' + ${user.email}"></span>
+                </div>
+                <!-- Actions -->
+                <div class="uk-flex uk-flex-right uk-gap-small">
+                    <a class="uk-button uk-button-secondary uk-button-small">Rendre inactif</a>
+                    <a class="uk-button uk-button-danger uk-button-small" th:href="@{/encheres/admin/suppr/{id}(id=${user.getNoUtilisateur()})}">Supprimer</a>
+                </div>
+
+            </li>
+        </ul>
+
+    </div>
+</div>
+</body>
+</html>

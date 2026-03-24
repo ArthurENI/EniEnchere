@@ -3,9 +3,11 @@ package fr.eni.encheres.services;
 import fr.eni.encheres.bo.Utilisateur;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public interface UtilisateurService {
 
+    public List<Utilisateur> getAllUtilisateur();
 
     public ServiceResponse<Utilisateur> login(String pseudo, String password);
 
