@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@SessionAttributes({"loggedUser"})
 @Controller
 @RequestMapping("/encheres")
 public class EnchereController {
@@ -39,7 +40,7 @@ public class EnchereController {
             @PathVariable(name = "id") Long id,
             Model model) {
         if (id > 0) {
-            Enchere enchere = enchereService.selectEnchereById(id);
+            Enchere enchere = enchereService.getLastEnchere(id);
 
             if (enchere != null) {
 
