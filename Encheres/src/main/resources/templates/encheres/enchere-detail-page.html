@@ -13,27 +13,27 @@
     <div>
       <div class="uk-card uk-card-default">
 
-        <div class="uk-card-media-top">
-          <img th:src="${article.imagePath}" th:alt="${article.title}" width="1800" height="1200">
-        </div>
+<!--        <div class="uk-card-media-top">-->
+<!--          <img th:src="${article.nom_image}" th:alt="${article.title}" width="1800" height="1200">-->
+<!--        </div>-->
 
         <div class="uk-card-body">
-          <h3 class="uk-heading-medium uk-margin-remove-bottom"
-              th:text="${article.title}"></h3>
-          <p th:text="${article.description}"></p>
-          <p th:text="${article.categorie}"></p>
-          <p th:text="${article.montant_enchere}"></p>
-          <p th:text="${article.miseAPrix}"></p>
-          <p th:text="${article.dateFinEnchere}"></p>
-          <p th:text="${article.adresseRetrait}"></p>
-          <p th:text="${article.utilisateur}"></p>
+          <h3 th:text="${enchere.article.nomArticle}"></h3>
+          <p th:text="${enchere.article.description}"></p>
+          <p th:text="${enchere.article.categorie}"></p>
+          <p th:text="${enchere.montant_enchere}"></p>
+          <p th:text="${enchere.article.miseAPrix}"></p>
+          <p th:text="${enchere.article.dateFinEnchere}"></p>
+          <p th:text="${enchere.article.adresseRetrait}"></p>
+          <p th:text="${enchere.utilisateur.pseudo}"></p>
+
 
           <div class="uk-margin">
             <form th:action="@{/encheres/ajout}" method="post">
               <input type="hidden" name="articleId"
-                     th:value="${article.noArticle}"/>
+                     th:value="${enchere.article.noArticle}"/>
               <input type="hidden" name="utilisateurId"
-                     th:value="${utilisateur.noUtilisateur}"/>
+                     th:value="${enchere.utilisateur.noUtilisateur}"/>
 
               <div class="uk-margin">
                 <label class="uk-form-label" for="proposition-perso">
@@ -44,7 +44,7 @@
                          id="proposition-perso"
                          type="number"
                          name="montant"
-                         th:placeholder="${article.montant_enchere}"/>
+                         th:placeholder="${enchere.montant_enchere}"/>
                 </div>
                 <input type="submit"
                        class="uk-button uk-button-default"

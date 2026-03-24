@@ -13,9 +13,9 @@ public interface IDAOArticle {
     List<Article> selectAllArticles();
     Article selectArticleById(Long id);
     List<Article> selectArticleParNom(String nom);
-    List<Article> selectArticleByUtilisateur(Utilisateur utilisateur);
+    List<Article> selectArticleByUtilisateur(Long id);
     List<Article> selectArticleByEtat(EtatVente etatVente);
-    List<Article> filterArticles(String nom, Long categorieId, String etat);
+    List<Article> filterArticles(String nom, Long categorieId);
 
     //Créer un article revient à créer une vente
     void createArticle(Article article);
