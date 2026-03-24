@@ -50,10 +50,11 @@ public class ArticleController {
     @GetMapping("/encheres")
     public String afficherEncheres(Model model){
         model.addAttribute("articles", articleService.selectAllArticles());
+        model.addAttribute("categorie", categorieService.selectAllCategories());
         return "encheres/ListVentes-page";
     }
 
-    @PostMapping("/chercher")
+    @PostMapping("/encheres")
     public String rechercherArticle(
             @RequestParam(name = "nom", required = false) String nom,
             @RequestParam(name = "categorie", required = false) Long categorieId,

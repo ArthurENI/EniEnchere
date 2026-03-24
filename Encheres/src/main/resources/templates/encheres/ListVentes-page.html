@@ -6,7 +6,7 @@ layout:decorate="~{layout/base}">
 
 <div class="uk-container uk-margin-top">
 
-    <form th:action="@{/articles/chercher}" method="post">
+    <form th:action="@{/articles/encheres}" method="post">
 
         <!-- TITRE -->
         <h2 class="uk-text-center">Liste des enchères</h2>
@@ -37,9 +37,9 @@ layout:decorate="~{layout/base}">
                 <div class="uk-margin">
                     <label>Statut :</label>
                     <select class="uk-select uk-width-small" name="statut">
-
-                        <option value="enCours">En cours</option>
-                        <option value="nonDebutees">Non débutées</option>
+                        <option value="">Toutes</option>
+                        <option value="ouvertes">Ouvertes</option>
+                        <option value="nonDebutees">En attente</option>
                         <option value="terminees">Terminées</option>>
                     </select>
                 </div>

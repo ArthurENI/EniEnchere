@@ -147,10 +147,7 @@ public class ArticleServiceImpl  implements ArticleService{
             be.add(BusinessCode.VALIDATION_DATE_DEBUT_ENCHERE_NULL);
             return false;
         }
-        if(dateDebutEnchere.isBefore(LocalDateTime.now())){
-            be.add(BusinessCode.VALIDATION_DATE_DEBUT_ENCHERE_PAST_TO_NOW);
-            return false;
-        }
+
         return true;
     }
 
@@ -189,6 +186,9 @@ public class ArticleServiceImpl  implements ArticleService{
             be.add(BusinessCode.VALIDATION_ARTICLE_NULL);
             return false;
         }
+         if(article.getDateDebutEnchere().isBefore(LocalDateTime.now())){
+             article.setDateDebutEnchere(LocalDateTime.now());
+         }
         if(!validerNomArticle(article.getNomArticle(), be)){
             isValid = false;
         }
