@@ -261,7 +261,7 @@ public class AuthController {
         if (session.getAttribute("loggedUser") == null) {
             return "redirect:/articles/encheres";
         }
-        return "/encheres/ListEnchere-page";
+        return "/encheres/ListVentes-page";
     }
 
 
