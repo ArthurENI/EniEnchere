@@ -7,56 +7,64 @@
 <title layout:fragment="title">Détail vente</title>
 
 <div layout:fragment="content">
-  <h1>Détail vente</h1>
+    <h1 class="uk-text-center">Détail vente</h1>
 
-  <div class="uk-child-width-1-2@m" uk-grid>
-    <div>
-      <div class="uk-card uk-card-default">
+    <div class="uk-flex uk-flex-center">
+        <div class="uk-width-1-2@m">
+            <div class="uk-card uk-card-default uk-padding"
+                 style="background-color: #f9f9f9; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-radius: 10px;">
 
-<!--        <div class="uk-card-media-top">-->
-<!--          <img th:src="${article.nom_image}" th:alt="${article.title}" width="1800" height="1200">-->
-<!--        </div>-->
+                <p style="color: darkred"
+                   th:text="${article.nomArticle}"></p>
 
-        <h3 class="uk-heading-medium uk-margin-remove-bottom"
-            th:text="${article.nomArticle}"></h3>
-        <p th:text="${article.description}"></p>
-        <p th:text="${article.categorie.libelle}"></p>
-        <p th:text="'Dernière enchere : ' + ${enchere.getMontant_enchere()}"></p>
-        <p th:text="${article.dateFinEnchere}"></p>
-        <p th:text="${article.adresseRetrait}"></p>
-        <p th:text="${article.utilisateur.pseudo}"></p>
-
-
-          <div class="uk-margin">
-            <form th:action="@{/encheres/ajout}" method="post">
-              <input type="hidden" name="articleId"
-                     th:value="${article.noArticle}"/>
-              <input type="hidden"
-                     th:value="${article.utilisateur.noUtilisateur}"/>
-
-              <div class="uk-margin">
-                <label class="uk-form-label" for="proposition-perso">
-                  Ma proposition :
-                </label>
-                <div class="uk-form-controls">
-                  <input class="uk-input"
-                         id="proposition-perso"
-                         type="number"
-                         name="montant"
-                         th:placeholder="'Encherir : (Minimum : '+${encherir}+' )'"/>
+                <p th:text="'Description : '+${article.description}"></p>
+                <p th:text="${article.categorie.libelle}"></p>
+                <p th:text="'Dernière enchere : ' + ${enchere.getMontant_enchere()}"></p>
+                <p th:text="${article.dateFinEnchere}"></p>
+                <div class="uk-margin">
+                    <div class="uk-card uk-card-default uk-card-body"
+                         style="border: 1px solid #ddd; border-radius: 8px;">
+                        <h3 class="uk-card-title">Adresse</h3>
+                        <p th:text="${article.adresseRetrait.rue}"></p>
+                        <p th:text="${article.adresseRetrait.codePostal}"></p>
+                        <p th:text="${article.adresseRetrait.ville}"></p>
+                    </div>
                 </div>
-                <input type="submit"
-                       class="uk-button uk-button-default"
-                       value="Enchérir"/>
-              </div>
-            </form>
-          </div>
+                <p th:text="${article.utilisateur.pseudo}"></p>
 
+                <div class="uk-margin">
+                    <form th:action="@{/encheres/ajout}" method="post">
+                        <input type="hidden" name="articleId"
+                               th:value="${article.noArticle}"/>
+                        <input type="hidden"
+                               th:value="${article.utilisateur.noUtilisateur}"/>
+
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="proposition-perso">
+                                Ma proposition :
+                            </label>
+
+                            <div class="uk-form-controls">
+                                <input class="uk-input uk-form-small uk-width-1-2"
+                                       id="proposition-perso"
+                                       type="number"
+                                       name="montant"
+                                       th:attr="min=${encherir}, value=${encherir}"
+                                       th:placeholder="'Encherir : (Minimum : '+${encherir}+' )'"/>
+                                        <!--Ajout de la valeur minimum possible pour l'enchere
+                                         + on bloque les flèches à cette valeur min-->
+                            </div>
+
+                            <input type="submit"
+                                   class="uk-button uk-button-primary uk-margin-top"
+                                   value="Enchérir"/>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
         </div>
-
-      </div>
     </div>
-  </div>
 </div>
 </body>
 </html>
