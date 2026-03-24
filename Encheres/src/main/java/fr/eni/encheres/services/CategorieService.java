@@ -9,7 +9,7 @@ import java.util.List;
 public interface CategorieService {
     Categorie read(Long id);
     List<Categorie> selectAllCategories();
-    Categorie create(Categorie categorie);
-    Categorie edit(Categorie categorie);
+    void create(Categorie categorie);
+    void edit(Categorie categorie);
     void delete(Long id);
 }

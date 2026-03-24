@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-@Primary
+//@Primary
 public class DAOCategorieMock implements IDAOCategorie {
     
     public List<Categorie> dbCategories;
@@ -64,13 +64,12 @@ public class DAOCategorieMock implements IDAOCategorie {
     }
 
     @Override
-    public Categorie create(Categorie categorie) {
-        return null;
+    public void create(Categorie categorie) {;
     }
 
     @Override
-    public Categorie edit(Categorie categorie) {
-        return null;
+    public void edit(Categorie categorie) {
+        
     }
 
     @Override

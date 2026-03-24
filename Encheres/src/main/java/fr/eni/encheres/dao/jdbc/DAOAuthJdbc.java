@@ -131,8 +131,6 @@ public class DAOAuthJdbc implements IDAOUtilisateur {
                 UPDATE utilisateurs
                 SET mot_de_passe = ?
                 WHERE no_utilisateur = ?
-                
-                
                 """;
         jdbcTemplate.update(sql, utilisateur.getMotDePasse(), utilisateur.getNoUtilisateur());
     }

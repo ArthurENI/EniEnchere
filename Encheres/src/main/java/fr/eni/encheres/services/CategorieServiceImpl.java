@@ -39,17 +39,18 @@ public class CategorieServiceImpl implements CategorieService{
     }
 
     @Override
-    public Categorie create(Categorie categorie) {
-        return null;
+    public void create(Categorie categorie) {
+        idaoCategorie.create(categorie);
     }
 
     @Override
-    public Categorie edit(Categorie categorie) {
-        return null;
+    public void edit(Categorie categorie) {
+        idaoCategorie.edit(categorie);
     }
 
     @Override
     public void delete(Long id) {
+        idaoCategorie.delete(id);
 
     }
 
