@@ -46,7 +46,7 @@ public class ArticleServiceImpl  implements ArticleService{
         if (a != null) {
             chargerCategorieEtUtilisateur(a);
             //Charger les encheres si il y en a
-            List<Enchere> encheres = idaoEnchere.findByArticle(id);
+            //List<Enchere> encheres = idaoEnchere.findByArticle(id);
             /*if(encheres !=null){
                 encheres.forEach(this::chargerUtilisateurEnchere);
                 a.setEnchereList(encheres);
@@ -62,8 +62,9 @@ public class ArticleServiceImpl  implements ArticleService{
     }
 
     @Override
-    public List<Article> selectArticleByUtilisateur(Utilisateur utilisateur) {
-        return idaoArticle.selectArticleByUtilisateur(utilisateur);
+    public List<Article> selectArticleByUtilisateur(Long idUser) {
+        List<Article> articles =  idaoArticle.selectArticleByUtilisateur(idUser);
+        return articles;
     }
 
     @Override
@@ -72,8 +73,8 @@ public class ArticleServiceImpl  implements ArticleService{
     }
 
     @Override
-    public List<Article> filterArticles(String nom, Long categorieId, String etat) {
-        return idaoArticle.filterArticles(nom, categorieId, etat);
+    public List<Article> filterArticles(String nom, Long categorieId) {
+        return idaoArticle.filterArticles(nom, categorieId);
     }
 
     @Override
@@ -113,6 +114,11 @@ public class ArticleServiceImpl  implements ArticleService{
         Utilisateur u = idaoUtilisateur.selectUtilisateurById(e.getUtilisateur().getNoUtilisateur());
         e.setUtilisateur(u);
         System.out.println("UTILISATEUR ENCHERE : "+e.getUtilisateur().getNoUtilisateur());
+    }
+
+    private void chargerArticleParUtilisateur(Long idUser){
+        List<Article> articles = idaoArticle.selectArticleByUtilisateur(idUser);
+        System.out.println("ARTICLES PAR UTILISATEUR : "+articles.size());
     }
 
 

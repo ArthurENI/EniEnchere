@@ -32,42 +32,60 @@ public class ArticleController {
         this.adresseService = adresseService;
     }
 
-    /*@GetMapping()
-    public String afficherArticles(Model model){
-        List<Article> lstArticles = articleService.selectAllArticles();
-        model.addAttribute("services", lstArticles);
-        return "articles/articles-page";
-    }*/
 
-    @GetMapping("/detail")
+    @GetMapping("/detail/{id}")
     public String afficherUnArticle(
-            @RequestParam(name = "id", required = true) Long id, Model model ) {
+            @PathVariable Long id, Model model ) {
         if(id>0){
             Article article =articleService.selectArticleById(id);
             if(article!=null){
                 model.addAttribute("article", article);
-                return "articles/article-detail";
+                return "encheres/enchere-detail-page";
             }
         }
         return "redirect:/articles";
     }
 
+
     @GetMapping("/encheres")
     public String afficherEncheres(Model model){
         model.addAttribute("articles", articleService.selectAllArticles());
-
-        return "encheres/ListEnchere-page";
+        return "encheres/ListVentes-page";
     }
 
     @PostMapping("/chercher")
     public String rechercherArticle(
             @RequestParam(name = "nom", required = false) String nom,
             @RequestParam(name = "categorie", required = false) Long categorieId,
-            @RequestParam(name = "etat", required = false) String etat,
+            @RequestParam(name = "statut", required = false) String statut,
             Model model) {
-        List<Article> articlesFiltres = articleService.filterArticles(nom, categorieId,etat );
-        model.addAttribute("articles", articlesFiltres);
-        return "articles/articles-page";
+        List<Article> articles = articleService.selectAllArticles();
+        model.addAttribute("categorie", categorieService.selectAllCategories());
+
+        if(nom!=null){
+            articles = articles.stream().filter(a -> a.getNomArticle().toLowerCase().contains(nom.toLowerCase()))
+                    .toList();
+        }
+        if(categorieId != null){
+            articles = articles.stream().filter(a -> a.getCategorie().getNoCategorie().equals(categorieId))
+                    .toList();
+        }
+        if(statut != null){
+            switch (statut) {
+                case "ouvertes" -> articles = articles.stream()
+                        .filter(a -> a.getEtatVente() == EtatVente.OUVERTE)
+                        .toList();
+                case "nonDebutees" -> articles = articles.stream()
+                        .filter(a -> a.getEtatVente() == EtatVente.ATTENTE)
+                        .toList();
+                case "terminees" -> articles = articles.stream()
+                        .filter(a -> a.getEtatVente() == EtatVente.TERMINEE)
+                        .toList();
+            }
+        }
+        model.addAttribute("articles", articles);
+
+        return "encheres/ListVentes-page";
     }
 
     @GetMapping("/vente")
@@ -111,5 +129,16 @@ public class ArticleController {
                 return "encheres/creationArticle-page";
             }
         }
+    }
+
+    @PostMapping("/utilisateurs")
+    public String afficherArticlesParUtilisateur(
+            @SessionAttribute("loggedUser") Utilisateur utilisateur,
+            Model model){
+
+        List<Article> articles = articleService.selectArticleByUtilisateur(utilisateur.getNoUtilisateur());
+
+        model.addAttribute("articles", articles);
+        return "encheres/ListVentes-page";
     }
 }

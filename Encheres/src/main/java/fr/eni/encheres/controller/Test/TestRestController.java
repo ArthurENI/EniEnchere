@@ -2,6 +2,7 @@ package fr.eni.encheres.controller.Test;
 
 import fr.eni.encheres.bo.Article;
 import fr.eni.encheres.bo.Categorie;
+import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.services.ArticleService;
 import fr.eni.encheres.services.CategorieService;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +38,16 @@ public class TestRestController {
             return ResponseEntity.ok(article);
         } else {
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/utilisateurs/{id}")
+    public List<ResponseEntity<Article>> getArticleByUtilisateurId(@PathVariable Long id) {
+        List<Article> articles = articleService.selectArticleByUtilisateur(id);
+        if(articles != null){
+            return articles.stream().map(ResponseEntity::ok).toList();
+        }else{
+            return List.of(ResponseEntity.notFound().build());
         }
     }
 
