@@ -6,6 +6,7 @@ import fr.eni.encheres.services.AdresseService;
 import fr.eni.encheres.services.ArticleService;
 
 import fr.eni.encheres.services.CategorieService;
+import fr.eni.encheres.services.EnchereService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,13 +24,13 @@ public class ArticleController {
 
     private final CategorieService categorieService;
     private final ArticleService articleService;
-    private final AdresseService adresseService;
+    private final EnchereService enchereService;
 
     public ArticleController(ArticleService articleService, CategorieService categorieService
-    , AdresseService adresseService) {
+    , EnchereService enchereService) {
         this.articleService = articleService;
         this.categorieService = categorieService;
-        this.adresseService = adresseService;
+        this.enchereService = enchereService;
     }
 
 
@@ -45,6 +46,7 @@ public class ArticleController {
         }
         return "redirect:/articles";
     }
+
 
 
     @GetMapping("/encheres")

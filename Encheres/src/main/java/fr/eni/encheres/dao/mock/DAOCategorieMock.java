@@ -24,6 +24,8 @@ public class DAOCategorieMock implements IDAOCategorie {
         Utilisateur utilisateur = new Utilisateur(1L,"testuser", "Test", "User", "test@eni.fr", "0102030405", "mdp", 100, true, adresse, encheres, role);
         // Création de la catégorie mockée (vide pour l'instant)
         Categorie mockCategorie = new Categorie(1L, "DIVERS", null);
+        Categorie mockCategorie2 = new Categorie(2L, "AUTOMOBILE", null);
+        Categorie mockCategorie3 = new Categorie(3L, "TEXTILE", null);
         // Création d'un article fictif
         Article article = new Article(
                 1L,
@@ -41,7 +43,9 @@ public class DAOCategorieMock implements IDAOCategorie {
         );
         // Ajout de l'article à la catégorie
         mockCategorie.setArticles(List.of(article));
-        dbCategories = java.util.List.of(mockCategorie);
+        mockCategorie2.setArticles(List.of(article));
+        mockCategorie3.setArticles(List.of(article));
+        dbCategories = List.of(mockCategorie, mockCategorie2, mockCategorie3);
     }
     
     @Override

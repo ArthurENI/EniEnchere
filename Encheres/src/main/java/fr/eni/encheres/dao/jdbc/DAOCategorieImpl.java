@@ -5,6 +5,7 @@ package fr.eni.encheres.dao.jdbc;
 import fr.eni.encheres.bo.Categorie;
 import fr.eni.encheres.dao.IDAOCategorie;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 
@@ -12,70 +13,37 @@ import java.util.List;
 public class DAOCategorieImpl implements IDAOCategorie {
 
     private final JdbcTemplate jdbcTemplate;
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public DAOCategorieImpl(JdbcTemplate jdbcTemplate) {
+    public DAOCategorieImpl(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
+
     @Override
-    public Categorie read(Long id) {
-        */
-/*String sql = "SELECT * FROM Categorie WHERE NoCategorie = ?";
-
-        return jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
-            Categorie cat = new Categorie();
-            cat.setNoCategorie(rs.getLong("NoCategorie"));
-            cat.setLibelle(rs.getString("Libelle"));
-            return cat;
-        }, id);*//*
-
+    public Categorie selectCategorieById(Long id) {
         return null;
     }
 
     @Override
     public List<Categorie> findAll() {
-        */
-/*String sql = "SELECT * FROM Categorie";
-
-        return jdbcTemplate.query(sql, (rs, rowNum) -> {
-            Categorie cat = new Categorie();
-            cat.setNoCategorie(rs.getLong("NoCategorie"));
-            cat.setLibelle(rs.getString("Libelle"));
-            return cat;
-        });*//*
-
         return List.of();
     }
 
     @Override
-    public Categorie create (Categorie categorie) {
-
-        */
-/*String sql = "INSERT INTO Categorie (Libelle) VALUES (?)";
-        jdbcTemplate.update(sql, categorie.getLibelle());
-        return categorie;*//*
-
+    public Categorie create(Categorie categorie) {
         return null;
     }
 
     @Override
-    public Categorie edit (Categorie categorie) {
-
-        */
-/*String sql = "UPDATE Categorie SET Libelle = ? WHERE NoCategorie = ?";
-        jdbcTemplate.update(sql, categorie.getLibelle(), categorie.getNoCategorie());
-        return categorie;*//*
-
+    public Categorie edit(Categorie categorie) {
         return null;
     }
 
     @Override
     public void delete(Long id) {
-        */
-/*String sql = "DELETE FROM Categorie WHERE NoCategorie = ?";
-        jdbcTemplate.update(sql, id);*//*
 
     }
-
-
-}*/
+}
+*/
