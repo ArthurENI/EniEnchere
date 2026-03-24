@@ -2,6 +2,7 @@ package fr.eni.encheres.controller;
 
 import fr.eni.encheres.bo.Article;
 import fr.eni.encheres.bo.Enchere;
+import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.services.ArticleService;
 import fr.eni.encheres.services.EnchereService;
 import fr.eni.encheres.services.UtilisateurService;
@@ -54,13 +55,14 @@ public class EnchereController {
 
     @PostMapping("/ajout")
     public String ajoutEnchere(
-            @RequestParam(name = "articleId", required = true) Long param1,
-            @RequestParam(name = "utilisateurId", required = true) Long param2,
-            @RequestParam(name = "montant", required = true) int param3,
-            Model model) {
+            @RequestParam("articleId") Long articleId,
+            @RequestParam("montant") int montant,
+            @SessionAttribute("loggedUser") Utilisateur user
+    ) {
 
-        enchereService.placerEnchere(param1, param2, param3);
-        return "redirect:/articles/detail?id=" + param1;
+        enchereService.placerEnchere(articleId, user.getNoUtilisateur(), montant);
+
+        return "encheres/ListVentes-page";
     }
 
     @GetMapping("/test")

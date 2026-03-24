@@ -31,8 +31,8 @@
             <form th:action="@{/encheres/ajout}" method="post">
               <input type="hidden" name="articleId"
                      th:value="${article.noArticle}"/>
-              <input type="hidden" name="utilisateurId"
-                     th:value="${article.utilisateur}"/>
+              <input type="hidden"
+                     th:value="${article.utilisateur.noUtilisateur}"/>
 
               <div class="uk-margin">
                 <label class="uk-form-label" for="proposition-perso">
