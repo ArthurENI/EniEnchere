@@ -40,7 +40,7 @@ public class EnchereController {
             @PathVariable(name = "id") Long id,
             Model model) {
         if (id > 0) {
-            Enchere enchere = enchereService.getLastEnchere(id);
+            Enchere enchere = enchereService.getLastEnchere(enchereService.selectEnchereById(id));
 
             if (enchere != null) {
 
@@ -61,8 +61,6 @@ public class EnchereController {
 
         enchereService.placerEnchere(param1, param2, param3);
         return "redirect:/articles/detail?id=" + param1;
-
-
     }
 
     @GetMapping("/test")
