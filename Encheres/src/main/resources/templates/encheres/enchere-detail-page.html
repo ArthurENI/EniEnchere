@@ -14,23 +14,23 @@
             <div class="uk-card uk-card-default uk-padding"
                  style="background-color: #f9f9f9; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-radius: 10px;">
 
-                <p style="color: darkred"
-                   th:text="${article.nomArticle}"></p>
+                <p><u><b>Nom de l'article</b></u> : <span  style="color: darkred">[[${article.nomArticle}]]</span></p>
+                <p><u>Description</u> : [[${article.description}]]</p>
+                <p><u>Catégorie</u> : [[${article.categorie.libelle}]]</p>
+                <p><u>Dernière enchère</u> : [[${enchere.getMontant_enchere()}]]</p>
+                <p><u>Date de fin d'enchere</u> : [[${article.dateFinEnchere}]]</p>
 
-                <p th:text="'Description : '+${article.description}"></p>
-                <p th:text="${article.categorie.libelle}"></p>
-                <p th:text="'Dernière enchere : ' + ${enchere.getMontant_enchere()}"></p>
-                <p th:text="${article.dateFinEnchere}"></p>
                 <div class="uk-margin">
                     <div class="uk-card uk-card-default uk-card-body"
                          style="border: 1px solid #ddd; border-radius: 8px;">
                         <h3 class="uk-card-title">Adresse</h3>
-                        <p th:text="${article.adresseRetrait.rue}"></p>
-                        <p th:text="${article.adresseRetrait.codePostal}"></p>
-                        <p th:text="${article.adresseRetrait.ville}"></p>
+                        <p><u>Rue</u> : [[${article.adresseRetrait.rue}]]</p>
+                        <p><u>Code postal</u> : [[${article.adresseRetrait.codePostal}]]</p>
+                        <p><u>Ville</u> : [[${article.adresseRetrait.ville}]]</p>
                     </div>
                 </div>
-                <p th:text="${article.utilisateur.pseudo}"></p>
+
+                <p><u>Vendeur</u> : [[${article.utilisateur.pseudo}]]</p>
 
                 <div class="uk-margin">
                     <form th:action="@{/encheres/ajout}" method="post">
