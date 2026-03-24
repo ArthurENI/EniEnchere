@@ -21,7 +21,7 @@
             th:text="${article.nomArticle}"></h3>
         <p th:text="${article.description}"></p>
         <p th:text="${article.categorie.libelle}"></p>
-        <p th:text="${article.miseAPrix}"></p>
+        <p th:text="'Dernière enchere : ' + ${enchere.getMontant_enchere()}"></p>
         <p th:text="${article.dateFinEnchere}"></p>
         <p th:text="${article.adresseRetrait}"></p>
         <p th:text="${article.utilisateur.pseudo}"></p>
@@ -43,7 +43,7 @@
                          id="proposition-perso"
                          type="number"
                          name="montant"
-                         th:placeholder="${article.miseAPrix}"/>
+                         th:placeholder="'Encherir : (Minimum : '+${encherir}+' )'"/>
                 </div>
                 <input type="submit"
                        class="uk-button uk-button-default"

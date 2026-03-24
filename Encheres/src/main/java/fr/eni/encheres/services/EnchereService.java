@@ -11,9 +11,9 @@ public interface EnchereService {
     List<Enchere> selectAllEncheres();
     List<Enchere> selectEncheresByArticle(Long articleId);
     Enchere selectMeilleureEnchere(Long articleId);
-    Enchere getLastEnchere(Long articleId);
 
 
     void placerEnchere(Long articleId, Long utilisateurId, int montant);
+    Enchere getLastEnchere(Enchere enchere);
 }
 
