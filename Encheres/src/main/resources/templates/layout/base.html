@@ -17,7 +17,7 @@
     <div class="uk-container">
         <nav id="navbar" data-uk-navbar="mode: click;">
             <div class="uk-navbar-left">
-                <a class="uk-navbar-item uk-logo" href="/articles/encheres">Eni-Encheres</a>
+                <a class="uk-navbar-item uk-logo" th:href="@{/articles/encheres}">Eni-Encheres</a>
 
             </div>
             <div class="uk-navbar-center">
@@ -26,7 +26,14 @@
             <div class="uk-navbar-right">
                 <ul class="uk-navbar-nav">
 
+
+
                     <!-- SI CONNECTE -->
+                    <li th:if="${loggedUser}">
+
+                        <!-- SI ADMIN -->
+                    <a th:if="${loggedUser.getRole().getLibelle()} == 'admin'" th:href="@{/}" class=" "> Admin</a>
+                    <!-- SI ADMIN -->
                     <li th:if="${loggedUser}">
                         <a href="#" data-uk-icon="icon:menu"></a>
                         <div class="uk-navbar-dropdown uk-navbar-dropdown-bottom-left">
@@ -38,14 +45,14 @@
                                         <span data-uk-icon="icon:bag"></span>Créer une vente
                                     </a>
                                 </li>
-                                <li><a th:href= "'/encheres/Profil/'+${loggedUser.noUtilisateur}"> <span data-uk-icon="icon:user"></span>Profil</a></li>
-                                <li><a href="/encheres/logout"><span data-uk-icon="icon: sign-out"></span> Se déconnecter</a></li>
+                                <li><a th:href= "@{'/encheres/Profil/'+${loggedUser.noUtilisateur}}"> <span data-uk-icon="icon:user"></span>Profil</a></li>
+                                <li><a th:href="@{/encheres/logout}"><span data-uk-icon="icon: sign-out"></span> Se déconnecter</a></li>
                             </ul>
                         </div>
                     </li>
                     <!-- SI PAS CONNECTE -->
                     <div class="uk-navbar-item" th:if="${loggedUser == null}">
-                        <a href="/encheres" class="uk-button uk-button-primary uk-visible@m"> Se connecter</a>
+                        <a th:href="@{/encheres}" class="uk-button uk-button-primary uk-visible@m"> Se connecter</a>
                     </div>
                 </ul>
                 <div class="uk-navbar-item">

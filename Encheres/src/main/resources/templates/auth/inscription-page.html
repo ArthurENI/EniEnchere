@@ -12,7 +12,7 @@
 
     <!-- Inscription -->
     <form class="uk-form-horizontal "
-          action="/encheres/inscription-process"
+          th:action="@{/encheres/inscription-process}"
           method="post"
           th:object="${utilisateur}">
 
@@ -142,7 +142,7 @@
         <div class="uk-grid-small uk-grid">
             <!-- Annuler-->
             <div class="uk-width-1-2">
-                <a class="uk-button uk-button-default uk-width-1-2 uk-align-center" href="/encheres">Retour</a>
+                <a class="uk-button uk-button-default uk-width-1-2 uk-align-center" th:href="@{/encheres}">Retour</a>
             </div>
             <div class="uk-width-1-2">
                 <input type="submit" class="uk-button uk-button-primary uk-width-1-2 uk-align-center" value="Valider">

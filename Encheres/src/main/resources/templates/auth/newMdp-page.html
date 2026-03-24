@@ -6,7 +6,7 @@
 <div layout:fragment="content">
     <!-- Inscription -->
     <form class="uk-form-horizontal "
-          action="/encheres/Mdp-process"
+          th:action="@{/encheres/Mdp-process}"
           method="post"
           th:object="${utilisateur}">
 

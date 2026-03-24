@@ -12,7 +12,7 @@
 
 
             <!-- login -->
-            <form class="toggle-class" action="/encheres/login-process" method="post" th:object="${utilisateur}">
+            <form class="toggle-class" th:action="@{/encheres/login-process}" method="post" th:object="${utilisateur}">
                 <fieldset class="uk-fieldset">
                     <div class="uk-margin-small">
                         <div class="uk-inline uk-width-1-1">
@@ -46,7 +46,7 @@
                     </div>
                     <div class="uk-margin-small">
                         <label>
-                            <input class="uk-checkbox" type="checkbox">
+                            <input class="uk-checkbox" type="checkbox" name="cookiePseudo">
                             Se souvenir de moi
                         </label>
                     </div>
@@ -63,7 +63,7 @@
             <!-- /login -->
 
             <!-- recover password -->
-            <form class="toggle-class" action="/encheres/ChgProcess" th:object="${emailForm}"  method="post" hidden>
+            <form class="toggle-class" th:action="@{/encheres/ChgProcess}" th:object="${emailForm}"  method="post" hidden>
                 <div class="uk-margin-small">
                     <div class="uk-inline uk-width-1-1">
                         <span class="uk-form-icon uk-form-icon-flip" data-uk-icon="icon: mail"></span>
@@ -99,7 +99,7 @@
                         Retour
                     </a>
                     <br>
-                    <a class="uk-link-reset uk-text-small toggle-class" href="/encheres/inscription">
+                    <a class="uk-link-reset uk-text-small toggle-class" th:href="@{/encheres/inscription}">
                         Créer un compte
                     </a>
 

@@ -53,11 +53,11 @@
             <div class="uk-grid">
                 <div class="uk-width-1-5">
                     <a class="uk-button-primary uk-button"
-                       th:href="'/encheres/ProfilModif/'+${loggedUser.noUtilisateur}">Modifier</a>
+                       th:href="@{'/encheres/ProfilModif/'+${loggedUser.noUtilisateur}}">Modifier</a>
                 </div>
                 <div class="uk-width-1-2">
                     <a class="uk-button-danger uk-button"
-                        href="/encheres/suppr" >Supprimer compte</a>
+                        th:href="@{/encheres/suppr}" >Supprimer compte</a>
                 </div>
             </div>
 

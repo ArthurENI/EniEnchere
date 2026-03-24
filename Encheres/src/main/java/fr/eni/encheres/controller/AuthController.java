@@ -1,9 +1,13 @@
 package fr.eni.encheres.controller;
 
+import fr.eni.encheres.bo.Role;
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.services.ServiceResponse;
 import fr.eni.encheres.services.UtilisateurService;
 import jakarta.servlet.ServletRequest;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.util.Objects;
 
 @SessionAttributes({"loggedUser"})
@@ -23,22 +28,23 @@ public class AuthController {
     }
 
     @GetMapping("/encheres")
-    public String showLoginForm(Model model) {
+    public String showLoginForm(@CookieValue(value = "rememberLogin", required = false) String login, Model model) {
         // Instancier un user par defaut dans le formulaire
         Utilisateur utilisateur = new Utilisateur();
+        utilisateur.setPseudo(login);
 
         model.addAttribute("utilisateur", utilisateur);
-
         model.addAttribute("emailForm", new Utilisateur());
 
         return "auth/login-page";
     }
 
     @PostMapping("/encheres/login-process")
-    public String loginProcess(@Valid @ModelAttribute("utilisateur") Utilisateur utilisateur,BindingResult bindingResult, Model model,
-                               RedirectAttributes redirectAttributes) {
+    public String loginProcess(@Valid @ModelAttribute("utilisateur") Utilisateur utilisateur, BindingResult bindingResult, Model model,
+                               RedirectAttributes redirectAttributes, HttpServletResponse response, @RequestParam(value = "cookiePseudo", required = false) String cookiePseudo) {
 
-        if (bindingResult.hasErrors() ) {
+
+        if (bindingResult.hasErrors()) {
             model.addAttribute("emailForm", new Utilisateur());
             return "auth/login-page";
         }
@@ -47,7 +53,7 @@ public class AuthController {
         ServiceResponse<Utilisateur> serviceResponse = authService.login(utilisateur.getPseudo(), utilisateur.getMotDePasse());
 
         // Si tentative erreur
-        if (!serviceResponse.code.equals("2002") ) {
+        if (!serviceResponse.code.equals("2002")) {
             // Envoyer un message d'erreur temporaire
             EniFlashMessage.sendError(model, serviceResponse.message);
 
@@ -58,6 +64,20 @@ public class AuthController {
 
         // récupérer le user connecté(e)
         Utilisateur loggedUser = serviceResponse.data;
+
+        //  Création du cookie
+        if (cookiePseudo != null) {
+            Cookie cookie = new Cookie("rememberLogin", utilisateur.getPseudo());
+            cookie.setMaxAge(7 * 24 * 60 * 60);
+            cookie.setPath("/");
+            response.addCookie(cookie);
+        } else {
+            // cookie vide
+            Cookie cookie = new Cookie("rememberLogin", null);
+            cookie.setMaxAge(0); // suppression immédiate
+            cookie.setPath("/");
+            response.addCookie(cookie);
+        }
 
         // Ajouter dans une session un user
         model.addAttribute("loggedUser", loggedUser);
@@ -110,17 +130,15 @@ public class AuthController {
     }
 
 
-
-
     @PostMapping("/encheres/inscription-process")
     public String InscriptionProcess(@Valid @ModelAttribute("utilisateur") Utilisateur utilisateur, BindingResult bindingResult,
                                      Model model, RedirectAttributes redirectAttributes, @RequestParam("confirmMdp") String confirmMdp) {
 
-        if (bindingResult.hasErrors()  ) {
+        if (bindingResult.hasErrors()) {
             return "auth/inscription-page";
         }
 
-        if(!Objects.equals(utilisateur.getMotDePasse(), confirmMdp)){
+        if (!Objects.equals(utilisateur.getMotDePasse(), confirmMdp)) {
             EniFlashMessage.sendError(model, "Les champs mots de passes ne sont pas identiques");
             return "auth/inscription-page";
         }
@@ -135,7 +153,7 @@ public class AuthController {
 
         EniFlashMessage.sendSuccessFlash(redirectAttributes, serviceResponse.message);
 
-        if (serviceResponse.message.equals("Utilisateur créer avec succès")){
+        if (serviceResponse.message.equals("Utilisateur créer avec succès")) {
             // Rediriger sur la page de connexion
             return "redirect:/encheres";
         }
@@ -152,7 +170,7 @@ public class AuthController {
     }
 
     @GetMapping("/encheres/Profil/{id}")
-    public String showProfilForm(@PathVariable(name="id") Long id, Model model) {
+    public String showProfilForm(@PathVariable(name = "id") Long id, Model model) {
         Utilisateur loggedUser = (Utilisateur) model.getAttribute("loggedUser");
 
         if (loggedUser == null) {
@@ -164,10 +182,10 @@ public class AuthController {
     }
 
     @GetMapping("/encheres/suppr")
-    public String supprimerCompte(Model model, RedirectAttributes redirectAttributes,SessionStatus sessionStatus) {
+    public String supprimerCompte(Model model, RedirectAttributes redirectAttributes, SessionStatus sessionStatus) {
         Utilisateur utilisateur = (Utilisateur) model.getAttribute("loggedUser");
         sessionStatus.setComplete();
-       authService.SupprUtilisateur(utilisateur);
+        authService.SupprUtilisateur(utilisateur);
 
         EniFlashMessage.sendSuccessFlash(redirectAttributes, "Compte supprimé avec succés");
 
@@ -178,28 +196,28 @@ public class AuthController {
 
 
     @PostMapping("/encheres/ChgProcess")
-    public String EmailProcess(@ModelAttribute("emailForm") Utilisateur emailForm,Model model,RedirectAttributes redirectAttributes) {
+    public String EmailProcess(@ModelAttribute("emailForm") Utilisateur emailForm, Model model, RedirectAttributes redirectAttributes) {
 
         Utilisateur utilisateur = null;
-            utilisateur = authService.getUtilisateurByEmail(emailForm.getEmail());
-        if(utilisateur == null){
+        utilisateur = authService.getUtilisateurByEmail(emailForm.getEmail());
+        if (utilisateur == null) {
             redirectAttributes.addFlashAttribute("errorMessage", "email incorrect");
             return "redirect:/encheres";
         }
 
         model.addAttribute("utilisateur", utilisateur);
 
-        return "redirect:/encheres/ChgMdp/"+utilisateur.getNoUtilisateur();
+        return "redirect:/encheres/ChgMdp/" + utilisateur.getNoUtilisateur();
     }
 
     @GetMapping("/encheres/ChgMdp/{id}")
-    public String showMdpForm(@PathVariable(name="id") Long id,Model model) {
+    public String showMdpForm(@PathVariable(name = "id") Long id, Model model) {
 
 
         // Instancier un user par defaut dans le formulaire
         Utilisateur utilisateur = authService.getUtilisateur(id);
 //        Utilisateur utilisateur = (Utilisateur) model.getAttribute("utilisateur");
-       model.addAttribute("utilisateur", utilisateur);
+        model.addAttribute("utilisateur", utilisateur);
 
         return "auth/newMdp-page";
     }
@@ -228,7 +246,7 @@ public class AuthController {
             serviceResponse = authService.updateMdp(utilisateur);
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", "erreur SQL");
-            return "redirect:/encheres/ChgMdp/"+utilisateur.getNoUtilisateur();
+            return "redirect:/encheres/ChgMdp/" + utilisateur.getNoUtilisateur();
         }
 
         EniFlashMessage.sendSuccessFlash(redirectAttributes, serviceResponse.message);
@@ -236,6 +254,14 @@ public class AuthController {
         //page acceuil
         return "redirect:/encheres";
 
+    }
+
+    @GetMapping("/dashboard")
+    public String dashboard(HttpSession session) {
+        if (session.getAttribute("loggedUser") == null) {
+            return "redirect:/articles/encheres";
+        }
+        return "/encheres/ListEnchere-page";
     }
 
 
