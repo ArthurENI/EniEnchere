@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="en"
+      layout:decorate="~{layout/base}">
+<body>
+<div layout:fragment="content" class="uk-section uk-section-small">
+  <div class="uk-container">
+
+    <h1 class="uk-heading-line uk-text-center"><span>Liste des categories</span></h1>
+
+    <ul class="uk-list uk-list-divider">
+      <li class="uk-flex uk-flex-between uk-flex-middle uk-padding-small">
+        <form class="uk-form-horizontal uk-flex uk-flex-middle uk-grid-small"
+              uk-grid
+              th:action="@{/encheres/Mdp-process}">
+
+          <div class="uk-width-expand">
+            <input class="uk-input" id="newCat" type="text" name="newCat">
+          </div>
+
+          <div>
+            <button type="submit"
+                    class="uk-button uk-button-primary uk-border-pill">
+              <span data-uk-icon="icon: plus"></span>
+            </button>
+          </div>
+
+        </form>
+      </li>
+      <li th:each="categorie : ${categories}"
+          class="uk-flex uk-flex-between uk-flex-middle uk-padding-small">
+        <!-- Info categories -->
+        <div>
+          <span class="uk-text-bold" th:text="${categorie.getLibelle()}"></span>
+        </div>
+        <!-- Actions -->
+        <div class="uk-flex uk-flex-right uk-gap-small">
+          <a class="uk-button uk-button-danger uk-button-small" th:href="@{/encheres/admin/supprCat/{id}(id=${categorie.getNoCategorie()})}">Supprimer</a>
+        </div>
+
+      </li>
+    </ul>
+
+  </div>
+</div>
+</body>
+</html>

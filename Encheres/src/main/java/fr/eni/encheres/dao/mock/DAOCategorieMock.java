@@ -69,7 +69,7 @@ public class DAOCategorieMock implements IDAOCategorie {
 
     @Override
     public void edit(Categorie categorie) {
-        
+
     }
 
     @Override

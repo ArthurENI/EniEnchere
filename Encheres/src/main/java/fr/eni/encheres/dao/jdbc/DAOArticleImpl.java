@@ -58,6 +58,8 @@ public class DAOArticleImpl implements IDAOArticle {
             VALUES (:nom, :image, :description, :date_debut, :date_fin, :prix, :idUtilisateur, :idCategorie, :idAdresse, :etat)
            \s""";
 
+    
+
 
     private final JdbcTemplate jdbcTemplate;
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;

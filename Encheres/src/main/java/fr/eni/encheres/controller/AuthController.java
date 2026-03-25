@@ -93,7 +93,7 @@ public class AuthController {
 
         sessionStatus.setComplete();
 
-        EniFlashMessage.sendSuccessFlash(redirectAttributes, "Déconnecter avec succés");
+        EniFlashMessage.sendSuccessFlash(redirectAttributes, "Déconnecté avec succés");
 
         // Rediriger sur la page d'accueil
         return "redirect:/articles/encheres";
@@ -216,7 +216,7 @@ public class AuthController {
 
         // Instancier un user par defaut dans le formulaire
         Utilisateur utilisateur = authService.getUtilisateur(id);
-//        Utilisateur utilisateur = (Utilisateur) model.getAttribute("utilisateur");
+
         model.addAttribute("utilisateur", utilisateur);
 
         return "auth/newMdp-page";
@@ -256,6 +256,7 @@ public class AuthController {
 
     }
 
+    // renvoie à l'acceuil lorsque session est terminée
     @GetMapping("/dashboard")
     public String dashboard(HttpSession session) {
         if (session.getAttribute("loggedUser") == null) {
