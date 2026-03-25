@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 import java.util.List;
 
@@ -57,13 +59,19 @@ public class EnchereController {
     public String ajoutEnchere(
             @RequestParam("articleId") Long articleId,
             @RequestParam("montant") int montant,
-            @SessionAttribute("loggedUser") Utilisateur user
+            @SessionAttribute("loggedUser") Utilisateur user,
+            RedirectAttributes redirectAttributes
     ) {
+        try {
+            enchereService.placerEnchere(articleId, user.getNoUtilisateur(), montant);
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+            return "redirect:/encheres/details/" + articleId;
+        }
 
-        enchereService.placerEnchere(articleId, user.getNoUtilisateur(), montant);
-
-        return "encheres/ListVentes-page";
+        return "redirect:/encheres/liste";
     }
+
 
     @GetMapping("/test")
     public String afficherFormulaireTest(Model model) {

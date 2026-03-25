@@ -37,16 +37,16 @@ public class EnchereServiceImpl  implements EnchereService {
 
 
     @Override
-    public List<Enchere> selectAllEncheres(){
-        List <Enchere> encheres = idaoEnchere.findAll();
+    public List<Enchere> selectAllEncheres() {
+        List<Enchere> encheres = idaoEnchere.findAll();
 
         return encheres;
     }
 
 
     @Override
-    public List<Enchere> selectEncheresByArticle(Long noArticle){
-        List <Enchere> encheres = idaoEnchere.findByArticle(noArticle);
+    public List<Enchere> selectEncheresByArticle(Long noArticle) {
+        List<Enchere> encheres = idaoEnchere.findByArticle(noArticle);
 
         return encheres;
 
@@ -55,7 +55,7 @@ public class EnchereServiceImpl  implements EnchereService {
 
     @Override
     public Enchere selectMeilleureEnchere(Long noArticle) {
-        List <Enchere> encheres = idaoEnchere.findByArticle(noArticle);
+        List<Enchere> encheres = idaoEnchere.findByArticle(noArticle);
 
         return encheres.stream()
                 .max(Comparator.comparingInt(Enchere::getMontant_enchere))
@@ -67,47 +67,44 @@ public class EnchereServiceImpl  implements EnchereService {
     public void placerEnchere(Long articleId, Long utilisateurId, int montant) {
 
         Article a = idaoArticle.selectArticleById(articleId);
-        if (a == null){
+        if (a == null) {
             throw new RuntimeException("Aucun article trouver");
         }
 
-        if (a.getUtilisateur().getNoUtilisateur().equals(utilisateurId)){
+        if (a.getUtilisateur().getNoUtilisateur().equals(utilisateurId)) {
             throw new RuntimeException("Le vendeur de l'article ne peut pas mettre d'enchere sur son article");
         }
+
         Enchere meilleure = selectMeilleureEnchere(articleId);
-        if (meilleure != null && montant <= meilleure.getMontant_enchere()){
+        if (meilleure != null && montant <= meilleure.getMontant_enchere()) {
             throw new RuntimeException("L'enchere n'est pas assez haute");
+        }
+
+        if (a.getEtatVente() == EtatVente.ATTENTE) {
+            throw new RuntimeException("L'enchère n'est pas encore ouverte");
         }
 
         Enchere enchere = new Enchere();
         enchere.setDateEnchere(LocalDateTime.now());
         enchere.setMontant_enchere(montant);
-
         enchere.setArticle(a);
 
         Utilisateur utilisateur = new Utilisateur();
         utilisateur.setNoUtilisateur(utilisateurId);
         enchere.setUtilisateur(utilisateur);
 
-
         idaoEnchere.create(enchere);
 
 
+
     }
+
 
     public Enchere getLastEnchere(Enchere enchere){
-        List<Enchere> encheres = selectEncheresByArticle(enchere.getArticle().getNoArticle());
-        enchere = encheres.get(encheres.size() - 1);
-        return enchere;
+        if(enchere != null ){
+            List<Enchere> encheres = selectEncheresByArticle(enchere.getArticle().getNoArticle());
+            enchere = encheres.get(encheres.size() - 1);
+            return enchere;    }
+        return null;
     }
-
-
 }
-
-
-
-
-
-
-
-
