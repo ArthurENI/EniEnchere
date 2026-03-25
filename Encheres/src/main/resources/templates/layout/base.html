@@ -26,33 +26,55 @@
             <div class="uk-navbar-right">
                 <ul class="uk-navbar-nav">
 
+                            <!-- SI CONNECTE -->
+                            <li th:if="${loggedUser}">
 
+                                <!-- ADMIN -->
+                                <a th:if="${loggedUser.getRole().getLibelle()} == 'admin'" href="#">
+                                    Admin
+                                </a>
 
-                    <!-- SI CONNECTE -->
-                    <li th:if="${loggedUser}">
+                                <div class="uk-navbar-dropdown"
+                                     th:if="${loggedUser.getRole().getLibelle()} == 'admin'">
+                                    <ul class="uk-nav uk-navbar-dropdown-nav">
+                                        <li>
+                                            <a th:href="@{/encheres/admin/ListUtilisateur}">
+                                                <span data-uk-icon="icon:users"></span> Gestion utilisateurs
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a th:href="@{/encheres/admin/ListCategories}">
+                                                <span data-uk-icon="icon:database"></span> Gestion categories
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
 
-                        <!-- SI ADMIN -->
-                    <a th:if="${loggedUser.getRole().getLibelle()} == 'admin'" th:href="@{/encheres/admin/ListUtilisateur}" class=" "> Admin</a>
-                    <!-- SI ADMIN -->
+                    <!-- UTILISATEUR -->
                     <li th:if="${loggedUser}">
                         <a href="#" data-uk-icon="icon:menu"></a>
-                        <div class="uk-navbar-dropdown uk-navbar-dropdown-bottom-left">
+                        <div class="uk-navbar-dropdown ">
                             <ul class="uk-nav uk-navbar-dropdown-nav">
-                                <li class="uk-nav-header uk-text-small uk-text-primary" th:text="'Bonjour ' + ${loggedUser.pseudo}"></li>
+                                <li class="uk-nav-header uk-text-small uk-text-primary"
+                                    th:text="'Bonjour ' + ${loggedUser.pseudo}"></li>
                                 <li class="uk-nav-divider"></li>
                                 <li>
                                     <a th:href="@{/articles/vente}">
                                         <span data-uk-icon="icon:bag"></span>Créer une vente
                                     </a>
                                 </li>
-                                <li><a th:href= "@{'/encheres/Profil/'+${loggedUser.noUtilisateur}}"> <span data-uk-icon="icon:user"></span>Profil</a></li>
-                                <li><a th:href="@{/encheres/logout}"><span data-uk-icon="icon: sign-out"></span> Se déconnecter</a></li>
+                                <li><a th:href="@{'/encheres/Profil/'+${loggedUser.noUtilisateur}}"> <span
+                                        data-uk-icon="icon:user"></span>Profil</a></li>
+                                <li><a th:href="@{/encheres/logout}"><span data-uk-icon="icon: sign-out"></span> Se
+                                    déconnecter</a></li>
                             </ul>
                         </div>
                     </li>
                     <!-- SI PAS CONNECTE -->
                     <div class="uk-navbar-item" th:if="${loggedUser == null}">
-                        <a th:href="@{/encheres}" class="uk-button uk-button-primary"> Se connecter</a>
+                        <a th:href="@{/encheres}" class="uk-button uk-button-primary">
+                            <span data-uk-icon="icon: sign-in"></span> Se connecter</a>
                     </div>
                 </ul>
             </div>
