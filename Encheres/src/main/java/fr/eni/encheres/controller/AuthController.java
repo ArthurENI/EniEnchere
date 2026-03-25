@@ -27,6 +27,9 @@ public class AuthController {
         this.authService = authService;
     }
 
+    private Utilisateur getLoggedUser(Model model) {
+        return (Utilisateur) model.getAttribute("loggedUser");
+    }
     @GetMapping("/encheres")
     public String showLoginForm(@CookieValue(value = "rememberLogin", required = false) String login, Model model) {
         // Instancier un user par defaut dans le formulaire
@@ -39,52 +42,39 @@ public class AuthController {
         return "auth/login-page";
     }
 
+    // =========================
+    // LOGIN
+    // =========================
     @PostMapping("/encheres/login-process")
-    public String loginProcess(@Valid @ModelAttribute("utilisateur") Utilisateur utilisateur, BindingResult bindingResult, Model model,
-                               RedirectAttributes redirectAttributes, HttpServletResponse response, @RequestParam(value = "cookiePseudo", required = false) String cookiePseudo) {
-
+    public String loginProcess(
+            @Valid @ModelAttribute("utilisateur") Utilisateur utilisateur, BindingResult bindingResult,
+            Model model, RedirectAttributes redirectAttributes, HttpServletResponse response, @RequestParam(value = "cookiePseudo", required = false) String cookiePseudo) {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("emailForm", new Utilisateur());
             return "auth/login-page";
         }
 
-        // Appel le service
-        ServiceResponse<Utilisateur> serviceResponse = authService.login(utilisateur.getPseudo(), String.valueOf(utilisateur.getMotDePasse().hashCode()));
+        ServiceResponse<Utilisateur> serviceResponse =
+                authService.login(utilisateur.getPseudo(),
+                        String.valueOf(utilisateur.getMotDePasse().hashCode()));
 
-        // Si tentative erreur
         if (!serviceResponse.code.equals("2002")) {
-            // Envoyer un message d'erreur temporaire
             EniFlashMessage.sendError(model, serviceResponse.message);
-
-            // reafficher le  formulaire
             model.addAttribute("emailForm", new Utilisateur());
             return "auth/login-page";
         }
-
-        // récupérer le user connecté(e)
         Utilisateur loggedUser = serviceResponse.data;
-
-        //  Création du cookie
+        //  SESSION
+        model.addAttribute("loggedUser", loggedUser);
+        // Cookie
         if (cookiePseudo != null) {
             Cookie cookie = new Cookie("rememberLogin", utilisateur.getPseudo());
             cookie.setMaxAge(7 * 24 * 60 * 60);
             cookie.setPath("/");
             response.addCookie(cookie);
-        } else {
-            // cookie vide
-            Cookie cookie = new Cookie("rememberLogin", null);
-            cookie.setMaxAge(0); // suppression immédiate
-            cookie.setPath("/");
-            response.addCookie(cookie);
         }
-
-        // Ajouter dans une session un user
-        model.addAttribute("loggedUser", loggedUser);
-
         EniFlashMessage.sendSuccessFlash(redirectAttributes, serviceResponse.message);
-
-        // Rediriger sur la page d'accueil
         return "redirect:/articles/encheres";
     }
 
@@ -102,15 +92,15 @@ public class AuthController {
 
     @GetMapping({"/encheres/inscription", "/encheres/ProfilModif/{id}"})
     public String showInscriptionForm(
-            @PathVariable(name = "id", required = false) Long id,
-            Model model) {
+            @PathVariable(name = "id", required = false) Long id, Model model) {
 
         Utilisateur utilisateur;
 
         // Cas modification de profil
         if (id != null) {
 
-            Utilisateur loggedUser = (Utilisateur) model.getAttribute("loggedUser");
+           // Utilisateur loggedUser = (Utilisateur) model.getAttribute("loggedUser");
+            Utilisateur loggedUser = getLoggedUser(model);
             // Vérification utilisateur connecté
             if (loggedUser == null) {
                 return "auth/accesRestreint-page";
@@ -131,26 +121,26 @@ public class AuthController {
 
 
     @PostMapping("/encheres/inscription-process")
-    public String InscriptionProcess(@Valid @ModelAttribute("utilisateur") Utilisateur utilisateur, BindingResult bindingResult,
-                                     Model model, RedirectAttributes redirectAttributes, @RequestParam("confirmMdp") String confirmMdp) {
+    public String inscriptionProcess(
+            @Valid @ModelAttribute("utilisateur") Utilisateur utilisateur, BindingResult bindingResult,
+            Model model, RedirectAttributes redirectAttributes, @RequestParam("confirmMdp") String confirmMdp) {
 
         if (bindingResult.hasErrors()) {
             return "auth/inscription-page";
         }
 
         if (!Objects.equals(utilisateur.getMotDePasse(), confirmMdp)) {
-            EniFlashMessage.sendError(model, "Les champs mots de passes ne sont pas identiques");
+            EniFlashMessage.sendError(model, "Les mots de passe ne correspondent pas");
             return "auth/inscription-page";
         }
 
-        ServiceResponse<Utilisateur> serviceResponse = null;
+        ServiceResponse<Utilisateur> serviceResponse;
         try {
             serviceResponse = authService.saveUtilisateur(utilisateur);
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "email ou pseudo déjà utilisé");
+            redirectAttributes.addFlashAttribute("errorMessage", "Email ou pseudo déjà utilisé");
             return "redirect:/encheres/inscription";
         }
-
         EniFlashMessage.sendSuccessFlash(redirectAttributes, serviceResponse.message);
 
         if (serviceResponse.message.equals("Utilisateur créer avec succès")) {
@@ -158,22 +148,22 @@ public class AuthController {
             return "redirect:/encheres";
         }
 
-        // récupérer le user connecté(e)
-        Utilisateur loggedUser = serviceResponse.data;
-
         // Ajouter dans une session un user
-        model.addAttribute("loggedUser", loggedUser);
-
+        model.addAttribute("loggedUser", authService.getUtilisateur(utilisateur.getNoUtilisateur()));
         //page acceuil
-        return "redirect:/articles/encheres";
-
+        return "encheres/ListVentes-page";
     }
 
     @GetMapping("/encheres/Profil/{id}")
-    public String showProfilForm(@PathVariable(name = "id") Long id, Model model) {
-        Utilisateur loggedUser = (Utilisateur) model.getAttribute("loggedUser");
+    public String showProfil(@PathVariable Long id, Model model) {
+
+        Utilisateur loggedUser = getLoggedUser(model);
 
         if (loggedUser == null) {
+            return "auth/accesRestreint-page";
+        }
+
+        if (!loggedUser.getNoUtilisateur().equals(id)) {
             return "auth/accesRestreint-page";
         }
 
