@@ -158,7 +158,7 @@ public class DAOAuthJdbc implements IDAOUtilisateur {
                 VALUES(?,?,?,?,?,?,?,?,?,?)
                 """;
         jdbcTemplate.update(sql, utilisateur.getPseudo(), utilisateur.getNom(), utilisateur.getPrenom(), utilisateur.getEmail(),
-                utilisateur.getTelephone(), utilisateur.getMotDePasse(), 0, utilisateur.isActif(), id, 1);
+                utilisateur.getTelephone(), utilisateur.getMotDePasse(), 1000, utilisateur.isActif(), id, 1);
     }
 
     @Override

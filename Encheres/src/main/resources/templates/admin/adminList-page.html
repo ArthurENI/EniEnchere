@@ -17,13 +17,15 @@
                 </div>
                 <!-- Actions -->
                 <div class="uk-flex uk-flex-right uk-gap-small">
-                    <a class="uk-button uk-button-secondary uk-button-small">Rendre inactif</a>
+<!--                    <a class="uk-button uk-button-secondary uk-button-small">Rendre inactif</a>-->
                     <a class="uk-button uk-button-danger uk-button-small" th:href="@{/encheres/admin/suppr/{id}(id=${user.getNoUtilisateur()})}">Supprimer</a>
                 </div>
 
             </li>
         </ul>
-
+        <div th:if="${errorMessage}" class="uk-alert-danger uk-alert">
+            <p th:text="${errorMessage}"></p>
+        </div>
     </div>
 </div>
 </body>
