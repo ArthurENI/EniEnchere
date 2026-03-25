@@ -38,7 +38,7 @@ public class EnchereController {
         return "encheres/encheres-page";
     }
 
-    @GetMapping("/details/{id}")
+    @GetMapping("/detail/{id}")
     public String detailEnchere(
             @PathVariable(name = "id") Long id,
             Model model) {
@@ -62,14 +62,15 @@ public class EnchereController {
             @SessionAttribute("loggedUser") Utilisateur user,
             RedirectAttributes redirectAttributes
     ) {
+
         try {
             enchereService.placerEnchere(articleId, user.getNoUtilisateur(), montant);
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
-            return "redirect:/encheres/details/" + articleId;
+            return "redirect:/articles/detail/" + articleId;
         }
 
-        return "redirect:/encheres/liste";
+        return "redirect:/articles/detail/" + articleId;
     }
 
 
