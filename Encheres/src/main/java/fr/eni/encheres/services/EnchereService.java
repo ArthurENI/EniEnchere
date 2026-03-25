@@ -1,6 +1,8 @@
 package fr.eni.encheres.services;
 
 import fr.eni.encheres.bo.Enchere;
+import fr.eni.encheres.bo.Utilisateur;
+import jdk.jshell.execution.Util;
 
 import java.util.List;
 
@@ -13,7 +15,7 @@ public interface EnchereService {
     Enchere selectMeilleureEnchere(Long articleId);
 
 
-    void placerEnchere(Long articleId, Long utilisateurId, int montant);
+    void placerEnchere(Long articleId, Long utilisateurId, int montant, Utilisateur encherisseur);
     Enchere getLastEnchere(Enchere enchere);
 }
 

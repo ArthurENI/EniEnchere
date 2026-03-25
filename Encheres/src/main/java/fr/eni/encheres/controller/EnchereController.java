@@ -64,7 +64,7 @@ public class EnchereController {
     ) {
 
         try {
-            enchereService.placerEnchere(articleId, user.getNoUtilisateur(), montant);
+            enchereService.placerEnchere(articleId, articleService.selectArticleById(articleId).getUtilisateur().getNoUtilisateur(), montant, user);
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
             return "redirect:/articles/detail/" + articleId;

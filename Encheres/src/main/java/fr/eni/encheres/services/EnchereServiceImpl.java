@@ -64,15 +64,20 @@ public class EnchereServiceImpl  implements EnchereService {
 
 
     @Override
-    public void placerEnchere(Long articleId, Long utilisateurId, int montant) {
+    public void placerEnchere(Long articleId, Long utilisateurId, int montant, Utilisateur encherisseur) {
 
         Article a = idaoArticle.selectArticleById(articleId);
         if (a == null) {
             throw new RuntimeException("Aucun article trouver");
         }
 
-        if (a.getUtilisateur().getNoUtilisateur().equals(utilisateurId)) {
+        if (encherisseur.getNoUtilisateur().equals(utilisateurId)) {
             throw new RuntimeException("Le vendeur de l'article ne peut pas mettre d'enchere sur son article");
+        }
+
+        if(encherisseur.getCredit() < montant){
+            System.out.println(encherisseur.getCredit());
+            throw new RuntimeException("Vous n'avez pas assez de crédit pour placer cette enchère");
         }
 
         Enchere meilleure = selectMeilleureEnchere(articleId);
@@ -89,9 +94,7 @@ public class EnchereServiceImpl  implements EnchereService {
         enchere.setMontant_enchere(montant);
         enchere.setArticle(a);
 
-        Utilisateur utilisateur = new Utilisateur();
-        utilisateur.setNoUtilisateur(utilisateurId);
-        enchere.setUtilisateur(utilisateur);
+        enchere.setUtilisateur(encherisseur);
 
         idaoEnchere.create(enchere);
 
