@@ -51,7 +51,6 @@ public class DAOCategorieMock implements IDAOCategorie {
     @Override
     public Categorie selectCategorieById(Long id) {
         if (dbCategories == null) return null;
-        System.out.println("READ CATEGORIE : "+id);
         return dbCategories.stream()
                 .filter(c -> c.getNoCategorie() != null && c.getNoCategorie().equals(id))
                 .findFirst()

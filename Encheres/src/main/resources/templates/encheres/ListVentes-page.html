@@ -63,7 +63,8 @@ layout:decorate="~{layout/base}">
 
                     <!-- ARTICLE 1 -->
                     <div th:each="enchere : ${articles}">
-                        <div class="uk-card uk-card-default uk-card-body uk-flex">
+                        <div class="uk-card uk-card-default uk-card-body uk-flex uk-background-muted uk-border-rounded"
+                             style="border: 1px solid rgba(0,0,0,0.15); box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
 
                             <!-- Image -->
                             <div class="uk-margin-right">
@@ -73,12 +74,23 @@ layout:decorate="~{layout/base}">
                             <!-- Infos -->
                             <div>
                                 <a th:href ="'/articles/detail/' + ${enchere.getNoArticle()}">
-                                    <h4 class="uk-margin-remove" th:text="${enchere.getNomArticle()}"></h4></a>
-                                <p class="uk-margin-remove" th:text="'Catégorie : '+${enchere.getCategorie().libelle    }"></p>
-                                <p class="uk-margin-remove" th:text="'Prix de départ : '+${enchere.getMiseAPrix()}"></p>
-                                <p class="uk-margin-remove" th:text="'Date de fin : '+${enchere.getDateFinEnchere()}"></p>
-                                <p class="uk-margin-remove" th:text="'Vendeur : '+${enchere.getUtilisateur().getPseudo()}"></p>
-                                <p class="uk-margin-remove" th:text="'Statut : '+${enchere.getEtatVente()}"></p>
+                                    <p><b><span  style="color: darkred">[[${enchere.getNomArticle()}]]</span></b></p></a>
+                                    <p><u>Catégorie</u> : [[${enchere.categorie.libelle}]]</p>
+                                    <p><u>Prix de départ</u> : [[${enchere.miseAPrix}]]</p>
+
+                                    <p>
+                                        <u>Ouverture de l'enchère</u> :
+                                        [[${#temporals.format(enchere.dateDebutEnchere, 'dd/MM/yyyy HH:mm')}]]
+                                    </p>
+
+                                    <p>
+                                        <u>Date de fin</u> :
+                                        [[${#temporals.format(enchere.dateFinEnchere, 'dd/MM/yyyy HH:mm')}]]
+                                    </p>
+
+                                    <p><u>Vendeur</u> : [[${enchere.utilisateur.pseudo}]]</p>
+                                    <p><u>Statut</u> : [[${enchere.etatVente}]]</p>
+
                             </div>
 
                         </div>

@@ -12,13 +12,17 @@
     <div class="uk-flex uk-flex-center">
         <div class="uk-width-1-2@m">
             <div class="uk-card uk-card-default uk-padding"
-                 style="background-color: #f9f9f9; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-radius: 10px;">
+                 style="background-color: #f9f9f9;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            border-radius: 10px;
+            border: 1px solid rgba(0,0,0,0.15);">
 
                 <p><u><b>Nom de l'article</b></u> : <span  style="color: darkred">[[${article.nomArticle}]]</span></p>
                 <p><u>Description</u> : [[${article.description}]]</p>
                 <p><u>Catégorie</u> : [[${article.categorie.libelle}]]</p>
                 <p th:if="${enchere}"><u>Dernière enchère</u> : [[${enchere.getMontant_enchere()}]]</p>
                 <p th:if="${enchere == null}"><u>Mise à prix</u> : [[${article.miseAPrix}]]</p>
+                <p><u>Statut actuel</u> : [[${article.etatVente}]]</p>
                 <p><u>Date de fin d'enchere</u> : [[${article.dateFinEnchere}]]</p>
 
                 <div class="uk-margin">
@@ -44,23 +48,41 @@
                                th:value="${article.utilisateur.noUtilisateur}"/>
 
                         <div class="uk-margin">
-                            <label class="uk-form-label" for="proposition-perso">
-                                Ma proposition :
-                            </label>
+                            <div th:if="${article.etatVente.name() == 'TERMINEE'}"
+                                 class="uk-alert-success" uk-alert>
+                                <p>
+                                    <b>L'enchère a été remportée par : </b>
+                                    <span th:text="${enchere.utilisateur.pseudo}"></span>
+                                    <b>pour un montant de : </b>
+                                    <span th:text="${enchere.montant_enchere}"></span>
+                                </p>
+                            </div>
+                            <div th:if="${article.etatVente.name() == 'ATTENTE'}"
+                                 class="uk-alert-info" uk-alert>
+                                <p>
+                                    <b>L'enchère n'est pas encore ouverte : </b>
+                                </p>
+                            </div>
+                            <div th:if="${article.etatVente.name() == 'OUVERTE'}">
+                                <label class="uk-form-label" for="proposition-perso">
+                                    Ma proposition :
+                                </label>
 
-                            <div class="uk-form-controls">
-                                <input class="uk-input uk-form-small uk-width-1-2"
-                                       id="proposition-perso"
-                                       type="number"
-                                       name="montant"
-                                       th:attr="min=${encherir}, value=${encherir}"
-                                       th:placeholder="'Encherir : (Minimum : '+${encherir}+' )'"/>
+                                <div class="uk-form-controls">
+                                    <input class="uk-input uk-form-small uk-width-1-2"
+                                           id="proposition-perso"
+                                           type="number"
+                                           name="montant"
+                                           th:attr="min=${encherir}, value=${encherir}"
+                                           th:placeholder="'Encherir : (Minimum : '+${encherir}+' )'"/>
 
+                                </div>
+
+                                <input type="submit"
+                                       class="uk-button uk-button-primary uk-margin-top"
+                                       value="Enchérir"/>
                             </div>
 
-                            <input type="submit"
-                                   class="uk-button uk-button-primary uk-margin-top"
-                                   value="Enchérir"/>
                         </div>
                     </form>
                 </div>

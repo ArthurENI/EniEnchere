@@ -32,6 +32,7 @@ public class ArticleServiceImpl  implements ArticleService{
 
 
     public void validerStatutArticle(Article article){
+
         if(article.getDateFinEnchere().isBefore(LocalDateTime.now())){
             article.setEtatVente(EtatVente.TERMINEE);
         } else if(LocalDateTime.now().isAfter(article.getDateDebutEnchere()) && LocalDateTime.now().isBefore(article.getDateFinEnchere())){
@@ -39,6 +40,8 @@ public class ArticleServiceImpl  implements ArticleService{
         } else if(LocalDateTime.now().isBefore(article.getDateDebutEnchere())){
             article.setEtatVente(EtatVente.ATTENTE);
         }
+
+        idaoArticle.updateArticle(article);
     }
 
     @Override
@@ -125,12 +128,10 @@ public class ArticleServiceImpl  implements ArticleService{
     private void chargerUtilisateurEnchere(Enchere e){
         Utilisateur u = idaoUtilisateur.selectUtilisateurById(e.getUtilisateur().getNoUtilisateur());
         e.setUtilisateur(u);
-        System.out.println("UTILISATEUR ENCHERE : "+e.getUtilisateur().getNoUtilisateur());
     }
 
     private void chargerArticleParUtilisateur(Long idUser){
         List<Article> articles = idaoArticle.selectArticleByUtilisateur(idUser);
-        System.out.println("ARTICLES PAR UTILISATEUR : "+articles.size());
     }
 
 

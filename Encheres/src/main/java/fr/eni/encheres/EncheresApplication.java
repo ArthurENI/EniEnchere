@@ -26,7 +26,7 @@ public class EncheresApplication {
 		SpringApplication.run(EncheresApplication.class, args);
 	}
 
-	@Scheduled(fixedRate = 5000) // Vérifie toutes les minutes
+	@Scheduled(fixedRate = 60000) // Vérifie toutes les minutes
 	public void verifierStatutArticles() {
 		List<Article> articles = articleService.selectAllArticles();
 		for (Article article : articles) {

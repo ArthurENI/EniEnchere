@@ -105,7 +105,6 @@ public class ArticleController {
     @GetMapping("/vente")
     public String creerVente(Model model, @SessionAttribute("loggedUser") Utilisateur utilisateur)
     {
-        System.out.println("CREER VENTE");
         Article article = new Article();
         article.setAdresseRetrait(new Adresse());
         model.addAttribute("article", article);

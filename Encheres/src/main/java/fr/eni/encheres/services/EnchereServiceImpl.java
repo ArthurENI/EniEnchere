@@ -88,6 +88,9 @@ public class EnchereServiceImpl  implements EnchereService {
         if (a.getEtatVente() == EtatVente.ATTENTE) {
             throw new RuntimeException("L'enchère n'est pas encore ouverte");
         }
+        if (a.getEtatVente() == EtatVente.TERMINEE) {
+            throw new RuntimeException("L'enchère est cloturée");
+        }
 
         Enchere enchere = new Enchere();
         enchere.setDateEnchere(LocalDateTime.now());
