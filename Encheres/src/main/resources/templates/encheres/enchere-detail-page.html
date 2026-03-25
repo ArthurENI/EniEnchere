@@ -33,6 +33,9 @@
                 <p><u>Vendeur</u> : [[${article.utilisateur.pseudo}]]</p>
 
                 <div class="uk-margin">
+                    <div th:if="${errorMessage}" class="uk-alert-danger" uk-alert>
+                        <p th:text="${errorMessage}"></p>
+                    </div>
                     <form th:action="@{/encheres/ajout}" method="post">
                         <input type="hidden" name="articleId"
                                th:value="${article.noArticle}"/>
@@ -51,8 +54,7 @@
                                        name="montant"
                                        th:attr="min=${encherir}, value=${encherir}"
                                        th:placeholder="'Encherir : (Minimum : '+${encherir}+' )'"/>
-                                        <!--Ajout de la valeur minimum possible pour l'enchere
-                                         + on bloque les flèches à cette valeur min-->
+
                             </div>
 
                             <input type="submit"
