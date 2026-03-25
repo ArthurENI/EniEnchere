@@ -33,12 +33,12 @@
                     <!-- ADMIN -->
                     <li th:if="${loggedUser}">
 
-                        <a th:if="${loggedUser.getRole().getLibelle()} == 'admin'" href="#">
+                        <a th:if="${loggedUser.getRole()?.getLibelle()} == 'admin'" href="#">
                             Admin
                         </a>
 
                         <div class="uk-navbar-dropdown"
-                             th:if="${loggedUser.getRole().getLibelle()} == 'admin'">
+                             th:if="${loggedUser.getRole()?.getLibelle()} == 'admin'">
                             <ul class="uk-nav uk-navbar-dropdown-nav">
                                 <li>
                                     <a th:href="@{/encheres/admin/ListUtilisateur}">

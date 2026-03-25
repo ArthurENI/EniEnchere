@@ -50,7 +50,7 @@ public class AuthController {
         }
 
         // Appel le service
-        ServiceResponse<Utilisateur> serviceResponse = authService.login(utilisateur.getPseudo(), utilisateur.getMotDePasse());
+        ServiceResponse<Utilisateur> serviceResponse = authService.login(utilisateur.getPseudo(), String.valueOf(utilisateur.getMotDePasse().hashCode()));
 
         // Si tentative erreur
         if (!serviceResponse.code.equals("2002")) {

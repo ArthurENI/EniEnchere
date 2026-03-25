@@ -113,7 +113,7 @@ public class DAOAuthJdbc implements IDAOUtilisateur {
                 
                 """;
         jdbcTemplate.update(sql, utilisateur.getPseudo(), utilisateur.getNom(), utilisateur.getPrenom(), utilisateur.getEmail(),
-                utilisateur.getTelephone(), utilisateur.getMotDePasse(), utilisateur.getNoUtilisateur()
+                utilisateur.getTelephone(), utilisateur.getMotDePasse().hashCode(), utilisateur.getNoUtilisateur()
                 );
         sql = """
                 UPDATE adresse
@@ -132,7 +132,7 @@ public class DAOAuthJdbc implements IDAOUtilisateur {
                 SET mot_de_passe = ?
                 WHERE no_utilisateur = ?
                 """;
-        jdbcTemplate.update(sql, utilisateur.getMotDePasse(), utilisateur.getNoUtilisateur());
+        jdbcTemplate.update(sql, utilisateur.getMotDePasse().hashCode(), utilisateur.getNoUtilisateur());
     }
 
     @Override
@@ -158,7 +158,7 @@ public class DAOAuthJdbc implements IDAOUtilisateur {
                 VALUES(?,?,?,?,?,?,?,?,?,?)
                 """;
         jdbcTemplate.update(sql, utilisateur.getPseudo(), utilisateur.getNom(), utilisateur.getPrenom(), utilisateur.getEmail(),
-                utilisateur.getTelephone(), utilisateur.getMotDePasse(), 1000, utilisateur.isActif(), id, 1);
+                utilisateur.getTelephone(), utilisateur.getMotDePasse().hashCode(), 1000, utilisateur.isActif(), id, 1);
     }
 
     @Override
