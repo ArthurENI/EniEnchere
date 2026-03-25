@@ -28,6 +28,7 @@ layout:decorate="~{layout/base}">
                     <!-- Catégorie -->
                 <div class="uk-form-controls">
                     <select class="uk-select" name="categorie">
+                        <option value="">Toutes</option>
                         <option th:each="c : ${categorie}" th:value="${c.noCategorie}"
                                 th:text="${c.libelle}"></option>
                     </select>
@@ -71,7 +72,9 @@ layout:decorate="~{layout/base}">
 
                             <!-- Infos -->
                             <div>
-                                <a th:href ="'/articles/detail/' + ${enchere.getNoArticle()}"><h4 class="uk-margin-remove" th:text="${enchere.getNomArticle()}"></h4></a>
+                                <a th:href ="'/articles/detail/' + ${enchere.getNoArticle()}">
+                                    <h4 class="uk-margin-remove" th:text="${enchere.getNomArticle()}"></h4></a>
+                                <p class="uk-margin-remove" th:text="'Catégorie : '+${enchere.getCategorie().libelle    }"></p>
                                 <p class="uk-margin-remove" th:text="'Prix de départ : '+${enchere.getMiseAPrix()}"></p>
                                 <p class="uk-margin-remove" th:text="'Date de fin : '+${enchere.getDateFinEnchere()}"></p>
                                 <p class="uk-margin-remove" th:text="'Vendeur : '+${enchere.getUtilisateur().getPseudo()}"></p>
