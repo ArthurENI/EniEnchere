@@ -37,14 +37,20 @@ public class ArticleController {
     @GetMapping("/detail/{id}")
     public String afficherUnArticle(
             @PathVariable Long id, Model model ) {
+        int montantMinimum = articleService.selectArticleById(id).getMiseAPrix();
         if(id>0){
             Article article =articleService.selectArticleById(id);
             Enchere enchere = enchereService.getLastEnchere(enchereService.selectMeilleureEnchere(id));
-            int montantMinimum = enchereService.getLastEnchere(enchereService.selectMeilleureEnchere(id)).getMontant_enchere() + 1;
+            if(enchere != null){
+                montantMinimum = enchereService.getLastEnchere(enchereService.selectMeilleureEnchere(id)).getMontant_enchere() + 1;
+            }
+
 
             if(article!=null){
                 model.addAttribute("article", article);
-                model.addAttribute("enchere", enchere);
+                if(enchere != null){
+                    model.addAttribute("enchere", enchere);
+                }
                 model.addAttribute("encherir", montantMinimum);
                 return "encheres/enchere-detail-page";
             }

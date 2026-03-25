@@ -17,7 +17,8 @@
                 <p><u><b>Nom de l'article</b></u> : <span  style="color: darkred">[[${article.nomArticle}]]</span></p>
                 <p><u>Description</u> : [[${article.description}]]</p>
                 <p><u>Catégorie</u> : [[${article.categorie.libelle}]]</p>
-                <p><u>Dernière enchère</u> : [[${enchere.getMontant_enchere()}]]</p>
+                <p th:if="${enchere}"><u>Dernière enchère</u> : [[${enchere.getMontant_enchere()}]]</p>
+                <p th:if="${enchere == null}"><u>Mise à prix</u> : [[${article.miseAPrix}]]</p>
                 <p><u>Date de fin d'enchere</u> : [[${article.dateFinEnchere}]]</p>
 
                 <div class="uk-margin">
