@@ -20,7 +20,8 @@ public interface IDAOArticle {
     //Créer un article revient à créer une vente
     void createArticle(Article article);
     Article deleteArticle();
-    Article updateArticle();
+    void updateArticle(Article article);
+
 
 
 

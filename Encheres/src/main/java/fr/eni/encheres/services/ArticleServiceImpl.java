@@ -8,6 +8,7 @@ import fr.eni.encheres.dao.IDAOUtilisateur;
 import fr.eni.encheres.exception.BusinessCode;
 import fr.eni.encheres.exception.BusinessException;
 import org.springframework.dao.DataAccessException;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -27,6 +28,17 @@ public class ArticleServiceImpl  implements ArticleService{
         this.idaoCategorie = idaoCategorie;
         this.idaoUtilisateur = idaoUtilisateur;
         this.idaoEnchere = idaoEnchere;
+    }
+
+
+    public void validerStatutArticle(Article article){
+        if(article.getDateFinEnchere().isBefore(LocalDateTime.now())){
+            article.setEtatVente(EtatVente.TERMINEE);
+        } else if(LocalDateTime.now().isAfter(article.getDateDebutEnchere()) && LocalDateTime.now().isBefore(article.getDateFinEnchere())){
+            article.setEtatVente(EtatVente.OUVERTE);
+        } else if(LocalDateTime.now().isBefore(article.getDateDebutEnchere())){
+            article.setEtatVente(EtatVente.ATTENTE);
+        }
     }
 
     @Override

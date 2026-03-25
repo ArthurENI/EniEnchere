@@ -23,4 +23,6 @@ public interface ArticleService {
     Article deleteArticle();
     Article updateArticle();
 
+    void validerStatutArticle(Article article);
+
 }

@@ -2,7 +2,6 @@ package fr.eni.encheres.dao.jdbc;
 
 import fr.eni.encheres.bo.*;
 import fr.eni.encheres.dao.IDAOArticle;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -10,11 +9,8 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
-import javax.swing.tree.TreePath;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -58,7 +54,14 @@ public class DAOArticleImpl implements IDAOArticle {
             VALUES (:nom, :image, :description, :date_debut, :date_fin, :prix, :idUtilisateur, :idCategorie, :idAdresse, :etat)
            \s""";
 
-    
+    private final String UPDATE = """
+            UPDATE ARTICLES SET nom_article = :nom,
+            nom_image = :image, description_article = :description,
+            date_debut_encheres = :date_debut, date_fin_encheres = :date_fin, prix_initial = :prix,
+            no_utilisateur = :idUtilisateur, no_categorie = :idCategorie,
+            no_adresse = :idAdresse, etat = :etat
+            WHERE no_article = :id
+           """;
 
 
     private final JdbcTemplate jdbcTemplate;
@@ -148,8 +151,36 @@ public class DAOArticleImpl implements IDAOArticle {
     }
 
     @Override
-    public Article updateArticle() {
-        return null;
+    public void updateArticle(Article article) {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(
+                    "INSERT INTO adresse (rue,code_postal,ville) VALUES(?,?,?)",
+                    Statement.RETURN_GENERATED_KEYS
+            );
+            ps.setString(1, article.getAdresseRetrait().getRue());
+            ps.setString(2, article.getAdresseRetrait().getCodePostal());
+            ps.setString(3, article.getAdresseRetrait().getVille());
+            return ps;
+        }, keyHolder);
+        Long id = keyHolder.getKey().longValue();
+
+        MapSqlParameterSource namedParameter = new MapSqlParameterSource();
+        namedParameter.addValue("nom", article.getNomArticle());
+        namedParameter.addValue("image", article.getNomImage());
+        namedParameter.addValue("description", article.getDescription());
+        namedParameter.addValue("date_debut", article.getDateDebutEnchere());
+        namedParameter.addValue("date_fin", article.getDateFinEnchere());
+        namedParameter.addValue("prix", article.getMiseAPrix());
+        System.out.println("ID USER " + article.getUtilisateur().getNoUtilisateur());
+        namedParameter.addValue("idUtilisateur", article.getUtilisateur().getNoUtilisateur());
+        namedParameter.addValue("idCategorie", article.getCategorie().getNoCategorie());
+        namedParameter.addValue("idAdresse", id);
+        namedParameter.addValue("etat", article.getEtatVente().name());
+        System.out.println("ETAT VENTE " +article.getEtatVente());
+
+        namedParameterJdbcTemplate.update(UPDATE, namedParameter);
+
     }
 
 
