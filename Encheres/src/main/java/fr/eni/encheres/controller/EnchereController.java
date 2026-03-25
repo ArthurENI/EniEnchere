@@ -66,7 +66,7 @@ public class EnchereController {
         try {
             enchereService.placerEnchere(articleId, user.getNoUtilisateur(), montant);
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+            redirectAttributes.addFlashAttribute("errorMessage", "Crédit insuffisant");
             return "redirect:/articles/detail/" + articleId;
         }
 

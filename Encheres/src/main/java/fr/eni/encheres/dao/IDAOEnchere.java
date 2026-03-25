@@ -14,7 +14,6 @@ public interface IDAOEnchere {
 
     Enchere create(Enchere enchere);
 
-
     Enchere edit(Enchere enchere);
 
     void delete(Long id);

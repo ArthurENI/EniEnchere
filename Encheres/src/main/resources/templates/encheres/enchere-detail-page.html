@@ -34,9 +34,6 @@
                 <p><u>Vendeur</u> : [[${article.utilisateur.pseudo}]]</p>
 
                 <div class="uk-margin">
-                    <div th:if="${errorMessage}" class="uk-alert-danger" uk-alert>
-                        <p th:text="${errorMessage}"></p>
-                    </div>
                     <form th:action="@{/encheres/ajout}" method="post">
                         <input type="hidden" name="articleId"
                                th:value="${article.noArticle}"/>
