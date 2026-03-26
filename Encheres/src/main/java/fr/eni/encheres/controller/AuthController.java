@@ -173,7 +173,7 @@ public class AuthController {
 
     @GetMapping("/encheres/suppr")
     public String supprimerCompte(Model model, RedirectAttributes redirectAttributes, SessionStatus sessionStatus) {
-        Utilisateur utilisateur = (Utilisateur) model.getAttribute("loggedUser");
+        Utilisateur utilisateur = getLoggedUser(model);
         sessionStatus.setComplete();
         authService.SupprUtilisateur(utilisateur);
 

@@ -8,16 +8,17 @@
     <link rel="stylesheet" href="/uikit/css/uikit.min.css"/>
     <script src="/uikit/js/uikit.min.js"></script>
     <script src="/uikit/js/uikit-icons.min.js"></script>
+    <link rel="stylesheet" href="/css/encheres.css">
     <!-- /UIKIT -->
 </head>
 <body>
 <!--HEADER-->
-<header style="background-color: #fff; border-bottom: 1px solid #f2f2f2"
+<header style="background-color: #134b80; border-bottom: 1px solid #f2f2f2"
         data-uk-sticky="show-on-up: true; animation: uk-animation-slide-top">
-    <div class="uk-container">
-        <nav id="navbar" data-uk-navbar="mode: click;">
+    <div class="uk-container ">
+        <nav id="navbar" data-uk-navbar="mode: click;" >
             <div class="uk-navbar-left">
-                <a class="uk-navbar-item uk-logo" th:href="@{/articles/encheres}">Eni-Encheres</a>
+                <a class="uk-navbar-item uk-logo texteB" th:href="@{/articles/encheres}">Eni-Encheres</a>
 
             </div>
             <div class="uk-navbar-center">
@@ -28,16 +29,16 @@
 
                     <!-- SI CONNECTE -->
                     <li th:if="${loggedUser}">
-                        <span class="uk-navbar-item" th:text="'Crédit: ' + ${loggedUser.getCredit()}"></span>
+                        <span class="uk-navbar-item texteB" th:text="'Crédit: ' + ${loggedUser.getCredit()}"></span>
                     </li>
                     <!-- ADMIN -->
                     <li th:if="${loggedUser}">
 
-                        <a th:if="${loggedUser.getRole()?.getLibelle()} == 'admin'" href="#">
+                        <a th:if="${loggedUser.getRole()?.getLibelle()} == 'admin'" href="#" class="texteB">
                             Admin
                         </a>
 
-                        <div class="uk-navbar-dropdown"
+                        <div class="uk-navbar-dropdown "
                              th:if="${loggedUser.getRole()?.getLibelle()} == 'admin'">
                             <ul class="uk-nav uk-navbar-dropdown-nav">
                                 <li>
@@ -56,7 +57,7 @@
 
                     <!-- UTILISATEUR -->
                     <li th:if="${loggedUser}">
-                        <a href="#" data-uk-icon="icon:menu"></a>
+                        <a href="#" data-uk-icon="icon:menu" class="texteB"></a>
                         <div class="uk-navbar-dropdown ">
                             <ul class="uk-nav uk-navbar-dropdown-nav">
                                 <li class="uk-nav-header uk-text-small uk-text-primary"
@@ -108,8 +109,7 @@
 <!--FOOTER-->
 <footer class="uk-section uk-section-small uk-section-secondary">
     <div class="uk-container">
-        <p class="uk-text-small uk-text-center">Copyright 2026 - <a href="https://github.com/zzseba78/Kick-Off">Created
-            by KickOff</a> | Built with <a href="http://getuikit.com" title="Visit UIkit 3 site" target="_blank"
+        <p class="uk-text-small uk-text-center">Copyright 2026 - | Built with <a href="http://getuikit.com" title="Visit UIkit 3 site" target="_blank"
                                            data-uk-tooltip><span data-uk-icon="uikit"></span></a></p>
     </div>
 </footer>
