@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 import java.time.LocalDateTime;
@@ -36,7 +37,8 @@ public class ArticleController {
 
     @GetMapping("/detail/{id}")
     public String afficherUnArticle(
-            @PathVariable Long id, Model model ) {
+            @PathVariable Long id, Model model, RedirectAttributes redirectAttributes){
+        Utilisateur loggedUser = (Utilisateur) model.getAttribute("loggedUser");
         int montantMinimum = articleService.selectArticleById(id).getMiseAPrix();
         if(id>0){
             Article article =articleService.selectArticleById(id);
@@ -45,6 +47,8 @@ public class ArticleController {
                 montantMinimum = enchereService.getLastEnchere(enchereService.selectMeilleureEnchere(id)).getMontant_enchere() + 1;
             }
 
+            model.addAttribute("loggedUser", loggedUser);
+
 
             if(article!=null){
                 model.addAttribute("article", article);
@@ -52,6 +56,7 @@ public class ArticleController {
                     model.addAttribute("enchere", enchere);
                 }
                 model.addAttribute("encherir", montantMinimum);
+
                 return "encheres/enchere-detail-page";
             }
         }

@@ -101,8 +101,6 @@ public class EnchereServiceImpl  implements EnchereService {
 
         idaoEnchere.create(enchere);
 
-
-
     }
 
 

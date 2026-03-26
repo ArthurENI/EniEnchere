@@ -69,7 +69,7 @@ public class EnchereController {
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
             return "redirect:/articles/detail/" + articleId;
         }
-
+        EniFlashMessage.sendSuccessFlash(redirectAttributes, "Enchère placée avec succès !");
         return "redirect:/articles/detail/" + articleId;
     }
 

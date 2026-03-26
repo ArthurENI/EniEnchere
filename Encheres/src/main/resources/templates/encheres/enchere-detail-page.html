@@ -23,7 +23,7 @@
                 <p th:if="${enchere}"><u>Dernière enchère</u> : [[${enchere.getMontant_enchere()}]]</p>
                 <p th:if="${enchere == null}"><u>Mise à prix</u> : [[${article.miseAPrix}]]</p>
                 <p><u>Statut actuel</u> : [[${article.etatVente}]]</p>
-                <p><u>Date de fin d'enchere</u> : [[${article.dateFinEnchere}]]</p>
+                <p class="uk-alert-primary" uk-alert><u>Date de fin d'enchere</u> : [[${#temporals.format(article.dateFinEnchere, 'dd/MM/yyyy HH:mm')}]]</p>
 
                 <div class="uk-margin">
                     <div class="uk-card uk-card-default uk-card-body"
@@ -55,15 +55,21 @@
                                     <span th:text="${enchere.utilisateur.pseudo}"></span>
                                     <b>pour un montant de : </b>
                                     <span th:text="${enchere.montant_enchere}"></span>
+                                    <b> Crédits !</b>
                                 </p>
                             </div>
                             <div th:if="${article.etatVente.name() == 'ATTENTE'}"
-                                 class="uk-alert-info" uk-alert>
+                                 class="uk-alert-warning" uk-alert>
                                 <p>
                                     <b>L'enchère n'est pas encore ouverte : </b>
                                 </p>
                             </div>
-                            <div th:if="${article.etatVente.name() == 'OUVERTE'}">
+                            <div th:if="${article.etatVente.name() == 'OUVERTE' && loggedUser==null}"
+                                 class="uk-alert-warning" uk-alert>
+                                <p>Veuillez vous connecter pour enchérir</p>
+                            </div>
+
+                            <div th:if="${article.etatVente.name() == 'OUVERTE' && loggedUser!=null}">
                                 <label class="uk-form-label" for="proposition-perso">
                                     Ma proposition :
                                 </label>
