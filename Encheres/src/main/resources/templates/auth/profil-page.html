@@ -1,70 +1,99 @@
 <!DOCTYPE html>
-<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="en"
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="fr"
       layout:decorate="~{layout/base}">
 <body>
 
 <div layout:fragment="content">
 
+    <div class="uk-container uk-margin-large-top">
 
-    <div class="uk-width-1-1 uk-height-viewport uk-padding ">
-        <h1>Mon profil</h1>
+        <h1 class="uk-heading-line uk-text-center"><span>Mon profil</span></h1>
 
-        <!-- Profil -->
-        <div class="uk-align-center">
+        <!-- Carte profil -->
+        <div class="uk-flex uk-flex-center">
+            <div class="uk-card uk-card-default uk-card-body uk-width-1-2@m uk-box-shadow-medium">
 
-            <ul class="uk-list uk-list-bullet">
-                <li>
-                    <!-- Pseudo -->
-                    <p id="pseudo" th:text="'Pseudo : '+${utilisateur.pseudo}"></p>
-                </li>
+                <!-- Infos utilisateur -->
+                <div class="uk-grid-small uk-child-width-1-2@s" uk-grid>
 
-                <li>
-                    <!-- Nom -->
-                    <p id="nom" th:text="'Nom : '+${utilisateur.nom}"></p>
-                </li>
+                    <div>
+                        <p><strong>Pseudo :</strong><br>
+                            <span id="pseudo" th:text="${utilisateur.pseudo}"></span>
+                        </p>
+                    </div>
 
-                <li>
-                    <!-- Prénom -->
-                    <p id="prenom" th:text="'Prénom : '+${utilisateur.prenom}"></p>
-                </li>
-                <li>
-                    <!-- Email -->
-                    <p id="Email" th:text="'Email : '+${utilisateur.email}"></p>
-                </li>
-                <li>
-                    <!-- Téléphone -->
-                    <p id="telephone" th:text="'Téléphone : '+${utilisateur.telephone}"></p>
-                </li>
-                <li>
-                    <!-- Rue -->
-                    <p id="rue" th:text="'Rue : '+${utilisateur.adresse.rue}"></p>
-                </li>
-                <li>
-                    <!-- Code postal -->
-                    <p id="codePostal" th:text="'Code Postal : '+${utilisateur.adresse.codePostal}"></p>
-                </li>
-                <li>
-                    <!-- Ville -->
-                    <p id="ville" th:text="'Ville : '+${utilisateur.adresse.ville}"></p>
-                </li>
-            </ul>
+                    <div>
+                        <p><strong>Email :</strong><br>
+                            <span id="email" th:text="${utilisateur.email}"></span>
+                        </p>
+                    </div>
 
-            <!-- Bouttons -->
-            <div class="uk-grid">
-                <div class="uk-width-1-5">
-                    <a class="uk-button-primary uk-button"
-                       th:href="@{'/encheres/ProfilModif/'+${loggedUser.noUtilisateur}}">Modifier</a>
+                    <div>
+                        <p><strong>Nom :</strong><br>
+                            <span id="nom" th:text="${utilisateur.nom}"></span>
+                        </p>
+                    </div>
+
+                    <div>
+                        <p><strong>Prénom :</strong><br>
+                            <span id="prenom" th:text="${utilisateur.prenom}"></span>
+                        </p>
+                    </div>
+
+                    <div>
+                        <p><strong>Téléphone :</strong><br>
+                            <span id="telephone" th:text="${utilisateur.telephone}"></span>
+                        </p>
+                    </div>
+
                 </div>
-                <div class="uk-width-1-2">
-                    <a class="uk-button-danger uk-button"
-                        th:href="@{/encheres/suppr}" >Supprimer compte</a>
+
+                <hr>
+
+                <!-- Adresse -->
+                <h4 class="uk-heading-bullet">Adresse</h4>
+
+                <div class="uk-grid-small uk-child-width-1-2@s" uk-grid>
+
+                    <div>
+                        <p><strong>Rue :</strong><br>
+                            <span th:text="${utilisateur.adresse.rue}"></span>
+                        </p>
+                    </div>
+
+                    <div>
+                        <p><strong>Code postal :</strong><br>
+                            <span th:text="${utilisateur.adresse.codePostal}"></span>
+                        </p>
+                    </div>
+
+                    <div class="uk-width-1-1">
+                        <p><strong>Ville :</strong><br>
+                            <span th:text="${utilisateur.adresse.ville}"></span>
+                        </p>
+                    </div>
+
                 </div>
+
+                <!-- Boutons -->
+                <div class="uk-margin-top uk-flex uk-flex-between uk-flex-middle">
+
+                    <a class="uk-button uk-button-primary"
+                       th:href="@{'/encheres/ProfilModif/'+${loggedUser.noUtilisateur}}">
+                        Modifier
+                    </a>
+                    <a class="uk-button uk-button-danger"
+                       th:href="@{/encheres/suppr}">
+                        Supprimer compte
+                    </a>
+
+                </div>
+
             </div>
-
         </div>
 
-
     </div>
+
 </div>
 </body>
 </html>
