@@ -108,8 +108,10 @@ public class ArticleController {
     }
 
     @GetMapping("/vente")
-    public String creerVente(Model model, @SessionAttribute("loggedUser") Utilisateur utilisateur)
-    {
+    public String creerVente(Model model, @SessionAttribute(value = "loggedUser",required = false) Utilisateur utilisateur) {
+        if (utilisateur == null) {
+            return "auth/accesRestreint-page";
+        }
         Article article = new Article();
         article.setAdresseRetrait(new Adresse());
         model.addAttribute("article", article);
