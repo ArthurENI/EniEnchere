@@ -151,7 +151,8 @@ public class AuthController {
         // Ajouter dans une session un user
         model.addAttribute("loggedUser", authService.getUtilisateur(utilisateur.getNoUtilisateur()));
         //page acceuil
-        return "encheres/ListVentes-page";
+//        return "encheres/ListVentes-page";
+        return "redirect:/encheres/Profil/"+utilisateur.getNoUtilisateur();
     }
 
     @GetMapping("/encheres/Profil/{id}")
